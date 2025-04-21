@@ -95,9 +95,13 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 
 ## **Contact**
 For questions or support, feel free to reach out:
-- Email: admin@tutorfinder.com
-- GitHub Issues: [GitHub Issues](https://github.com/your-username/tutorfinder/issues)
+I would love to connect with you! Feel free to reach out for collaborations, inquiries, or just to chat about technology and development.
 
+Email: <banelezulu85@gmail.com>
+Outlook: <banele.zulu@outlook.com>
+LinkedIn: <https://www.linkedin.com/in/banele-zulu-a30861255/>
+GitHub: <https://github.com/BaneleZulu/>
+Thank you for visiting my portfolio. I look forward to collaborating and creating something amazing together!.
 ---
 
 Feel free to replace placeholders like `"your-username"` and `"your_database_name"` with actual values specific to your project. Let me know if you'd like assistance with any specific section!
