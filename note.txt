@@ -1,0 +1,68 @@
+02 January 2025, 00:57
+song on: 7minute Drill [Might Delete Later], J.Cole.
+----------------------------------------------------------
+
+---SYSTEM VISION---
+The system must facilitate the centralization on students and mentors in one space where knowledge can be shared quickly and affectively. 
+
+---REQUIREMENTS---
+The system will have 3 actors, meaning it will be divided into 3 subsystems.
+ --: https://mentorcruise.com/
+ --: https://www.pushfar.com/article/how-to-find-a-free-mentor-and-why-you-need-one/
+ --: https://adplist.org/	
+
+0. System
+   - Thing I need the system to perform
+   > Selfie verification.
+   > Waiting period for mentor/teachers after registration.
+   > Payment plan selection.
+   > Implement free trail.		 	
+   > Use youtubers as mentor dummies.
+
+
+1. Admin subsystem
+    - The super admin who overlook the system and posses super privilege's.
+    
+    > CRUD on tutors and students accounts.
+    > CRUD on tutor followers.
+    > CRUD on posts, notes, messages.
+    > CRUD on classes, course.
+
+
+2. Tutor subsystem
+    - The tutor seem to be the most complex subsystem here.
+
+    > Detail profile
+    > Follow other tutors
+    > Post messages on account.
+    > Make notes for students.
+    > CRUD course
+    > Add links to external resources, e.g. link to teams video session etc.
+    > CRUD book recommendation.
+    > Respond to student chats.
+
+
+3. Student subsystem
+    - Students system will facilitate actions like to stay up to date with tutors content/course.  
+
+    > Detail profile
+    > Follow/Unfollow tutor
+    > Write post
+    > Join/Exit course  
+    > Read book recommendation
+    > Use links etc.
+    > Virtual student card
+
+GLOBAL PAGES:
+1. homepage: overview of the site purpose, and key features
+2. About us: Mission, team behind the site.
+3. How it works: Detailed explanation of how the platform operates, including process for signing up, and how to find students. 
+4. Browse tutors: Searchable directory of tutor with basic information. (subjects, qualification, rating, profiles)
+5. Testimonials/Reviews: Feedback from tutor & students how have used the platform.
+6. FAQ: 
+7. Contact us: 
+8. Blog/Resources: Articles, tips, and resources related to tutoring, education, and learning.
+9. Pricing:
+10:  
+
+
