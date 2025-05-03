@@ -7,69 +7,73 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
 ?>
 
 <body>
+    <div class="parent">
 
-    <header>
-        <!--//? ******************main nav bar  -->
-        <div class="logo">
-            <img src="/resources/images/mentor.jpg" alt="TutorFinder-logo">
-            <h1>Tutor<strong>Finder</strong></h1>
+        <header>
+            <span class="logo">
+                <img src="/resources/others/logo-removebg-preview.png" alt="tutorfidner-logo">
+            </span>
+
+            <div class="wrapper">
+                <div class="switch-container">
+                    <div class="switch">
+                        <input type="checkbox" id="modeSwitch">
+                        <label for="modeSwitch" class="slider">
+                            <i class="ph ph-sun" id="modeIcon"></i>
+                        </label>
+                    </div>
+                    <p class="mode-label">Light Mode</p>
+                </div>
+                <nav>
+
+                    <button>Sign In</button>
+                    <button>
+                        <a href="/">Get Started</a>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+
+        <div class="home-view">
+            <div class="wrapper">
+                <select name="searchOption" id="searchOption">
+                    <option value="">What do wanna get better at?</option>
+                    <option value="">&#128187; Programming</option>
+                    <option value="">&#127757; Physics</option>
+                    <option value="">&#128176; Finances and Trading</option>
+                    <option value="">&#128275; Testing and Penetration</option>
+                    <option value="">&#127909; Video and Photo Editing</option>
+                    <option value="">&#9962; Theology</option>
+                    <option value="">&#128393; Art</option>
+                    <option value="">&#128195; Writing</option>
+                    <option value="">&#128101; Psychology</option>
+                </select>
+            </div>
+
+            <div class="mentor-view">
+                <img src="" alt="top-mentor-view">
+                <img src="" alt="top-mentor-view">
+                <img src="" alt="top-mentor-view">
+                <img src="" alt="top-mentor-view">
+                <img src="" alt="top-mentor-view">
+                <img src="" alt="top-mentor-view">
+            </div>
         </div>
 
-        <!--//?  **BACKGROUND COLOR CONTROL CODE, changes the pages theme to the liking of the user-->
-        <form class="color-picker" action="">
-            <fieldset>
-                <h4>Plain colors</h4>
-                <legend class="visually-hidden">Pick a color scheme</legend>
-                <label for="light" class="visually-hidden">Light</label>
-                <input type="radio" name="theme" id="light" title="Light Theme Mode" checked>
 
-                <label for="black" class="visually-hidden">Black theme </label>
-                <input type="radio" name="theme" id="black" title="Legacy Theme Mode">
-            </fieldset>
-        </form>
-        <!--//? **END BACKGROUND COLOR CONTROL -->
+        <h1>Transforming your potential</h1>
+        <h4>Become the best version of yourself by accessing to the perspectives
+            and life experiences of others who've been there, done that.</h4>
 
-        <nav class="global-nav" role="tablist" aria-labelledby="channel-name">
-            <button class="tab" role="tab" aria-controls="tabPanel-1" aria-selected="true" tabindex="0"
-                onclick="openTab('event', 'home')">Home</button>
-            <button class="tab" role="tab" aria-controls="tabPanel-2" aria-selected="false" tabindex="-1"
-                onclick="openTab('event', 'tutors')">Tutors</button>
-            <button class="tab" role="tab" aria-controls="tabPanel-3" aria-selected="false" tabindex="-1"
-                onclick="openTab('event', 'faq')">FAQ</button>
-            <button class="tab" role="tab" aria-controls="tabPanel-4" aria-selected="false" tabindex="-1"
-                onclick="openTab('event', 'contact')">Contact US</button>
-            <button class="tab" role="tab" aria-controls="tabPanel-5" aria-selected="false" tabindex="-1">Log IN</button>
-        </nav>
-    </header>
 
-    <main>
-        <div id="home" class="tabContent">
-            <?php
-            include($IPATH . 'home.html');
-            ?>
-        </div>
-        <div id="tutors" class="tabContent" style="display: none;">
-            <?php
-            include($IPATH . 'tutor.html');
-            ?>
-        </div>
-        <div id="faq" class="tabContent" style="display: none;">
-            <?php
-            include($IPATH . 'faq.html');
-            ?>
-        </div>
-        <div id="contact" class="tabContent" style="display: none;">
-            <?php
-            include($IPATH . 'contact.html');
-            ?>
-        </div>
-    </main>
+        <div style="height: 40rem;"></div>
 
-    <footer>
 
-    </footer>
+    </div>
 
-    <script src="/src/assets/js/main.js"></script>
+    <script src="/src/assets/js/app.js"></script>
+    <script src="/src/assets/js/theme.js"></script>
 </body>
 
 </html>
