@@ -1,0 +1,19 @@
+Executing statement: 
+        SELECT u.profile_image, u.fullname, t.average_rating 
+        FROM tutors t
+        JOIN users u ON t.id = u.id
+        ORDER BY t.average_rating DESC
+        LIMIT 6
+         | Result: [{'profile_image': 'NeilDegreseTyson.jpg', 'fullname': 'Neil deGrasse Tyson', 'average_rating': 5}, {'profile_image': 'JordanPeterson.jpg', 'fullname': 'Jordan B Peterson', 'average_rating': 5}, {'profile_image': 'SusanCain.jpg', 'fullname': 'Susan Cain', 'average_rating': 5}, {'profile_image': 'vanessa-van-edwards.jpg', 'fullname': 'Vanessa Van Edwards', 'average_rating': 5}, {'profile_image': 'KevinPowell.webp', 'fullname': 'Kevin Powell', 'average_rating': 5}, {'profile_image': 'Elliot_Alderson_Icon.webp', 'fullname': 'Elliot Alderson', 'average_rating': 5}]Executing statement: 
+        SELECT u.profile_image, u.fullname, t.average_rating 
+        FROM tutors t
+        JOIN users u ON t.id = u.id
+        ORDER BY t.average_rating DESC
+        LIMIT 6
+         | Result: [{'profile_image': 'NeilDegreseTyson.jpg', 'fullname': 'Neil deGrasse Tyson', 'average_rating': 5}, {'profile_image': 'JordanPeterson.jpg', 'fullname': 'Jordan B Peterson', 'average_rating': 5}, {'profile_image': 'SusanCain.jpg', 'fullname': 'Susan Cain', 'average_rating': 5}, {'profile_image': 'vanessa-van-edwards.jpg', 'fullname': 'Vanessa Van Edwards', 'average_rating': 5}, {'profile_image': 'KevinPowell.webp', 'fullname': 'Kevin Powell', 'average_rating': 5}, {'profile_image': 'Elliot_Alderson_Icon.webp', 'fullname': 'Elliot Alderson', 'average_rating': 5}]Executing statement: 
+        SELECT u.profile_image, u.fullname, t.average_rating 
+        FROM tutors t
+        JOIN users u ON t.id = u.id
+        ORDER BY t.average_rating DESC
+        LIMIT 6
+         | Result: [{'profile_image': 'NeilDegreseTyson.jpg', 'fullname': 'Neil deGrasse Tyson', 'average_rating': 5}, {'profile_image': 'JordanPeterson.jpg', 'fullname': 'Jordan B Peterson', 'average_rating': 5}, {'profile_image': 'SusanCain.jpg', 'fullname': 'Susan Cain', 'average_rating': 5}, {'profile_image': 'vanessa-van-edwards.jpg', 'fullname': 'Vanessa Van Edwards', 'average_rating': 5}, {'profile_image': 'KevinPowell.webp', 'fullname': 'Kevin Powell', 'average_rating': 5}, {'profile_image': 'Elliot_Alderson_Icon.webp', 'fullname': 'Elliot Alderson', 'average_rating': 5}]

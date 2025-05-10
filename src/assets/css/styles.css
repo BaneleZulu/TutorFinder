@@ -28,7 +28,7 @@
 }
 
 body {
-  position: relative;
+  /* position: relative; */
   background: linear-gradient(
     to bottom right,
     var(--clr-body-bg),
@@ -66,7 +66,7 @@ p {
   margin: 0;
   padding: 0;
   width: 100%;
-  text-wrap: nowrap !important;
+  /* text-wrap: nowrap !important; */
 }
 
 img {
@@ -95,6 +95,18 @@ b {
 
 p {
   color: var(--clr-text);
+  text-wrap: white-space;
+}
+
+.divider {
+  width: 100%;
+  text-align: center;
+  margin-block: 1rem;
+
+  h1 {
+    font-family: var(--font-txt2);
+    font-size: 3rem;
+  }
 }
 
 body header {
@@ -111,6 +123,7 @@ body header {
   background: transparent !important;
   -webkit-backdrop-filter: blur(20rem);
   backdrop-filter: blur(20rem);
+  border: 1px solid red;
 }
 
 body header span.logo {
