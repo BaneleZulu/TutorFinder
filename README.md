@@ -37,8 +37,8 @@ TutorFinder is a web-based platform designed to connect mentors (tutors) with me
 ---
 
 ## **Technologies Used**
-- **Frontend:** HTML, CSS, JavaScript (optional frameworks: React, Angular).
-- **Backend:** PHP (server-side scripting).
+- **Frontend:** HTML, CSS, JavaScript.
+- **Backend:** PHP, Python (server-side scripting).
 - **Database:** MySQL (relational database).
 - **Additional Libraries/Tools:** OpenCV for selfie verification, Stripe/PayPal for payment integration.
 
@@ -59,11 +59,11 @@ TutorFinder is a web-based platform designed to connect mentors (tutors) with me
 2. Set up a local development environment (e.g., XAMPP or WAMP for PHP and MySQL).
 3. Import the SQL schema from `db_schema.sql` to your MySQL database.
 4. Configure database credentials in the backend configuration file:
-   ```php
-   $servername = "localhost";
-   $username = "root";
-   $password = "";
-   $dbname = "your_database_name";
+   ```php, phython
+   host = "localhost";
+   username = "root";
+   password = "";
+   database = "your_database_name";
    ```
 5. Start your server and navigate to the frontend URL to begin using the system.
 
