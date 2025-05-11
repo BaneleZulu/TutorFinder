@@ -13,9 +13,7 @@ def get_db_connection():
     except:
         print('Error occurred')
     finally:
-        print('')   
-        
-    
+        print('')
 
 def logResults(message):
     try:
@@ -24,8 +22,4 @@ def logResults(message):
     except:
         log.write('Error! Failed to write to file')
     finally:
-        log.close()
-        
-        
-        
-               
+        log.close()      

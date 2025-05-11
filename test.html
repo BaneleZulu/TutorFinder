@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Organizations Scroll</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .scroll-container {
+            display: flex;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .scroll-content {
+            display: flex;
+            animation: scroll 10s linear infinite;
+        }
+
+        .partner {
+            margin: 0 20px;
+            text-align: center;
+        }
+
+        .partner img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        @keyframes scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scroll-container">
+        <div class="scroll-content">
+            <div class="partner">
+                <img src="educonnect.jpg" alt="EduConnect">
+                <p>EduConnect</p>
+            </div>
+            <div class="partner">
+                <img src="scholarsphere.jpg" alt="ScholarSphere">
+                <p>ScholarSphere</p>
+            </div>
+            <div class="partner">
+                <img src="learneasy.jpg" alt="LearnEasy">
+                <p>LearnEasy</p>
+            </div>
+            <div class="partner">
+                <img src="skillbridge.jpg" alt="SkillBridge">
+                <p>SkillBridge</p>
+            </div>
+            <div class="partner">
+                <img src="smarttutors.jpg" alt="SmartTutors Inc.">
+                <p>SmartTutors Inc.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const scrollContent = document.querySelector(".scroll-content");
+            const container = document.querySelector(".scroll-container");
+
+            function duplicateContent() {
+                const clones = scrollContent.cloneNode(true);
+                container.appendChild(clones);
+            }
+
+            duplicateContent();
+        });
+    </script>
+
+
+    <ul class="carousel">
+        <li>
+            <h2>Lorem ipsum dolor sit amet.</h2>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At reiciendis voluptates hic dignissimos dolor
+                necessitatibus, quia ea dolore deserunt quam!</p>
+        </li>
+        <li>
+            <h2>Sint nobis corporis nesciunt ipsum.</h2>
+            <p>Itaque repudiandae sit asperiores omnis nihil, quis iste eaque reiciendis repellat recusandae aliquid.
+                Accusamus, nisi? Culpa delectus veritatis ipsam officia!</p>
+        </li>
+        <li>
+            <h2>Rerum eaque quia quisquam sequi.</h2>
+            <p>Quasi porro animi placeat blanditiis maiores error fugiat quam explicabo veniam inventore quo, ad
+                molestias
+                ab, cumque soluta tempora voluptates?</p>
+        </li>
+        <li>
+            <h2>Neque ut perferendis in asperiores.</h2>
+            <p>Fugiat et animi dolorem, mollitia repellat repudiandae quidem eius expedita accusantium quae id quo iste,
+                delectus optio similique pariatur veniam.</p>
+        </li>
+        <li>
+            <h2>Sit illum soluta est fugiat!</h2>
+            <p>Ratione, excepturi qui! Temporibus dignissimos ipsam accusamus corporis eveniet deleniti, sit culpa
+                repellendus iure, nulla maxime aliquam iste, tempora quaerat?</p>
+        </li>
+    </ul>
+
+
+
+    <style>
+        html {
+            color-scheme: dark;
+            font-family: system-ui;
+        }
+
+        .carousel {
+            list-style: none;
+            margin: 5rem;
+            padding: 1rem;
+            border: 5px solid white;
+
+            display: grid;
+            gap: 2rem;
+            grid-auto-flow: column;
+            grid-auto-columns: 40%;
+
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+
+            @media (prefers-reduced-motion: no-preference) {
+                scroll-behavior: smooth;
+            }
+
+            anchor-name: --carousel;
+
+            scroll-marker-group: after;
+
+            &::scroll-marker-group {
+                display: flex;
+                justify-content: center;
+                gap: 0.5rem;
+                padding: 1rem;
+            }
+
+            >li {
+                scroll-snap-align: center;
+
+                &::scroll-marker {
+                    content: " ";
+                    width: 20px;
+                    height: 20px;
+                    aspect-ratio: 1 / 1;
+                    border-radius: 100%;
+                    border: 2px solid CanvasText;
+                }
+
+                &::scroll-marker:target-current {
+                    background: LinkText;
+                }
+            }
+
+            &::scroll-button(*) {
+                position: fixed;
+                position-anchor: --carousel;
+                margin: 1rem;
+                font: inherit;
+                background: dodgerblue;
+                border: 0;
+                border-radius: 4px;
+                font-weight: 700;
+            }
+
+            &::scroll-button(right) {
+                content: "right";
+                position-area: center right;
+            }
+
+            &::scroll-button(left) {
+                content: "left";
+                position-area: center left;
+            }
+        }
+    </style>
+</body>
+
+</html>

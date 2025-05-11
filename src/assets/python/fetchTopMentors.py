@@ -1,13 +1,11 @@
-from flask import Flask, jsonify
+from flask import Blueprint, jsonify
 from flask_cors import CORS
 import conn  # Assumes conn.get_db_connection() and logResults() are defined
 
 
-app = Flask(__name__)
 db = conn.get_db_connection()
-CORS(app)  # Add this line to allow cross-origin requests
-
-@app.route('/mentors')
+mentors_blueprint = Blueprint("mentors", __name__)
+@mentors_blueprint.route("/")
 def return_top_mentors():
     try:
         cursor = db.cursor(dictionary=True)
@@ -37,11 +35,3 @@ def return_top_mentors():
 
     finally:
         cursor.close()
-
-@app.teardown_appcontext
-def close_db_connection(error):
-    if hasattr(conn, 'close_db_connection'):
-        conn.close_db_connection()
-
-if __name__ == '__main__':
-    app.run(debug=True)

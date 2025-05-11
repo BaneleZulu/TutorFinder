@@ -8,7 +8,6 @@ body .parent {
   gap: 1rem;
   padding-top: 5rem;
   position: relative;
-  background: var(--clr-body-bg);
 }
 
 /* h5 {} */
@@ -188,18 +187,6 @@ div.process-design div.row1 span.active::before {
   transform: translateX(-50%);
 }
 
-div.process-design div.row1 span::after {
-  width: 0.1rem;
-  height: 5rem;
-  content: "";
-  background: var(--clr-heading) !important;
-  position: absolute;
-  z-index: 2;
-  bottom: -5rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 div.process-design div.row1 span {
   position: relative;
   cursor: pointer;
@@ -256,4 +243,41 @@ div.process-design div.row2 p {
   width: 90%;
   font-size: 1rem;
   font-weight: 400;
+}
+
+/* PARTNER ORGANIZATIONS */
+.scroll-container {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.scroll-content {
+  display: flex;
+  animation: scroll 15s linear infinite;
+  width: 100dvw;
+  height: 15rem;
+}
+
+.partner {
+  margin: 0 20px;
+  text-align: center;
+}
+
+.partner img {
+  width: 15rem;
+  height: 50%;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
 }
