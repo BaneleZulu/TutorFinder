@@ -5,6 +5,7 @@ import conn  # Assumes conn.get_db_connection() and logResults() are defined
 
 db = conn.get_db_connection()
 mentors_blueprint = Blueprint("mentors", __name__)
+
 @mentors_blueprint.route("/")
 def return_top_mentors():
     try:

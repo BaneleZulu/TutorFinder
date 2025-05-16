@@ -4,8 +4,8 @@ import conn
 
 db = conn.get_db_connection()
 partners_blueprint = Blueprint("partners", __name__)
-@partners_blueprint.route("/")
 
+@partners_blueprint.route("/")
 def partner_organizations():
     try:
         cursor = db.cursor(dictionary=True)  # Use dictionary format for easy JSON conversion

@@ -41,3 +41,32 @@ steps.forEach((step) => {
     steps.classList.add("active");
   });
 });
+/*//? TOP MENTORS CAROUSEL  *********************************************** */
+document.addEventListener("DOMContentLoaded", () => {
+  const carousel = document.querySelector(".carousel");
+  const scrollLeftBtn = document.getElementById("scroll-left");
+  const scrollRightBtn = document.getElementById("scroll-right");
+
+  if (!carousel || !scrollLeftBtn || !scrollRightBtn) {
+    console.warn("Carousel or scroll buttons not found.");
+    return;
+  }
+
+  // Ensure the carousel has content
+  const observer = new MutationObserver(() => {
+    const scrollAmount = carousel.clientWidth / 5; // Adjusted calculation
+
+    scrollLeftBtn.addEventListener("click", () => {
+      carousel.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    });
+
+    scrollRightBtn.addEventListener("click", () => {
+      carousel.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    });
+
+    // Disconnect observer after first mutation detection
+    observer.disconnect();
+  });
+
+  observer.observe(carousel, { childList: true });
+});

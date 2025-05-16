@@ -111,7 +111,7 @@ p {
 
 body header {
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   padding: 0.5rem 5rem;
   display: flex;
@@ -123,7 +123,7 @@ body header {
   background: transparent !important;
   -webkit-backdrop-filter: blur(20rem);
   backdrop-filter: blur(20rem);
-  border: 1px solid red;
+  box-shadow: 1rem 1rem 5rem 1rem rgba(0, 0, 0, 0.6);
 }
 
 body header span.logo {

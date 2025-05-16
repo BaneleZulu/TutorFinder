@@ -134,11 +134,22 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
         <div class="divider">
             <h1>With the best mentor from biggest organizations </h1>
         </div>
-
         <div class="scroll-container">
-            <div class="scroll-content"></div> <!-- This must exist -->
+            <div class="scroll-content"></div>
         </div>
 
+
+        <div class="carousel-container">
+            <div class="carousel-header">
+                <h1>Discover the world's best mentors</h1>
+                <span class="carousel-controls">
+                    <button id="exploreMentorsBtn" class="explore-btn">Explore all</button>
+                    <button id="scroll-left" class="scroll-btn"><i class="ph ph-arrow-fat-lines-left"></i></button>
+                    <button id="scroll-right" class="scroll-btn"><i class="ph ph-arrow-fat-lines-right"></i></button>
+                </span>
+            </div>
+            <ul class="carousel"></ul>
+        </div>
 
 
     </div>
