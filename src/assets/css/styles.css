@@ -158,7 +158,7 @@ body header .switch-container {
   .switch {
     position: relative;
     width: 65px;
-    height: 35px;
+    height: 30px;
     background: #ccc;
     border-radius: 30px;
     transition: background 0.3s ease;
@@ -199,7 +199,7 @@ body header .wrapper nav {
   gap: 1rem;
 
   button {
-    padding: 10px 15px;
+    padding: 5px 10px;
     color: #fff;
     font-family: var(--font-txt2);
     font-size: 1rem;

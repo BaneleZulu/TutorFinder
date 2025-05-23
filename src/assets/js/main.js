@@ -70,3 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer.observe(carousel, { childList: true });
 });
+
+/*//? HOVER CARDS  *********************************************** */
+
+document.getElementById("cards").onmousemove = (e) => {
+  console.log("moving");
+  for (const card of document.getElementsByClassName("card")) {
+    const rect = card.getBoundingClientRect(),
+      x = e.clientX - rect.left,
+      y = e.clientY - rect.top;
+
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+  }
+};

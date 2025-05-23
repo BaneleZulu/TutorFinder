@@ -155,7 +155,105 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
         <div class="divider">
             <h1>Platform that delivers results</h1>
         </div>
-        
+
+        <div id="cards">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-image">
+                        <i class="ph-duotone ph-smiley"></i>
+                    </div>
+                    <div class="card-info-wrapper">
+                        <div class="card-info">
+                            <i class="ph-duotone ph-briefcase"></i>
+                            <div class="card-info-title">
+                                <h3><b>90<sup>%</sup></b> Happy Members</h3>
+                                <h4>Career enhancement for 1000+ members</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-image">
+                        <i class="ph-duotone ph-chalkboard-teacher"></i>
+                    </div>
+                    <div class="card-info-wrapper">
+                        <div class="card-info">
+                            <i class="ph-duotone ph-handshake"></i>
+                            <div class="card-info-title">
+                                <h3><b>167+</b> Expert mentors</h3>
+                                <h4>Find the best in your field.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-image">
+                        <i class="ph-duotone ph-flag"></i>
+                    </div>
+                    <div class="card-info-wrapper">
+                        <div class="card-info">
+                            <i class="ph-duotone ph-globe-hemisphere-west"></i>
+                            <div class="card-info-title">
+                                <h3><b>71</b> Counties</h3>
+                                <h4>Global community for variety of mentors and mentees.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-image">
+                        <i class="ph-duotone ph-globe"></i>
+                    </div>
+                    <div class="card-info-wrapper">
+                        <div class="card-info">
+                            <i class="ph-duotone ph-users-four"></i>
+                            <div class="card-info-title">
+                                <h3><b>1M</b> Global Connection</h3>
+                                <h4>Building strong learning relationships worldwide.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-image">
+                        <i class="ph-duotone ph-book-bookmark"></i>
+                    </div>
+                    <div class="card-info-wrapper">
+                        <div class="card-info">
+                            <i class="ph-duotone ph-book-open-text"></i>
+                            <div class="card-info-title">
+                                <h3><b>85%</b> Improved Learning</h3>
+                                <h4>Students report enhanced skills and confidence.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-image">
+                        <i class="ph-duotone ph-hourglass-medium"></i>
+                    </div>
+                    <div class="card-info-wrapper">
+                        <div class="card-info">
+                            <i class="ph-duotone ph-clock-clockwise"></i>
+                            <div class="card-info-title">
+                                <h3><b>24/7</b> Learning Access</h3>
+                                <h4>Flexible tutoring anytime, anywhere.</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
