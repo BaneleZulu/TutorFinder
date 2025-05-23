@@ -152,6 +152,14 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
         </div>
 
 
+        <div class="divider">
+            <h1>Platform that delivers results</h1>
+        </div>
+        
+
+
+
+
     </div>
 
     <script src="/src/assets/js/app.js"></script>

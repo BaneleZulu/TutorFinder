@@ -132,6 +132,12 @@ async function loadBestRatedMentors() {
         mentorItem.appendChild(topRatedTxt);
       }
 
+      // floating elements on image
+      const availableStatus = document.createElement("p");
+      availableStatus.className = "availabilityStatus";
+      availableStatus.textContent = mentor.availability_status;
+      mentorItem.appendChild(availableStatus);
+
       const mentorDescription = document.createElement("p");
       mentorDescription.textContent = `Experience: ${mentor.experience_years} years | Rating: ${mentor.average_rating}`;
 
@@ -141,18 +147,46 @@ async function loadBestRatedMentors() {
       mentorImage.width = 100;
       mentorImage.height = 100;
 
+      //card body
+      const cardBody = document.createElement("div");
+      cardBody.className = "card-body";
+
+      const bodySpan1 = document.createElement("span");
+      cardBody.appendChild(bodySpan1);
+      const locationIcon = document.createElement("i");
+      locationIcon.className = "ph-fill ph-map-pin";
+      const addressText = document.createElement("p");
+      addressText.textContent = formatAddress(mentor.address);
+      bodySpan1.appendChild(locationIcon);
+      bodySpan1.appendChild(addressText);
+
+      const bodySpan2 = document.createElement("span");
+      const moneyIcon = document.createElement("i");
+      moneyIcon.className = "ph-fill ph-money";
+      const hourlyRateText = document.createElement("p");
+      hourlyRateText.textContent = `R${mentor.hourly_rate}/hr`;
+      cardBody.appendChild(bodySpan2);
+      bodySpan2.appendChild(moneyIcon);
+      bodySpan2.appendChild(hourlyRateText);
+
       // Append elements into the list item
       mentorItem.appendChild(mentorImage);
       mentorItem.appendChild(mentorName);
       mentorName.appendChild(verifiedIcon);
       mentorItem.appendChild(mentorDescription);
 
+      mentorItem.appendChild(cardBody);
       // Append mentor item into the carousel
       carousel.appendChild(mentorItem);
     });
   } catch (error) {
     console.error("Error loading mentors:", error);
   }
+}
+
+function formatAddress(address) {
+  let addressArr = address.split(",");
+  return addressArr[1] + ", " + addressArr[3];
 }
 
 // Load data when the page is fully loaded

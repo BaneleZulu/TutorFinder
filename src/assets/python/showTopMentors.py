@@ -11,8 +11,8 @@ def return_mentors():
     try:
         cursor = db.cursor(dictionary=True)
         query = """
-                    SELECT users.id, users.profile_image, users.fullname, users.email, users.phone, users.is_verified, users.user_role, 
-                    tutors.experience_years, tutors.availability_status, tutors.average_rating
+                    SELECT users.id, users.profile_image, users.fullname, users.address, users.email, users.phone, users.is_verified, users.user_role, 
+                    tutors.experience_years, tutors.availability_status, tutors.average_rating, tutors.hourly_rate
                     FROM users JOIN tutors
                     ON users.id = tutors.id
                     WHERE users.is_verified = TRUE 
@@ -30,13 +30,15 @@ def return_mentors():
                 'id': row['id'],
                 'profile_image': row['profile_image'],
                 'fullname': row['fullname'],
+                'address': row['address'],
                 'email': row['email'],
                 'phone': row['phone'],
                 'is_verified': row['is_verified'],
                 'user_role': row['user_role'],
                 'experience_years': row['experience_years'],
                 'availability_status': row['availability_status'],
-                'average_rating': row['average_rating']
+                'average_rating': row['average_rating'],
+                'hourly_rate': row['hourly_rate']
                 })
         return jsonify({"mentors": mentors})
            
