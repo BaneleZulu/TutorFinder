@@ -8,7 +8,6 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
 
 <body>
     <div class="parent">
-
         <header>
             <span class="logo">
                 <img src="/resources/others/logo-removebg-preview.png" alt="tutorfidner-logo">
@@ -142,7 +141,7 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
         <div class="carousel-container">
             <div class="carousel-header">
                 <h1>Discover the world's best mentors</h1>
-                <span class="carousel-controls">
+                <span class="section-controls">
                     <button id="exploreMentorsBtn" class="explore-btn">Explore all</button>
                     <button id="scroll-left" class="scroll-btn"><i class="ph ph-arrow-fat-lines-left"></i></button>
                     <button id="scroll-right" class="scroll-btn"><i class="ph ph-arrow-fat-lines-right"></i></button>
@@ -155,7 +154,6 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
         <div class="divider">
             <h1>Platform that delivers results</h1>
         </div>
-
         <div id="cards">
             <div class="card">
                 <div class="card-content">
@@ -256,6 +254,214 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
         </div>
 
 
+        <div class="divider">
+            <h1>Trusted by our community.</h1>
+            <h4>Word of mouth from our mentors and mentees</h4>
+        </div>
+        <div class="testimonials">
+            <span class="section-controls">
+                <button id="exploreTestimonialsBtn" class="explore-btn">Explore all</button>
+                <button class="refresh-btn"><i class="ph-light ph-arrow-clockwise"></i></button>
+            </span>
+            <main class="testimonial-grid">
+                <article class="testimonial grid-col-span-2 flow bg-primary-400 quote text-neutral-100">
+                    <div class="flex">
+                        <div>
+                            <img src="/resources/images/JordanPeterson.png" alt="daniel clifford">
+                        </div>
+                        <div>
+                            <h2 class="name">Daniel Clifford</h2>
+                            <p class="position">Verified Graduate</p>
+                        </div>
+                    </div>
+                    <p>
+                        I received a job offer mid-course, and the subjects I learned were current, if not more so,
+                        in the company I joined. I honestly feel I got every penny’s worth.
+                    </p>
+                    <p>
+                        “ I was an EMT for many years before I joined the bootcamp. I’ve been looking to make a
+                        transition and have heard some people who had an amazing experience here. I signed up
+                        for the free intro course and found it incredibly fun! I enrolled shortly thereafter.
+                        The next 12 weeks was the best - and most grueling - time of my life. Since completing
+                        the course, I’ve successfully switched careers, working as a Software Engineer at a VR startup. ”
+                    </p>
+                </article>
+                <article class="testimonial flow bg-secondary-400 text-neutral-100">
+                    <div class="flex">
+                        <div>
+                            <img src="./images/image-jonathan.jpg" alt="Jonathan Walters">
+                        </div>
+                        <div>
+                            <h2 class="name">Jonathan Walters</h2>
+                            <p class="position">Verified Graduate</p>
+                        </div>
+                    </div>
+                    <p>
+                        The team was very supportive and kept me motivated
+                    </p>
+                    <p>
+                        “ I started as a total newbie with virtually no coding skills. I now work as a mobile engineer
+                        for a big company. This was one of the best investments I’ve made in myself. ”
+                    </p>
+                </article>
+                <article class="testimonial flow bg-neutral-100 text-secondary-400">
+                    <div class="flex">
+                        <div>
+                            <img src="./images/image-jeanette.jpg" alt="Jeanette Harmon">
+                        </div>
+                        <div>
+                            <h2 class="name">Jeanette Harmon</h2>
+                            <p class="position">Verified Graduate</p>
+                        </div>
+                    </div>
+                    <p>
+                        An overall wonderful and rewarding experience</p>
+                    <p>
+                        “ Thank you for the wonderful experience! I now have a job I really enjoy, and make a good living
+                        while doing something I love. ”
+                    </p>
+                </article>
+                <article class="testimonial grid-col-span-2 flow bg-secondary-500 text-neutral-100">
+                    <div class="flex">
+                        <div>
+                            <img class="border-primary-400" src="./images/image-patrick.jpg" alt="Patrick Abrams">
+                        </div>
+                        <div>
+                            <h2 class="name">Patrick Abrams</h2>
+                            <p class="position">Verified Graduate</p>
+                        </div>
+                    </div>
+                    <p>
+                        Awesome teaching support from TAs who did the bootcamp themselves. Getting guidance from them and
+                        learning from their experiences was easy.
+                    </p>
+                    <p>
+                        “ The staff seem genuinely concerned about my progress which I find really refreshing. The program
+                        gave me the confidence necessary to be able to go out in the world and present myself as a capable
+                        junior developer. The standard is above the rest. You will get the personal attention you need from
+                        an incredible community of smart and amazing people. ”
+                    </p>
+                </article>
+                <article class="testimonial flow bg-neutral-100 text-secondary-400">
+                    <div class="flex">
+                        <div>
+                            <img src="./images/image-kira.jpg" alt="Kira Whittle">
+                        </div>
+                        <div>
+                            <h2 class="name">Kira Whittle</h2>
+                            <p class="position">Verified Graduate</p>
+                        </div>
+                    </div>
+                    <p>
+                        Such a life-changing experience. Highly recommended!
+                    </p>
+                    <p>
+                        “ Before joining the bootcamp, I’ve never written a line of code. I needed some structure from
+                        professionals who can help me learn programming step by step. I was encouraged to enroll by a former
+                        student of theirs who can only say wonderful things about the program. The entire curriculum and staff
+                        did not disappoint. They were very hands-on and I never had to wait long for assistance. The agile team
+                        project, in particular, was outstanding. It took my learning to the next level in a way that no tutorial
+                        could ever have. In fact, I’ve often referred to it during interviews as an example of my developent
+                        experience. It certainly helped me land a job as a full-stack developer after receiving multiple offers.
+                        100% recommend! ”
+                    </p>
+                </article>
+            </main>
+        </div>
+
+
+
+        <footer>
+            <div class="footer-top">
+                <span>
+                    <img src="/resources/others/logo-removebg-preview.png" alt="tutorfinder-logo-img" loading="lazy">
+                    <p>Empowering connections, sparking creativity, and transforming the world—one conversation at a time.</p>
+                </span>
+                <span>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-youtube-logo"></i>
+                        <span class="tooltip-text">YouTube</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-linkedin-logo"></i>
+                        <span class="tooltip-text">LinkedIn</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-facebook-logo"></i>
+                        <span class="tooltip-text">Facebook</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-x-logo"></i>
+                        <span class="tooltip-text">X (Twitter)</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-instagram-logo"></i>
+                        <span class="tooltip-text">Instagram</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-tiktok-logo"></i>
+                        <span class="tooltip-text">TikTok</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-discord-logo"></i>
+                        <span class="tooltip-text">Discord</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-telegram-logo"></i>
+                        <span class="tooltip-text">Telegram</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-slack-logo"></i>
+                        <span class="tooltip-text">Slack</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-medium-logo"></i>
+                        <span class="tooltip-text">Medium</span>
+                    </a>
+                    <a href="" class="tooltip">
+                        <i class="ph-fill ph-reddit-logo"></i>
+                        <span class="tooltip-text">Reddit</span>
+                    </a>
+                </span>
+
+
+            </div>
+
+            <div class="footer-bottom">
+                <div>
+                    <span>
+                        <a href="./Screens/about.php">About US</a>
+                        <a href="./Screens/become-mentor.php">Become a mentor</a>
+                        <a href="./Screens/become-mentee.php">Become a mentee</a>
+                        <a href="">Community</a>
+                        <a href="">Blog</a>
+                    </span>
+
+                    <span>
+                        <a href="">Join TutorFidner</a>
+                        <a href="/about.php#faq">FAQ's</a>
+                        <a href="">Help Center</a>
+                        <a href="">Partnerships</a>
+                    </span>
+                </div>
+
+
+                <div>
+                    <p>&copy; Copyright <?php echo date('Y'); ?> - <b>TutorFinder</b></p>
+                    <span>
+                        <a href="">Contact Us</a>
+                        <a href="">Privacy Policy</a>
+                        <a href="">Terms of use</a>
+                        <a href="">Sitemap</a>
+                    </span>
+                </div>
+
+            </div>
+            <p class="out-text" style="font-size:.7rem;">Made with <i class="fa-solid fa-heart"></i> by <a
+                    href="https://www.linkedin.com/in/banele-zulu-a30861255/?trk=opento_sprofile_topcard" target="_blank"
+                    rel="noopener" title="nihil@github">Banele Zulu</a>
+            </p>
+        </footer>
 
 
     </div>

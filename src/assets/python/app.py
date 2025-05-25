@@ -3,6 +3,8 @@ from flask_cors import CORS
 from fetchTopMentors import mentors_blueprint
 from fetchPartnerOrganization import partners_blueprint
 from showTopMentors import topMentors_blueprint
+from fetchFAQ import faq_blueprint
+
 
 app = Flask(__name__)
 CORS(app)
@@ -11,6 +13,7 @@ CORS(app)
 app.register_blueprint(mentors_blueprint, url_prefix="/mentors")
 app.register_blueprint(partners_blueprint, url_prefix="/partner_organizations")
 app.register_blueprint(topMentors_blueprint, url_prefix="/best_rated_mentors")
+app.register_blueprint(faq_blueprint, url_prefix="/faq")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
