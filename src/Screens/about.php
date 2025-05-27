@@ -219,8 +219,8 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
         .card {
             transition: transform 0.3s, box-shadow 0.3s;
             background: var(--clr-card-bg);
-            height: 20rem;
-            min-height: max-content;
+            /* height: 20rem; */
+            /* min-height: max-content; */
         }
 
         .card:hover {

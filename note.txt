@@ -77,3 +77,72 @@ You’ll need a clear unique selling point—maybe hyper-local mentorship, niche
 Building trust and ensuring quality mentors will also be key.
 Suggestion: Consider a feature that lets users showcase their learning outcomes (like portfolios or testimonials) to build credibility 
 and attract more users.
+
+
+
+file_put_contents('log.csv', 'Request method: ' . $_SERVER['REQUEST_METHOD'] ?? 'Empty request method'
+    . "\n"
+    . 'Request URI: ' . $_SERVER['REQUEST_URI'] ?? 'Empty request URI'
+    . "\n"
+    . 'Script name: ' . $_SERVER['SCRIPT_NAME'] ?? 'Empty script name'
+    . "\n"
+    . 'Query string: ' . $_SERVER['QUERY_STRING'] ?? 'Empty query string'
+    . "\n"
+    . 'Remote address: ' . $_SERVER['REMOTE_ADDR'] ?? 'Empty remote address'
+    . "\n"
+    . 'Server name: ' . $_SERVER['SERVER_NAME'] ?? 'Empty server name'
+    . "\n"
+    . 'Server port: ' . $_SERVER['SERVER_PORT'] ?? 'Empty server port'
+    . "\n"
+    . 'Server protocol: ' . $_SERVER['SERVER_PROTOCOL'] ?? 'Empty server protocol'
+    . "\n"
+    . 'Server software: ' . $_SERVER['SERVER_SOFTWARE'] ?? 'Empty server software'
+    . "\n"
+    . 'Post data: ' . json_encode($_POST, JSON_PRETTY_PRINT)
+    . "\n", FILE_APPEND);
+
+UNDERSTAND THE DIFFERENCE: on sending data to backend
+ const formData = new FormData();
+        formData.append('name', name);
+        formData.append('id_number', id_number);
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('password', password);
+        formData.append('confirm_password', confirm_password);
+
+        const response = await fetch('process_registration.php', {
+            method: 'POST',
+            body: formData
+        });
+-----
+const response = await fetch('process_registration.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams({
+        name: name,
+        id_number: id_number,
+        email: email,
+        phone: phone,
+        password: password,
+        confirm_password: confirm_password
+    })
+});
+----
+const response = await fetch('process_registration.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                id_number: id_number,
+                email: email,
+                phone: phone,
+                password: password,
+                confirm_password: confirm_password
+            })
+        });
+
+

@@ -433,15 +433,15 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
                         <a href="./Screens/about.php">About US</a>
                         <a href="./Screens/become-mentor.php">Become a mentor</a>
                         <a href="./Screens/become-mentee.php">Become a mentee</a>
-                        <a href="">Community</a>
-                        <a href="">Blog</a>
+                        <a href="./Screens/community.php">Community</a>
+                        <a href="./Screens//blog.php">Blog</a>
                     </span>
 
                     <span>
                         <a href="">Join TutorFidner</a>
-                        <a href="/about.php#faq">FAQ's</a>
+                        <a href="./Screens/about.php#faq">FAQ's</a>
                         <a href="">Help Center</a>
-                        <a href="">Partnerships</a>
+                        <a href="./Screens/about.php#partnerships">Partnerships</a>
                     </span>
                 </div>
 

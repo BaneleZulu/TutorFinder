@@ -213,7 +213,6 @@ body header .wrapper nav {
   }
 }
 
-
 button {
   display: flex;
   justify-content: center;
@@ -508,7 +507,8 @@ form .form-data label {
 /*? FOOTER SECTION  */
 footer {
   min-width: 100%;
-  background: var(--clr-card-bg);
+  /* background: var(--clr-card-bg); */
+  background: var(--clr-nav-bg);
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -62,8 +62,8 @@
                 <a href="about.php">About US</a>
                 <a href="become-mentor.php">Become a mentor</a>
                 <a href="become-mentee.php">Become a mentee</a>
-                <a href="">Community</a>
-                <a href="">Blog</a>
+                <a href="community.php">Community</a>
+                <a href="blog.php">Blog</a>
             </span>
 
             <span>

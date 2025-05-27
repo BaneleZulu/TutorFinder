@@ -14,9 +14,12 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
             <p class="text-lg md:text-xl max-w-3xl mx-auto mb-6">
                 Unlock your potential with personalized learning from expert mentors. Join TutorFinder as a mentee and start your journey to deep understanding today!
             </p>
-            <a href="#apply" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
+            <a href="#apply"
+                class="bg-white text-[#f84650] px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
                 Start Learning
+                <i class="ph ph-thin ph-arrow-right ml-2 text-[#f84650] text-1xl"></i>
             </a>
+
         </div>
     </section>
 
