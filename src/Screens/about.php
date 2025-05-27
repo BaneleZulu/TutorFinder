@@ -5,7 +5,7 @@
 require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
 ?>
 
-<body class="bg-gray-100 font-sans">
+<body class="about-body font-sans">
     <?php include('../util/header.php'); ?>
     <!-- Hero Section -->
     <section class="banner bg-[#f84650] text-white py-20 mt-10">
@@ -129,7 +129,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
     <section id="faq" class="py-12 ">
         <div class="container mx-auto px-4">
             <h3 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h3>
-            <div class="max-w-4xl mx-auto">
+            <div class="faq-list max-w-4xl mx-auto">
                 <div class="accordion mb-4">
                     <div class="accordion-header bg-[#f84650] p-4 rounded-t-lg">
                         <h4 class="text-lg font-semibold">What makes TutorFinder different?</h4>
@@ -195,6 +195,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
     <!-- Footer -->
     <?php include("../util/footer.php"); ?>
     <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/quickLisk_main.js"></script>
     <style>
         h1,
         h2,
@@ -210,6 +211,9 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
             color: var(--clr-text) !important;
         }
 
+        body.about-body {
+            background: var(--clr-body-bg);
+        }
 
         section:not(.banner) {
             background: var(--clr-body-bg);

@@ -1,7 +1,7 @@
 <header>
-    <span class="logo" style="background: var(--clr-body-bg); border-radius: 2rem; padding: 0 10px;">
+    <a href="../index.php" target="_self" rel="noopener noreferrer" class="logo" style="background: var(--clr-body-bg); border-radius: 2rem; padding: 0 10px;">
         <img src="/resources/others/logo-removebg-preview.png" alt="tutorfidner-logo">
-    </span>
+    </a>
 
     <div class="wrapper">
         <div class="switch-container">

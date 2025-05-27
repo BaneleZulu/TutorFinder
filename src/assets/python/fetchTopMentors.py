@@ -29,7 +29,6 @@ def return_top_mentors():
             })
         conn.logResults(f"Executing statement: {query} | Result: {result}")
         return jsonify({"mentors": mentors})
-
     except Exception as e:
         conn.logResults(f"Error fetching top mentors: {e}")
         return jsonify({"mentors": []})

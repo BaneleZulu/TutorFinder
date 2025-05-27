@@ -126,9 +126,10 @@ body header {
   box-shadow: 1rem 1rem 5rem 1rem rgba(0, 0, 0, 0.6);
 }
 
-body header span.logo {
+body header .logo {
   width: 5rem;
   height: 100%;
+  cursor: pointer;
   cursor: pointer;
 
   img {

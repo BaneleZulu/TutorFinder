@@ -191,3 +191,5 @@ function formatAddress(address) {
 
 // Load data when the page is fully loaded
 document.addEventListener("DOMContentLoaded", loadBestRatedMentors);
+
+

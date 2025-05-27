@@ -9,9 +9,10 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
 <body>
     <div class="parent">
         <header>
-            <span class="logo">
+            <a href="./index.php" target="_self" rel="noopener noreferrer" class="logo" style="background: var(--clr-body-bg); border-radius: 2rem; padding: 0 10px;">
                 <img src="/resources/others/logo-removebg-preview.png" alt="tutorfidner-logo">
-            </span>
+            </a>
+
 
             <div class="wrapper">
                 <div class="switch-container">

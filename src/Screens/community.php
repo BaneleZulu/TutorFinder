@@ -5,7 +5,7 @@
 require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
 ?>
 
-<body class="bg-gray-100 font-sans">
+<body class="community-body font-sans">
     <?php include("../util/header.php"); ?>
 
     <section class="bg-[#f84650] text-white py-20 mt-10">
