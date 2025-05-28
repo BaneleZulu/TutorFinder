@@ -20,8 +20,6 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
                 Start Your Journey
                 <i class="ph ph-thin ph-arrow-right ml-2 text-[#f84650] text-1xl"></i>
             </a>
-
-
         </div>
     </section>
 
@@ -186,6 +184,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
             </div>
         </div>
     </section>
+    
     <section class="py-12">
         <div class="container mx-auto px-4">
             <h3 class="text-3xl font-bold text-center mb-8">Benefits of Being a Mentor</h3>

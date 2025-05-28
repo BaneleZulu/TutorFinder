@@ -195,7 +195,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
     <!-- Footer -->
     <?php include("../util/footer.php"); ?>
     <script src="../assets/js/theme.js"></script>
-    <script src="../assets/js/quickLisk_main.js"></script>
+    <script src="../assets/js/quickLink_main.js"></script>
     <style>
         h1,
         h2,

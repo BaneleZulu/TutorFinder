@@ -26,7 +26,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
         <div class="container mx-auto px-4">
             <h3 class="text-3xl font-bold text-center mb-8">Featured Post</h3>
             <div class="max-w-8xl mx-auto ">
-                <div class="card mx-auto p-6 rounded-lg shadow-md">
+                <div class="card blog-card mx-auto p-6 rounded-lg shadow-md">
                     <img src="/resources/others/logo.png" alt="Featured Post" class="w-full h-64 object-cover rounded-lg mb-4">
                     <h4 class="text-2xl font-semibold mb-2">5 Tips to Master Coding as a Beginner</h4>
                     <p class="mb-2">By Alex Johnson | May 20, 2025</p>
@@ -36,6 +36,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
                         Obcaecati asperiores reiciendis quos deleniti, repellat, perferendis aut,
                         nesciunt impedit iusto a ipsa. Excepturi, ullam!
                     </p>
+                    <i>May 28, 2025</i>
                     <a href="blog-post.html" class="text-blue-600 hover:underline">Read More</a>
                 </div>
             </div>
@@ -108,6 +109,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
     <!-- Footer -->
     <?php include("../util/footer.php"); ?>
     <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/quickLink_main.js"></script>
     <style>
         body.blog .card {
             background: var(--clr-nav-bg);
@@ -136,7 +138,6 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
             color: white;
         }
     </style>
-
 
 
     <script>
