@@ -57,36 +57,27 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
             <h3 class="text-3xl font-bold text-center mb-8 underline">Our Community</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="card p-6 rounded-lg shadow-md text-center">
-                    <img src="/resources/images/JordanPeterson.png" alt="Team Member" class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4">
-                    <h4 class="text-lg font-semibold">Jordan B. Peterson</h4>
-                    <p class="text-gray-700 uppercase">Clinical psychologist, professor, and author</p>
-                    <p class="text-sm text-gray-500">
-                        Specializing in personality psychology,
-                        ethics, and mythology. Offers guidance on personal development and meaning in life.
-                        Global recognized clinical psychologist, practising over 25yrs
-                    </p>
+                    <img src="/resources/images/a9a29be6327279c2d168aa9dfa6b02f8.jpg" alt="Team Member" class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4">
+                    <h4 class="text-lg font-semibold">Tupac Amaru Shakur</h4>
+                    <p class="text-gray-700 uppercase">Head of Marketing and Public Speaker</p>
+                    <p class="text-sm text-gray-500"></p>
                 </div>
                 <div class="card p-6 rounded-lg shadow-md text-center">
-                    <img src="/resources/images/Elliot_Alderson.png" alt="Team Member" class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4">
-                    <h4 class="text-lg font-semibold">Elliot Alderson</h4>
-                    <p class="text-gray-700 uppercase">Elite cybersecurity engineer and ethical hacker</p>
-                    <p class="text-sm text-gray-500">
-                        With expertise in network security, penetration testing,
-                        and vulnerability assessment.
-                        Specializes in teaching security-first coding practices and digital privacy protection.
-                    </p>
+                    <img src="/resources/images/images - 2022-12-06T213411.697.jpeg" alt="Team Member" class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4">
+                    <h4 class="text-lg font-semibold">Yamir Firzt</h4>
+                    <p class="text-gray-700 uppercase">Product Designer</p>
+                    <p class="text-sm text-gray-500">Co-Founder and Team Leader</p>
                 </div>
                 <div class="card p-6 rounded-lg shadow-md text-center">
-                    <img src="/resources/images/KevinPowell.png" alt="Team Member" class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4">
-                    <h4 class="text-lg font-semibold">Kevin Powell</h4>
-                    <p class="text-gray-700 uppercase">Front-end web development expert specializing in CSS</p>
+                    <img src="/resources/images/model.png" alt="Team Member" class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4">
+                    <h4 class="text-lg font-semibold">John Doe</h4>
+                    <p class="text-gray-700 uppercase">Content and Script</p>
                     <p class="text-sm text-gray-500">Creates educational content focused on modern web design techniques and best practices.</p>
                 </div>
                 <div class="card p-6 rounded-lg shadow-md text-center">
                     <img src="/resources/images/55834ce6a2e4ae59e219aeed23ad59cb--white-eyes-dark-anime.jpg" alt="Team Member" class="w-24 h-24  bg-gray-200 rounded-full mx-auto mb-4">
                     <h4 class="text-lg font-semibold">Banele Zulu</h4>
-                    <p class="text-gray-700 uppercase">Software developer: Developed TutorFinder!!!!</p>
-                    <a href="#join" class="text-blue-600 hover:underline">Apply Now</a>
+                    <p class="text-gray-700 uppercase">Founder and Lead Developer</p>
                 </div>
             </div>
         </div>
@@ -130,46 +121,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
         <div class="container mx-auto px-4">
             <h3 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h3>
             <div class="faq-list max-w-4xl mx-auto">
-                <div class="accordion mb-4">
-                    <div class="accordion-header bg-[#f84650] p-4 rounded-t-lg">
-                        <h4 class="text-lg font-semibold">What makes TutorFinder different?</h4>
-                    </div>
-                    <div class="accordion-content bg-white p-1 rounded-b-lg">
-                        <p class="text-gray-600 p-4">
-                            TutorFinder focuses on deep learning, connecting you with community-rated mentors who emphasize understanding over quick answers. Choose from online, in-person, or group sessions at affordable rates.
-                        </p>
-                    </div>
-                </div>
-                <div class="accordion mb-4">
-                    <div class="accordion-header bg-[#f84650] p-4 rounded-t-lg">
-                        <h4 class="text-lg font-semibold">How do I choose a mentor?</h4>
-                    </div>
-                    <div class="accordion-content bg-white p-1 rounded-b-lg">
-                        <p class="text-gray-600 p-4">
-                            Browse mentors by subject, teaching style, and session format. Use our filters to match your budget and preferences, and check ratings to find the perfect fit.
-                        </p>
-                    </div>
-                </div>
-                <div class="accordion mb-4">
-                    <div class="accordion-header bg-[#f84650] p-4 rounded-t-lg">
-                        <h4 class="text-lg font-semibold">Are there affordable options?</h4>
-                    </div>
-                    <div class="accordion-content bg-white p-1 rounded-b-lg">
-                        <p class="text-gray-600 p-4">
-                            Yes! We offer flexible subscription plans and discounts to make learning accessible. Check our plans page for details.
-                        </p>
-                    </div>
-                </div>
-                <div class="accordion mb-4">
-                    <div class="accordion-header bg-[#f84650] p-4 rounded-t-lg">
-                        <h4 class="text-lg font-semibold">Do you have tutors who work with students with learning disabilities?</h4>
-                    </div>
-                    <div class="accordion-content bg-white p-1 rounded-b-lg">
-                        <p class="text-gray-600 p-4">
-                            Yes, many of our tutors specialize in working with students who have ADHD, dyslexia, autism spectrum disorders, and other learning differences. You can filter for these specializations when searching for tutors.
-                        </p>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -334,22 +286,6 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
                 target.scrollIntoView({
                     behavior: 'smooth'
                 });
-            });
-        });
-
-        // Accordion functionality
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const isOpen = content.classList.contains('open');
-                document.querySelectorAll('.accordion-content').forEach(c => {
-                    c.classList.remove('open');
-                    c.style.maxHeight = '0';
-                });
-                if (!isOpen) {
-                    content.classList.add('open');
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                }
             });
         });
     </script>

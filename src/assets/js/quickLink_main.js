@@ -25,22 +25,38 @@ async function loadsFAQData() {
       return;
     }
 
-    // clears current/default content
+    // Clear current/default content
     faqParent.innerHTML = "";
 
-    //dynamically create FAQs on the markup
+    // Dynamically create FAQs on the markup
     faqList.forEach((faq) => {
       const faqItem = document.createElement("div");
-      faqItem.className = "accordion md-4";
+      faqItem.className = "accordion md-4 mb-5";
       faqItem.innerHTML = `
         <div class="accordion-header bg-[#f84650] p-4 rounded-t-lg">
-        <h4 class="text-lg font-semibold">${faq.question}</h4>
+          <h4 class="text-lg font-semibold">${faq.question}</h4>
         </div>
         <div class="accordion-content bg-white p-1 rounded-b-lg">
-            <p class="text-gray-600 p-4">${faq.answer}</p>
+          <p class="text-gray p-4 width-full ">${faq.answer}</p>
         </div>`;
 
       faqParent.appendChild(faqItem);
+    });
+
+    // Attach event listeners to accordion headers AFTER they are created
+    document.querySelectorAll(".accordion-header").forEach((header) => {
+      header.addEventListener("click", () => {
+        const content = header.nextElementSibling;
+        const isOpen = content.classList.contains("open");
+        document.querySelectorAll(".accordion-content").forEach((c) => {
+          c.classList.remove("open");
+          c.style.maxHeight = "0";
+        });
+        if (!isOpen) {
+          content.classList.add("open");
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
     });
   } catch (error) {
     console.error("Error loading FAQs:", error);
