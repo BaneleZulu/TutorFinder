@@ -134,10 +134,10 @@ require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
                 Whether you’re a mentor ready to share your expertise or a learner eager to grow, TutorFinder is your platform for meaningful education.
             </p>
             <div class="flex justify-center space-x-4">
-                <a href="#" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
+                <a href="#" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-[#f84650]">
                     Sign Up as a Mentee
                 </a>
-                <a href="#" class="border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600">
+                <a href="#" class="border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600  hover:bg-[#f84650] ">
                     Become a Mentor
                 </a>
             </div>

@@ -269,6 +269,9 @@ button:focus {
 
 /* global close overlay btn */
 button.exit-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
   padding: 0.6em 2.3em;
   cursor: pointer;
   font-size: 1rem;
@@ -280,14 +283,88 @@ button.exit-btn {
   transition: background 500ms ease-in-out, color 500ms ease-in-out;
   background-color: white;
   z-index: 100;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
 
   &:hover {
     color: #ffffff;
     background-position: 100%;
     background-color: red;
+  }
+}
+
+/*//? ******************************** FORM BUTTON STYLE */
+.bn54 {
+  position: relative;
+  outline: none;
+  text-decoration: none;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  height: 45px;
+  width: 130px;
+  opacity: 1;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  font-size: 1rem;
+
+  i {
+    font-size: 1rem;
+    
+  }
+}
+
+.bn54 .bn54span {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.7px;
+}
+
+.bn54:hover {
+  animation: bn54rotate 0.7s ease-in-out both;
+}
+
+.bn54:hover .bn54span {
+  animation: bn54storm 0.7s ease-in-out both;
+  animation-delay: 0.06s;
+}
+
+@keyframes bn54rotate {
+  0% {
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+  25% {
+    transform: rotate(3deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: rotate(-3deg) translate3d(0, 0, 0);
+  }
+  75% {
+    transform: rotate(1deg) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: rotate(0deg) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes bn54storm {
+  0% {
+    transform: translate3d(0, 0, 0) translateZ(0);
+  }
+  25% {
+    transform: translate3d(4px, 0, 0) translateZ(0);
+  }
+  50% {
+    transform: translate3d(-3px, 0, 0) translateZ(0);
+  }
+  75% {
+    transform: translate3d(2px, 0, 0) translateZ(0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) translateZ(0);
   }
 }
 
@@ -353,6 +430,13 @@ input[type="submit"]:active {
   width: fit-content;
   width: fit-content;
   background: var(--clr-body-bg);
+  overflow: hidden;
+
+  a {
+    text-decoration: underline;
+    color: var(--clr-heading);
+    font-weight: 300;
+  }
 }
 
 .overlay-wrapper .overlay-content .image-viewer {

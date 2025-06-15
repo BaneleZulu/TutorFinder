@@ -84,3 +84,15 @@ document.getElementById("cards").onmousemove = (e) => {
     card.style.setProperty("--mouse-y", `${y}px`);
   }
 };
+
+// ? RENDER SIGN IN OVERLAY
+// ? global overlay opener function.
+//? @{param} : overlay wrapper id or class to open.
+function openOverlay(overlay) {
+  document.querySelector(overlay).style.display = "flex";
+}
+// ? global overlay closer function.
+//? @{param} : overlay wrapper id or class to close.
+function closeOverlay(overlay) {
+  document.querySelector(overlay).style.display = "none";
+}

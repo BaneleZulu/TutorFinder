@@ -4,6 +4,8 @@
 require($_SERVER['DOCUMENT_ROOT'] . '/includes/header.html');
 $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
 
+require $_SERVER['DOCUMENT_ROOT'] . '/components/overlay.php';
+
 ?>
 
 <body>
@@ -26,10 +28,8 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
                 </div>
                 <nav>
 
-                    <button>Sign In</button>
-                    <button>
-                        <a href="/">Get Started</a>
-                    </button>
+                    <button onclick="openOverlay('#loginOverlay')">Sign In</button>
+                    <button onclick="openOverlay('#signupOverlay')">Get Started</button>
                 </nav>
             </div>
         </header>
@@ -50,7 +50,7 @@ $IPATH = $_SERVER['DOCUMENT_ROOT'] . '/src/Screens/';
                     <span>
                         <i class="ph ph-magnifying-glass"></i>
                         <select name="searchOption" id="searchOption">
-                            <option value="">What do wanna get better at?</option>
+                            <option value="">What do you wanna get better at?</option>
                             <option value="">&#128187; Programming</option>
                             <option value="">&#127757; Physics</option>
                             <option value="">&#128176; Finances and Trading</option>
