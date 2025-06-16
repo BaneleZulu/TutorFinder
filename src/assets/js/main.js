@@ -96,3 +96,26 @@ function openOverlay(overlay) {
 function closeOverlay(overlay) {
   document.querySelector(overlay).style.display = "none";
 }
+
+const signupOverlay = document.getElementById("signupOverlay");
+const signinOverlay = document.getElementById("loginOverlay");
+const registerOverlay = document.getElementById("registrationOverlay");
+
+document.getElementById("loginBtnOvl").addEventListener("click", () => {
+  signinOverlay.style.display = "flex";
+  signupOverlay.style.display = "none";
+  registerOverlay.style.display = "none";
+});
+
+document.getElementById("signupBtnOvl").addEventListener("click", () => {
+  signupOverlay.style.display = "flex";
+  signinOverlay.style.display = "none";
+  registerOverlay.style.display = "none";
+});
+
+//? REGISTRATION PROCESS OVERLAY
+document.getElementById("registerBtn").addEventListener("click", (event) => {
+  event.preventDefault();
+  registerOverlay.style.display = "flex";
+  signupOverlay.style.display = "none";
+});

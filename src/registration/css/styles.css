@@ -1,0 +1,107 @@
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 2px solid;
+  margin-bottom: 20px;
+  color: var(--clr-text);
+
+  div {
+    color: var(--clr-text);
+  }
+}
+
+.progress-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.progress-step.active .step-circle {
+  background: var(--clr-primary);
+  border: 1px solid var(--clr-primary);
+  color: var(--clr-text);
+}
+
+.step-circle {
+  width: 30px;
+  height: 30px;
+  background: var(--clr-card-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 5px;
+  transition: background 0.3s ease;
+}
+
+.step-line {
+  height: 2px;
+  background: var(--clr-secondary);
+  color: var(--clr-secondary);
+  position: absolute;
+  top: 14px;
+  width: 100%;
+  z-index: -1;
+}
+
+.step-line.active {
+  background: var(--clr-primary);
+}
+
+/* FORM */
+#registrationOverlay .overlay-content {
+  margin-top: 5rem;
+}
+
+#registrationOverlay .form-section {
+  min-width: 60dvw;
+}
+
+form#registrationForm .step {
+  width: 100%;
+
+  .form-data {
+    position: relative;
+  }
+}
+
+#registrationOverlay {
+  display: flex;
+}
+
+.radio-custom {
+  display: none;
+}
+
+.radio-custom + label {
+  padding: 8px 16px;
+  border: 2px solid var(--clr-heading-bg);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.radio-custom:checked + label {
+  border-color: var(--clr-heading-bg);
+  background: var(--clr-body-bg);
+}
+
+.error {
+  position: absolute;
+  top: 3.5rem;
+  left: 0.5rem;
+  color: #ef4444;
+  font-size: 0.875rem;
+}
+
+#video {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+#canvas {
+  display: none;
+}
