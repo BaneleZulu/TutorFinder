@@ -1,15 +1,16 @@
-import "/model/js/User";
-
+import User from "../../../model/js/User.js";
+console.log("user obj", User); // Should log the User class
+const user = new User(
+  localStorage.getItem("userType")?.toLowerCase() || "mentor"
+);
 document.addEventListener("DOMContentLoaded", () => {
-  const User = new User();
-
   const formData = {
-    email: "", // Re-added email to store from signupOverlay
+    email: "test@mail.com", // Re-added email to store from signupOverlay
     fullname: "",
     dob: "",
     phone: "",
     password: "",
-    userType: "",
+    userType: "mentor",
     educationLevel: "",
     tertiaryEducation: "",
     learningGoals: "",
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Show/hide overlays
-  function closeOverlay(selector) {
+  function closeOverlayStep(selector) {
     document.querySelector(selector).classList.remove("active");
   }
 
@@ -47,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateProgressBar() {
     const steps = document.querySelectorAll(".progress-step");
     steps.forEach((step) => {
-      const stepType = step.getAttribute("data-type") || "";
+      const stepType = localStorage.getItem("userType") || "";
       step.style.display =
         stepType === "" || stepType === formData.userType.toLowerCase()
           ? "block"
@@ -180,15 +181,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // If valid, add success styling and store data
       if (isValid) {
-        [
-          fullnameInput,
-          dobInput,
-          phoneInput,
-          passwordInput,
-          confirmPasswordInput,
-        ].forEach((input) => {
-          input.classList.add("success");
-        });
+        [, dobInput, phoneInput, passwordInput, confirmPasswordInput].forEach(
+          (input) => {
+            input.classList.add("success");
+          }
+        );
 
         formData.fullname = fullname;
         formData.dob = dob;
@@ -351,8 +348,15 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("next1").addEventListener("click", () => {
     if (validateStep(1)) {
       currentStep = 2;
-      console.log("Moving to step", currentStep);
-      showStep(2);
+      const loadingSpinner = document.getElementById("loadingSpinnerStep1");
+      // Show loading spinner
+      loadingSpinner.style.display = "inline-block";
+
+      // Simulate async operation (e.g., API call or transition delay)
+      setTimeout(() => {
+        showStep(2);
+        loadingSpinner.style.display = "none";
+      }, 3000); // Simulate delay for UX
     } else {
       console.log("Validation failed for step 1");
     }
@@ -367,7 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (validateStep(2)) {
       console.log("Mentee Registration:", formData);
       alert("Registration submitted successfully!");
-      closeOverlay("#registrationOverlay");
+      closeOverlayStep("#registrationOverlay");
     }
   });
 
@@ -422,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("finishMentor").addEventListener("click", () => {
     console.log("Mentor Registration:", formData);
     alert("Mentor application submitted! It is now pending review.");
-    closeOverlay("#registrationOverlay");
+    closeOverlayStep("#registrationOverlay");
   });
 
   // Show signup overlay on page load

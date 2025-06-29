@@ -64,7 +64,9 @@
                         <p id="confirmPasswordError"></p>
                     </div>
                     <div class="flex justify-end gap-4 pr-4">
-                        <button type="button" id="next1" class="p-2 rounded hover:bg-[#f84650]">Save & Continue</button>
+                        <button type="button" id="next1" class="p-2 rounded hover:bg-[#f84650]">Save & Continue
+                            <span class="loading" id="loadingSpinnerStep1" style="display: none;"></span>
+                        </button>
                     </div>
                 </div>
                 <!-- Mentee Step 2: Education Info -->
@@ -162,3 +164,5 @@
         </div>
     </div>
 </div>
+
+<script type="module" src="/src/registration/js/app.js"></script>

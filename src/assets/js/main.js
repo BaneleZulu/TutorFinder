@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         openOverlay(userSelectOverlay);
         closeOverlay(signupOverlay);
       }, 3000); // Simulate delay for UX
+   
     });
 });
 
@@ -172,7 +173,7 @@ document
 
     if (userTypeInput) {
       const userType = userTypeInput.value;
-      console.log("Type:", userType);
+      localStorage.setItem("userType", userType.toUpperCase());
 
       // Store type or pass it to your registration flow here
       closeOverlay(userSelectOverlay);

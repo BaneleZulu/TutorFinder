@@ -1,4 +1,4 @@
-class User {
+export default class User {
   constructor(userType) {
     this.userType = userType; // "mentor" or "mentee"
     this.userData = {};
@@ -39,12 +39,10 @@ class User {
     el.classList.add("hidden");
   }
 
-  // 🧩 Set data
   setField(field, value) {
     this.userData[field] = value;
   }
 
-  // 🔁 CRUD-style Methods
   createUser() {
     console.log(`✅ Creating ${this.userType}`, this.userData);
     // Hook to AJAX / fetch logic here
@@ -62,7 +60,6 @@ class User {
     this.userData = {};
   }
 
-  // 🚦 Step 1: Form Handling Utility
   collectBasicInfo() {
     const fullname = document.getElementById("fullname").value.trim();
     const dob = document.getElementById("dob").value;

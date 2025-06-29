@@ -458,6 +458,7 @@ input:invalid:not(:placeholder-shown) {
 
 input:valid:not(:placeholder-shown) {
   background-image: url(/resources/others/checked_green.png);
+  border: 1px solid rgb(70, 236, 87) !important;
 }
 
 input:invalid:not(:placeholder-shown),
@@ -679,16 +680,12 @@ input.success:focus {
 
 /* Error message styles */
 .error-message {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 0.25rem;
   color: #ef4444;
   opacity: 0;
   transform: translateY(-10px);
   transition: all 0.2s ease-in-out;
   pointer-events: none;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .error-message.show {
@@ -698,10 +695,6 @@ input.success:focus {
 
 /* Success message */
 .success-message {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 0.25rem;
   color: #10b981;
   font-size: 0.8rem;
   opacity: 0;
