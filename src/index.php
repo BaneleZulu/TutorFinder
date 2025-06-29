@@ -467,6 +467,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/src/registration/registration.php';
 
     </div>
 
+    <!-- <script src="/src/registration/js/register_validation.js"></script> -->
     <script src="/src/assets/js/app.js"></script>
     <script src="/src/assets/js/main.js"></script>
     <script src="/src/assets/js/theme.js"></script>

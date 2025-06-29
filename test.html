@@ -1,714 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TutorFinder Registration</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Email Validation</title>
     <style>
-        .overlay {
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-        }
-
-        .overlay.active {
-            display: flex;
-        }
-
-        .progress-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 2px solid;
-            margin-bottom: 20px;
-        }
-
-        .progress-step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-        }
-
-        .progress-step.active .step-circle {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .step-circle {
-            width: 30px;
-            height: 30px;
-            background: #e5e7eb;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 5px;
-            transition: background 0.3s ease;
-        }
-
-        .step-line {
-            height: 2px;
-            background: #e5e7eb;
-            position: absolute;
-            top: 14px;
-            width: 100%;
-            z-index: -1;
-        }
-
-        .step-line.active {
-            background: #3b82f6;
-        }
-
-        .form-section {
-            background: #374151;
+        body {
+            font-family: Arial, sans-serif;
             padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
             border-radius: 8px;
-            max-width: 600px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-data {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        input[type="email"] {
             width: 100%;
-        }
-
-        .radio-custom {
-            display: none;
-        }
-
-        .radio-custom+label {
-            padding: 8px 16px;
+            padding: 0.75rem;
             border: 2px solid #d1d5db;
-            border-radius: 4px;
-            cursor: pointer;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+            box-sizing: border-box;
         }
 
-        .radio-custom:checked+label {
+        input[type="email"]:focus {
+            outline: none;
             border-color: #3b82f6;
-            background: #dbeafe;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        .error {
+        /* Input states */
+        input.error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        input.success {
+            border-color: #10b981;
+            background-color: #f0fdf4;
+        }
+
+        input.error:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        input.success:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        /* Error message styles */
+        .error-message {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 0.25rem;
             color: #ef4444;
             font-size: 0.875rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.2s ease-in-out;
+            pointer-events: none;
         }
 
-        #video {
+        .error-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Success message */
+        .success-message {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 0.25rem;
+            color: #10b981;
+            font-size: 0.875rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Button styles */
+        .submit-btn {
             width: 100%;
-            max-width: 300px;
-            border-radius: 4px;
-            margin-bottom: 10px;
+            padding: 0.75rem;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            margin-top: 1rem;
         }
 
-        #canvas {
-            display: none;
+        .submit-btn:hover:not(:disabled) {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Icons */
+        .input-icon {
+            position: absolute;
+            right: 0.75rem;
+            top: 2.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .input-icon.show {
+            opacity: 1;
+        }
+
+        .error-icon {
+            color: #ef4444;
+        }
+
+        .success-icon {
+            color: #10b981;
+        }
+
+        /* Loading state */
+        .loading {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div id="registrationOverlay" class="overlay fixed inset-0 justify-center items-center">
-        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl">
-            <div class="progress-bar">
-                <div class="progress-step" data-step="1">
-                    <div class="step-circle">1</div>
-                    <div>Email</div>
-                    <div class="step-line active"></div>
-                </div>
-                <div class="progress-step" data-step="2">
-                    <div class="step-circle">2</div>
-                    <div>Basic Info</div>
-                    <div class="step-line"></div>
-                </div>
-                <div class="progress-step" data-step="3">
-                    <div class="step-circle">3</div>
-                    <div>User Details</div>
-                    <div class="step-line"></div>
-                </div>
-                <div class="progress-step" data-step="4" data-type="mentee">
-                    <div class="step-circle">4</div>
-                    <div>Education (Mentee)</div>
-                    <div class="step-line"></div>
-                </div>
-                <div class="progress-step" data-step="4" data-type="mentor">
-                    <div class="step-circle">4</div>
-                    <div>Teaching Info (Mentor)</div>
-                    <div class="step-line"></div>
-                </div>
-                <div class="progress-step" data-step="5" data-type="mentor">
-                    <div class="step-circle">5</div>
-                    <div>Selfie (Mentor)</div>
-                    <div class="step-line"></div>
-                </div>
-                <div class="progress-step" data-step="6" data-type="mentor">
-                    <div class="step-circle">6</div>
-                    <div>Documents (Mentor)</div>
-                    <div class="step-line"></div>
-                </div>
+<body>
+    <div class="form-container">
+        <h2>Email Validation Demo</h2>
+        <form id="emailForm">
+            <div class="form-data">
+                <label for="signupEmail">Email Address</label>
+                <input type="email" name="email" id="signupEmail" placeholder="your@email.com" required>
+                
+                <!-- Icons -->
+                <div class="input-icon error-icon" id="errorIcon">✕</div>
+                <div class="input-icon success-icon" id="successIcon">✓</div>
+                
+                <!-- Messages -->
+                <div class="error-message" id="signupEmailError">Invalid email format</div>
+                <div class="success-message" id="signupEmailSuccess">Valid email address</div>
             </div>
-            <div class="form-section mt-6">
-                <h2 class="text-xl font-bold text-purple-600 mb-4">TutorFinder Registration</h2>
-                <form id="registrationForm">
-                    <!-- Step 1: Email Validation -->
-                    <div id="step1" class="step">
-                        <h3 class="text-lg font-semibold mb-4">Step 1: Verify Email</h3>
-                        <div class="mb-4">
-                            <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
-                            <input type="email" id="email" class="w-full p-2 border rounded bg-gray-700 text-white"
-                                required>
-                            <p id="emailError" class="error hidden"></p>
-                        </div>
-                        <div class="flex justify-end gap-4">
-                            <button type="button" id="next1"
-                                class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Save & Continue</button>
-                        </div>
-                    </div>
-                    <!-- Step 2: Basic Info -->
-                    <div id="step2" class="step hidden">
-                        <h3 class="text-lg font-semibold mb-4">Step 2: Basic Information</h3>
-                        <div class="mb-4">
-                            <label for="fullname" class="block text-sm font-medium text-gray-300">Full Name</label>
-                            <input type="text" id="fullname" class="w-full p-2 border rounded bg-gray-700 text-white"
-                                required>
-                            <p id="fullnameError" class="error hidden"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label for="dob" class="block text-sm font-medium text-gray-300">Date of Birth</label>
-                            <input type="date" id="dob" class="w-full p-2 border rounded bg-gray-700 text-white"
-                                required>
-                            <p id="dobError" class="error hidden"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label for="phone" class="block text-sm font-medium text-gray-300">Phone Number</label>
-                            <input type="tel" id="phone" class="w-full p-2 border rounded bg-gray-700 text-white"
-                                required>
-                            <p id="phoneError" class="error hidden"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
-                            <input type="password" id="password"
-                                class="w-full p-2 border rounded bg-gray-700 text-white" required>
-                            <p id="passwordError" class="error hidden"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label for="confirmPassword" class="block text-sm font-medium text-gray-300">Confirm
-                                Password</label>
-                            <input type="password" id="confirmPassword"
-                                class="w-full p-2 border rounded bg-gray-700 text-white" required>
-                            <p id="confirmPasswordError" class="error hidden"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-300 mb-2">User Type</label>
-                            <div class="flex gap-4">
-                                <input type="radio" id="mentee" name="userType" value="MENTEE" class="radio-custom"
-                                    required>
-                                <label for="mentee" class="text-sm text-white">Mentee</label>
-                                <input type="radio" id="mentor" name="userType" value="MENTOR" class="radio-custom">
-                                <label for="mentor" class="text-sm text-white">Mentor</label>
-                            </div>
-                            <p id="userTypeError" class="error hidden"></p>
-                        </div>
-                        <div class="flex justify-between">
-                            <button type="button" id="prev2"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">Previous</button>
-                            <button type="button" id="next2"
-                                class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Save & Continue</button>
-                        </div>
-                    </div>
-                    <!-- Mentee Step 3: Education Info -->
-                    <div id="menteeStep3" class="step hidden">
-                        <h3 class="text-lg font-semibold mb-4">Step 3: Education Information</h3>
-                        <div class="mb-4">
-                            <label for="educationLevel" class="block text-sm font-medium text-gray-300">Education
-                                Level</label>
-                            <select id="educationLevel" class="w-full p-2 border rounded bg-gray-700 text-white"
-                                required>
-                                <option value="">Select Education Level</option>
-                                <option value="High School">High School</option>
-                                <option value="Undergraduate">Undergraduate</option>
-                                <option value="Postgraduate">Postgraduate</option>
-                            </select>
-                            <p id="educationLevelError" class="error hidden"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label for="tertiaryEducation" class="block text-sm font-medium text-gray-300">Tertiary
-                                Education (Optional)</label>
-                            <input type="text" id="tertiaryEducation"
-                                class="w-full p-2 border rounded bg-gray-700 text-white">
-                        </div>
-                        <div class="mb-4">
-                            <label for="learningGoals" class="block text-sm font-medium text-gray-300">Learning
-                                Goals</label>
-                            <textarea id="learningGoals" class="w-full p-2 border rounded bg-gray-700 text-white"
-                                rows="4"></textarea>
-                            <p id="learningGoalsError" class="error hidden"></p>
-                        </div>
-                        <div class="flex justify-between">
-                            <button type="button" id="prev3Mentee"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">Previous</button>
-                            <button type="button" id="submitMentee"
-                                class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Save & Continue</button>
-                        </div>
-                    </div>
-                    <!-- Mentor Step 3: Teaching Info -->
-                    <div id="mentorStep3" class="step hidden">
-                        <h3 class="text-lg font-semibold mb-4">Step 3: Teaching Information</h3>
-                        <div class="mb-4">
-                            <label for="specialities" class="block text-sm font-medium text-gray-300">Specialities
-                                (comma-separated)</label>
-                            <input type="text" id="specialities"
-                                class="w-full p-2 border rounded bg-gray-700 text-white"
-                                placeholder="e.g., Math, Physics, Coding">
-                            <p id="specialitiesError" class="error hidden"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label for="experienceYears" class="block text-sm font-medium text-gray-300">Years of
-                                Experience</label>
-                            <input type="number" id="experienceYears"
-                                class="w-full p-2 border rounded bg-gray-700 text-white" min="0" required>
-                            <p id="experienceYearsError" class="error hidden"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label for="hourlyRate" class="block text-sm font-medium text-gray-300">Hourly Rate
-                                ($)</label>
-                            <input type="number" id="hourlyRate"
-                                class="w-full p-2 border rounded bg-gray-700 text-white" min="0" step="0.01" required>
-                            <p id="hourlyRateError" class="error hidden"></p>
-                        </div>
-                        <div class="flex justify-between">
-                            <button type="button" id="prev3Mentor"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">Previous</button>
-                            <button type="button" id="next3Mentor"
-                                class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Save & Continue</button>
-                        </div>
-                    </div>
-                    <!-- Mentor Step 4: Selfie Verification -->
-                    <div id="mentorStep4" class="step hidden">
-                        <h3 class="text-lg font-semibold mb-4">Step 4: Selfie Verification</h3>
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-300">Take Selfie with Front Camera</label>
-                            <video id="video" autoplay></video>
-                            <canvas id="canvas" width="300" height="300"></canvas>
-                            <button type="button" id="captureSelfie"
-                                class="mt-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Capture
-                                Selfie</button>
-                            <p id="selfieError" class="error hidden"></p>
-                        </div>
-                        <div class="flex justify-between">
-                            <button type="button" id="prev4Mentor"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">Previous</button>
-                            <button type="button" id="next4Mentor"
-                                class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Save & Continue</button>
-                        </div>
-                    </div>
-                    <!-- Mentor Step 5: Document Verification -->
-                    <div id="mentorStep5" class="step hidden">
-                        <h3 class="text-lg font-semibold mb-4">Step 5: Document Verification</h3>
-                        <div class="mb-4">
-                            <label for="idDocument" class="block text-sm font-medium text-gray-300">ID Document</label>
-                            <input type="file" id="idDocument" class="w-full p-2 border rounded bg-gray-700 text-white"
-                                accept=".pdf,.jpg,.png" required>
-                            <p id="idDocumentError" class="error hidden"></p>
-                        </div>
-                        <div class="mb-4">
-                            <label for="certificate" class="block text-sm font-medium text-gray-300">Certificate
-                                (Optional)</label>
-                            <input type="file" id="certificate" class="w-full p-2 border rounded bg-gray-700 text-white"
-                                accept=".pdf,.jpg,.png">
-                        </div>
-                        <div class="flex justify-between">
-                            <button type="button" id="prev5Mentor"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">Previous</button>
-                            <button type="button" id="submitMentor"
-                                class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Save & Continue</button>
-                        </div>
-                    </div>
-                    <!-- Mentor Final Step: Confirmation -->
-                    <div id="mentorFinal" class="step hidden">
-                        <h3 class="text-lg font-semibold mb-4">Application Pending</h3>
-                        <div id="confirmationDetails" class="mb-4 text-gray-300"></div>
-                        <div class="flex justify-between">
-                            <button type="button" id="prev6Mentor"
-                                class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">Previous</button>
-                            <button type="button" id="finishMentor"
-                                class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Finish</button>
-                        </div>
-                    </div>
-                </form>
-                <div class="flex justify-between mt-4">
-                    <button type="button" id="requestCall"
-                        class="bg-gray-500 text-white p-2 rounded hover:bg-gray-600">Request Call</button>
-                </div>
-            </div>
-        </div>
+            
+            <button type="submit" class="submit-btn" id="signupRegisterBtn">
+                <span id="buttonText">Sign Up</span>
+                <span class="loading" id="loadingSpinner" style="display: none;"></span>
+            </button>
+        </form>
     </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const formData = {
-                email: '',
-                fullname: '',
-                dob: '',
-                phone: '',
-                password: '',
-                userType: '',
-                educationLevel: '',
-                tertiaryEducation: '',
-                learningGoals: '',
-                specialities: '',
-                experienceYears: '',
-                hourlyRate: '',
-                selfie: null,
-                idDocument: null,
-                certificate: null
-            };
+        // Enhanced email validation with visual feedback
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailInput = document.getElementById('signupEmail');
+            const errorMessage = document.getElementById('signupEmailError');
+            const successMessage = document.getElementById('signupEmailSuccess');
+            const errorIcon = document.getElementById('errorIcon');
+            const successIcon = document.getElementById('successIcon');
+            const submitBtn = document.getElementById('signupRegisterBtn');
+            const buttonText = document.getElementById('buttonText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
 
-            let currentStep = 1;
-            const totalMenteeSteps = 3;
-            const totalMentorSteps = 6;
-            let stream;
-
-            function updateProgressBar() {
-                const steps = document.querySelectorAll('.progress-step');
-                steps.forEach((step, index) => {
-                    const stepNum = parseInt(step.getAttribute('data-step'));
-                    const stepType = step.getAttribute('data-type') || '';
-                    const circle = step.querySelector('.step-circle');
-                    const line = step.querySelector('.step-line');
-                    if ((formData.userType === 'MENTEE' && stepType === 'mentor') || (formData.userType === 'MENTOR' && stepType === 'mentee')) {
-                        circle.style.background = '#e5e7eb';
-                        line.style.background = '#e5e7eb';
-                        return;
-                    }
-                    if (stepNum < currentStep || (currentStep === totalMenteeSteps && formData.userType === 'MENTEE') || (currentStep === totalMentorSteps && formData.userType === 'MENTOR')) {
-                        circle.classList.add('active');
-                        line.classList.add('active');
-                    } else {
-                        circle.classList.remove('active');
-                        line.classList.remove('active');
-                    }
-                });
-            }
-
-            function showStep(step) {
-                document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
-                if (step === 1) {
-                    document.getElementById('step1').classList.remove('hidden');
-                } else if (step === 2) {
-                    document.getElementById('step2').classList.remove('hidden');
-                } else if (step === 3) {
-                    if (formData.userType === 'MENTEE') {
-                        document.getElementById('menteeStep3').classList.remove('hidden');
-                    } else if (formData.userType === 'MENTOR') {
-                        document.getElementById('mentorStep3').classList.remove('hidden');
-                    }
-                } else if (step === 4 && formData.userType === 'MENTOR') {
-                    document.getElementById('mentorStep4').classList.remove('hidden');
-                    initializeCamera();
-                } else if (step === 5 && formData.userType === 'MENTOR') {
-                    document.getElementById('mentorStep5').classList.remove('hidden');
-                } else if (step === 6 && formData.userType === 'MENTOR') {
-                    document.getElementById('mentorFinal').classList.remove('hidden');
-                }
-                updateProgressBar();
-            }
-
+            // Email validation function
             function validateEmail(email) {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
+                const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return pattern.test(email.trim());
             }
 
-            function validatePhone(phone) {
-                const re = /^\+?\d{10,15}$/;
-                return re.test(phone);
+            // Clear all states
+            function clearValidationStates() {
+                emailInput.classList.remove('error', 'success');
+                errorMessage.classList.remove('show');
+                successMessage.classList.remove('show');
+                errorIcon.classList.remove('show');
+                successIcon.classList.remove('show');
             }
 
-            function validatePassword(password) {
-                return password.length >= 8;
+            // Show error state
+            function showError(message = 'Invalid email format') {
+                clearValidationStates();
+                emailInput.classList.add('error');
+                errorMessage.textContent = message;
+                errorMessage.classList.add('show');
+                errorIcon.classList.add('show');
+                submitBtn.disabled = true;
             }
 
-            function validateStep(step) {
-                let isValid = true;
-                if (step === 1) {
-                    const email = document.getElementById('email').value;
-                    const emailError = document.getElementById('emailError');
-                    if (!validateEmail(email)) {
-                        emailError.textContent = 'Please enter a valid email';
-                        emailError.classList.remove('hidden');
-                        isValid = false;
-                    } else {
-                        emailError.classList.add('hidden');
-                        formData.email = email;
-                    }
-                } else if (step === 2) {
-                    const fullname = document.getElementById('fullname').value;
-                    const dob = document.getElementById('dob').value;
-                    const phone = document.getElementById('phone').value;
-                    const password = document.getElementById('password').value;
-                    const confirmPassword = document.getElementById('confirmPassword').value;
-                    const userType = document.querySelector('input[name="userType"]:checked')?.value;
-
-                    document.getElementById('fullnameError').classList.add('hidden');
-                    document.getElementById('dobError').classList.add('hidden');
-                    document.getElementById('phoneError').classList.add('hidden');
-                    document.getElementById('passwordError').classList.add('hidden');
-                    document.getElementById('confirmPasswordError').classList.add('hidden');
-                    document.getElementById('userTypeError').classList.add('hidden');
-
-                    if (!fullname) {
-                        document.getElementById('fullnameError').textContent = 'Full name is required';
-                        document.getElementById('fullnameError').classList.remove('hidden');
-                        isValid = false;
-                    }
-                    if (!dob) {
-                        document.getElementById('dobError').textContent = 'Date of birth is required';
-                        document.getElementById('dobError').classList.remove('hidden');
-                        isValid = false;
-                    }
-                    if (!validatePhone(phone)) {
-                        document.getElementById('phoneError').textContent = 'Please enter a valid phone number';
-                        document.getElementById('phoneError').classList.remove('hidden');
-                        isValid = false;
-                    }
-                    if (!validatePassword(password)) {
-                        document.getElementById('passwordError').textContent = 'Password must be at least 8 characters';
-                        document.getElementById('passwordError').classList.remove('hidden');
-                        isValid = false;
-                    }
-                    if (password !== confirmPassword) {
-                        document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
-                        document.getElementById('confirmPasswordError').classList.remove('hidden');
-                        isValid = false;
-                    }
-                    if (!userType) {
-                        document.getElementById('userTypeError').textContent = 'Please select a user type';
-                        document.getElementById('userTypeError').classList.remove('hidden');
-                        isValid = false;
-                    }
-
-                    if (isValid) {
-                        formData.fullname = fullname;
-                        formData.dob = dob;
-                        formData.phone = phone;
-                        formData.password = password;
-                        formData.userType = userType;
-                    }
-                } else if (step === 3 && formData.userType === 'MENTEE') {
-                    const educationLevel = document.getElementById('educationLevel').value;
-                    const learningGoals = document.getElementById('learningGoals').value;
-
-                    document.getElementById('educationLevelError').classList.add('hidden');
-                    document.getElementById('learningGoalsError').classList.add('hidden');
-
-                    if (!educationLevel) {
-                        document.getElementById('educationLevelError').textContent = 'Education level is required';
-                        document.getElementById('educationLevelError').classList.remove('hidden');
-                        isValid = false;
-                    }
-                    if (!learningGoals) {
-                        document.getElementById('learningGoalsError').textContent = 'Learning goals are required';
-                        document.getElementById('learningGoalsError').classList.remove('hidden');
-                        isValid = false;
-                    }
-
-                    if (isValid) {
-                        formData.educationLevel = educationLevel;
-                        formData.tertiaryEducation = document.getElementById('tertiaryEducation').value;
-                        formData.learningGoals = learningGoals;
-                    }
-                } else if (step === 3 && formData.userType === 'MENTOR') {
-                    const specialities = document.getElementById('specialities').value;
-                    const experienceYears = document.getElementById('experienceYears').value;
-                    const hourlyRate = document.getElementById('hourlyRate').value;
-
-                    document.getElementById('specialitiesError').classList.add('hidden');
-                    document.getElementById('experienceYearsError').classList.add('hidden');
-                    document.getElementById('hourlyRateError').classList.add('hidden');
-
-                    if (!specialities) {
-                        document.getElementById('specialitiesError').textContent = 'Specialities are required';
-                        document.getElementById('specialitiesError').classList.remove('hidden');
-                        isValid = false;
-                    }
-                    if (!experienceYears || experienceYears < 0) {
-                        document.getElementById('experienceYearsError').textContent = 'Valid years of experience required';
-                        document.getElementById('experienceYearsError').classList.remove('hidden');
-                        isValid = false;
-                    }
-                    if (!hourlyRate || hourlyRate < 0) {
-                        document.getElementById('hourlyRateError').textContent = 'Valid hourly rate required';
-                        document.getElementById('hourlyRateError').classList.remove('hidden');
-                        isValid = false;
-                    }
-
-                    if (isValid) {
-                        formData.specialities = specialities;
-                        formData.experienceYears = experienceYears;
-                        formData.hourlyRate = hourlyRate;
-                    }
-                } else if (step === 4 && formData.userType === 'MENTOR') {
-                    if (!formData.selfie) {
-                        document.getElementById('selfieError').textContent = 'Please capture a selfie';
-                        document.getElementById('selfieError').classList.remove('hidden');
-                        isValid = false;
-                    } else {
-                        document.getElementById('selfieError').classList.add('hidden');
-                    }
-                } else if (step === 5 && formData.userType === 'MENTOR') {
-                    const idDocument = document.getElementById('idDocument').files[0];
-                    if (!idDocument) {
-                        document.getElementById('idDocumentError').textContent = 'ID document is required';
-                        document.getElementById('idDocumentError').classList.remove('hidden');
-                        isValid = false;
-                    } else {
-                        document.getElementById('idDocumentError').classList.add('hidden');
-                        formData.idDocument = idDocument;
-                        formData.certificate = document.getElementById('certificate').files[0];
-                    }
-                }
-                return isValid;
+            // Show success state
+            function showSuccess(message = 'Valid email address') {
+                clearValidationStates();
+                emailInput.classList.add('success');
+                successMessage.textContent = message;
+                successMessage.classList.add('show');
+                successIcon.classList.add('show');
+                submitBtn.disabled = false;
             }
 
-            function displayConfirmation() {
-                const details = `
-                    <p><strong>Email:</strong> ${formData.email}</p>
-                    <p><strong>Full Name:</strong> ${formData.fullname}</p>
-                    <p><strong>Date of Birth:</strong> ${formData.dob}</p>
-                    <p><strong>Phone:</strong> ${formData.phone}</p>
-                    <p><strong>User Type:</strong> ${formData.userType}</p>
-                    ${formData.userType === 'MENTEE' ? `
-                        <p><strong>Education Level:</strong> ${formData.educationLevel}</p>
-                        <p><strong>Tertiary Education:</strong> ${formData.tertiaryEducation || 'N/A'}</p>
-                        <p><strong>Learning Goals:</strong> ${formData.learningGoals}</p>
-                    ` : `
-                        <p><strong>Specialities:</strong> ${formData.specialities}</p>
-                        <p><strong>Experience Years:</strong> ${formData.experienceYears}</p>
-                        <p><strong>Hourly Rate:</strong> $${formData.hourlyRate}</p>
-                        <p><strong>Selfie:</strong> Captured</p>
-                        <p><strong>ID Document:</strong> ${formData.idDocument ? formData.idDocument.name : 'N/A'}</p>
-                        <p><strong>Certificate:</strong> ${formData.certificate ? formData.certificate.name : 'N/A'}</p>
-                    `}
-                `;
-                document.getElementById('confirmationDetails').innerHTML = details;
-            }
-
-            async function initializeCamera() {
-                const video = document.getElementById('video');
-                const canvas = document.getElementById('canvas');
-                try {
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode: 'user' } // Use front camera
-                    });
-                    video.srcObject = stream;
-                } catch (err) {
-                    document.getElementById('selfieError').textContent = 'Unable to access camera: ' + err.message;
-                    document.getElementById('selfieError').classList.remove('hidden');
+            // Real-time validation on input
+            emailInput.addEventListener('input', function() {
+                const email = this.value.trim();
+                
+                if (email === '') {
+                    clearValidationStates();
+                    submitBtn.disabled = true;
+                    return;
                 }
-            }
 
-            document.getElementById('captureSelfie').addEventListener('click', () => {
-                const video = document.getElementById('video');
-                const canvas = document.getElementById('canvas');
-                const context = canvas.getContext('2d');
-                context.drawImage(video, 0, 0, 300, 300);
-                formData.selfie = canvas.toDataURL('image/png');
-                document.getElementById('selfieError').classList.add('hidden');
-            });
-
-            document.getElementById('requestCall').addEventListener('click', () => {
-                alert('Request for a call has been sent!');
-            });
-
-            document.getElementById('next1').addEventListener('click', () => {
-                if (validateStep(1)) {
-                    currentStep = 2;
-                    showStep(2);
+                if (!validateEmail(email)) {
+                    showError('Please enter a valid email address');
+                } else {
+                    showSuccess('Looks good!');
                 }
             });
 
-            document.getElementById('prev2').addEventListener('click', () => {
-                currentStep = 1;
-                showStep(1);
-            });
-
-            document.getElementById('next2').addEventListener('click', () => {
-                if (validateStep(2)) {
-                    currentStep = 3;
-                    showStep(3);
+            // Validation on blur (when user leaves the field)
+            emailInput.addEventListener('blur', function() {
+                const email = this.value.trim();
+                
+                if (email === '') {
+                    showError('Email is required');
+                } else if (!validateEmail(email)) {
+                    showError('Please enter a valid email address');
                 }
             });
 
-            document.getElementById('prev3Mentee').addEventListener('click', () => {
-                currentStep = 2;
-                showStep(2);
-            });
-
-            document.getElementById('submitMentee').addEventListener('click', () => {
-                if (validateStep(3)) {
-                    console.log('Mentee Registration:', formData);
-                    alert('Registration submitted successfully!');
-                    document.getElementById('registrationOverlay').classList.remove('active');
+            // Form submission
+            document.getElementById('signupRegisterBtn').addEventListener('click', function(event) {
+                event.preventDefault();
+                
+                const email = emailInput.value.trim();
+                
+                // Final validation
+                if (!email) {
+                    showError('Email is required');
+                    emailInput.focus();
+                    return;
                 }
-            });
-
-            document.getElementById('prev3Mentor').addEventListener('click', () => {
-                currentStep = 2;
-                showStep(2);
-            });
-
-            document.getElementById('next3Mentor').addEventListener('click', () => {
-                if (validateStep(3)) {
-                    currentStep = 4;
-                    showStep(4);
+                
+                if (!validateEmail(email)) {
+                    showError('Please enter a valid email address');
+                    emailInput.focus();
+                    return;
                 }
+
+                // Show loading state
+                buttonText.style.display = 'none';
+                loadingSpinner.style.display = 'inline-block';
+                submitBtn.disabled = true;
+
+                // Simulate API call
+                setTimeout(() => {
+                    // Reset button state
+                    buttonText.style.display = 'inline';
+                    loadingSpinner.style.display = 'none';
+                    submitBtn.disabled = false;
+                    
+                    // Success actions (replace with your actual code)
+                    console.log('Email validated:', email);
+                    showSuccess('Registration successful!');
+                    
+                    // Your actual code would go here:
+                    // localStorage.setItem("email", email);
+                    // closeOverlay(signupOverlay);
+                    // openOverlay(userSelectOverlay);
+                }, 1500);
             });
 
-            document.getElementById('prev4Mentor').addEventListener('click', () => {
-                if (stream) {
-                    stream.getTracks().forEach(track => track.stop());
-                }
-                currentStep = 3;
-                showStep(3);
-            });
-
-            document.getElementById('next4Mentor').addEventListener('click', () => {
-                if (validateStep(4)) {
-                    if (stream) {
-                        stream.getTracks().forEach(track => track.stop());
-                    }
-                    currentStep = 5;
-                    showStep(5);
-                }
-            });
-
-            document.getElementById('prev5Mentor').addEventListener('click', () => {
-                currentStep = 4;
-                showStep(4);
-                initializeCamera();
-            });
-
-            document.getElementById('submitMentor').addEventListener('click', () => {
-                if (validateStep(5)) {
-                    currentStep = 6;
-                    displayConfirmation();
-                    showStep(6);
-                }
-            });
-
-            document.getElementById('prev6Mentor').addEventListener('click', () => {
-                currentStep = 5;
-                showStep(5);
-            });
-
-            document.getElementById('finishMentor').addEventListener('click', () => {
-                console.log('Mentor Registration:', formData);
-                alert('Mentor application submitted! It is now pending review.');
-                if (stream) {
-                    stream.getTracks().forEach(track => track.stop());
-                }
-                document.getElementById('registrationOverlay').classList.remove('active');
-            });
-
-            document.getElementById('registrationOverlay').classList.add('active');
-            showStep(1);
+            // Initial state
+            submitBtn.disabled = true;
         });
     </script>
 </body>
-
 </html>

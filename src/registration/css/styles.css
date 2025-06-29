@@ -2,9 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
   border-bottom: 2px solid;
-  margin-bottom: 20px;
   color: var(--clr-text);
 
   div {
@@ -37,7 +35,7 @@
 }
 
 .step-line {
-  height: 2px;
+  height: 1px;
   background: var(--clr-secondary);
   color: var(--clr-secondary);
   position: absolute;
@@ -52,15 +50,27 @@
 
 /* FORM */
 #registrationOverlay .overlay-content {
-  margin-top: 5rem;
+  /* margin-top: 5rem; */
+
+  .progress-bar,
+  .form-section {
+    margin: 0;
+  }
 }
 
 #registrationOverlay .form-section {
   min-width: 60dvw;
+  padding: 0;
+
+  .form-data {
+    margin-block: 2px;
+  }
 }
 
 form#registrationForm .step {
   width: 100%;
+  padding: 0;
+  margin: 0;
 
   .form-data {
     position: relative;
@@ -68,6 +78,11 @@ form#registrationForm .step {
 }
 
 #registrationOverlay {
+  margin: auto;
+  /* display: flex; */
+}
+
+#userSelectOverlay {
   display: flex;
 }
 
@@ -85,14 +100,6 @@ form#registrationForm .step {
 .radio-custom:checked + label {
   border-color: var(--clr-heading-bg);
   background: var(--clr-body-bg);
-}
-
-.error {
-  position: absolute;
-  top: 3.5rem;
-  left: 0.5rem;
-  color: #ef4444;
-  font-size: 0.875rem;
 }
 
 #video {

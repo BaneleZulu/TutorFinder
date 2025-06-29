@@ -85,37 +85,99 @@ document.getElementById("cards").onmousemove = (e) => {
   }
 };
 
+const signupOverlay = document.getElementById("signupOverlay");
+const signinOverlay = document.getElementById("loginOverlay");
+const registerOverlay = document.getElementById("registrationOverlay");
+const userSelectOverlay = document.getElementById("userSelectOverlay");
 // ? RENDER SIGN IN OVERLAY
 // ? global overlay opener function.
 //? @{param} : overlay wrapper id or class to open.
 function openOverlay(overlay) {
-  document.querySelector(overlay).style.display = "flex";
+  const element =
+    typeof overlay === "string" ? document.querySelector(overlay) : overlay;
+  element.style.display = "flex";
 }
+
 // ? global overlay closer function.
 //? @{param} : overlay wrapper id or class to close.
 function closeOverlay(overlay) {
-  document.querySelector(overlay).style.display = "none";
+  const element =
+    typeof overlay === "string" ? document.querySelector(overlay) : overlay;
+  element.style.display = "none";
 }
 
-const signupOverlay = document.getElementById("signupOverlay");
-const signinOverlay = document.getElementById("loginOverlay");
-const registerOverlay = document.getElementById("registrationOverlay");
-
 document.getElementById("loginBtnOvl").addEventListener("click", () => {
-  signinOverlay.style.display = "flex";
-  signupOverlay.style.display = "none";
-  registerOverlay.style.display = "none";
+  closeOverlay(signupOverlay);
+  closeOverlay(registerOverlay);
+  openOverlay(signinOverlay);
 });
 
 document.getElementById("signupBtnOvl").addEventListener("click", () => {
-  signupOverlay.style.display = "flex";
-  signinOverlay.style.display = "none";
-  registerOverlay.style.display = "none";
+  closeOverlay(signinOverlay);
+  closeOverlay(registerOverlay);
+  openOverlay(signupOverlay);
 });
 
 //? REGISTRATION PROCESS OVERLAY
-document.getElementById("registerBtn").addEventListener("click", (event) => {
-  event.preventDefault();
-  registerOverlay.style.display = "flex";
-  signupOverlay.style.display = "none";
+document.addEventListener("DOMContentLoaded", () => {
+  document
+    .getElementById("signupRegisterBtn")
+    .addEventListener("click", (event) => {
+      event.preventDefault();
+      const message = document.getElementById("signupEmailMessage");
+      const emailInput = document.getElementById("signupEmail");
+      const email = emailInput.value;
+      const loadingSpinner = document.getElementById("loadingSpinner");
+
+      function validateEmail(email) {
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return pattern.test(email);
+      }
+
+      // Reset previous states
+      message.classList.remove("error-message", "success-message", "show");
+      emailInput.classList.remove("error", "success");
+
+      if (!validateEmail(email)) {
+        message.textContent = "Invalid email entered";
+        message.classList.add("error-message", "show");
+        emailInput.classList.add("error");
+        return;
+      }
+
+      // Show loading spinner
+      loadingSpinner.style.display = "inline-block";
+
+      // Simulate async operation (e.g., API call or transition delay)
+      setTimeout(() => {
+        message.classList.add("success-message", "show");
+        emailInput.classList.add("success");
+        localStorage.setItem("email", email); // Optional: Keep if needed for other logic
+        loadingSpinner.style.display = "none";
+        openOverlay(userSelectOverlay);
+        closeOverlay(signupOverlay);
+      }, 3000); // Simulate delay for UX
+    });
 });
+
+//? USER TYPE SELECT PROCESS OVERLAY
+document
+  .getElementById("userTypeSelectBtn")
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const userTypeInput = document.querySelector(
+      "input[name='userType_radio']:checked"
+    );
+
+    if (userTypeInput) {
+      const userType = userTypeInput.value;
+      console.log("Type:", userType);
+
+      // Store type or pass it to your registration flow here
+      closeOverlay(userSelectOverlay);
+      openOverlay(registerOverlay);
+    } else {
+      console.warn("Please select a user type.");
+    }
+  });

@@ -1,6 +1,10 @@
+import "/model/js/User";
+
 document.addEventListener("DOMContentLoaded", () => {
+  const User = new User();
+
   const formData = {
-    email: "",
+    email: "", // Re-added email to store from signupOverlay
     fullname: "",
     dob: "",
     phone: "",
@@ -17,31 +21,43 @@ document.addEventListener("DOMContentLoaded", () => {
     certificate: null,
   };
 
-  let currentStep = 2;
-  const totalMenteeSteps = 3;
-  const totalMentorSteps = 6;
+  let currentStep = 1; // Start at step 1 (Basic Info)
   let stream;
 
+  // Validation helper functions
+  function validatePhone(phone) {
+    const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+    return phoneRegex.test(phone.replace(/\s/g, ""));
+  }
+
+  function validatePassword(password) {
+    return password && password.length >= 8;
+  }
+
+  // Show/hide overlays
+  function closeOverlay(selector) {
+    document.querySelector(selector).classList.remove("active");
+  }
+
+  function showOverlay(selector) {
+    document.querySelector(selector).classList.add("active");
+  }
+
+  // Update progress bar based on user type
   function updateProgressBar() {
     const steps = document.querySelectorAll(".progress-step");
-    steps.forEach((step, index) => {
-      const stepNum = parseInt(step.getAttribute("data-step"));
+    steps.forEach((step) => {
       const stepType = step.getAttribute("data-type") || "";
+      step.style.display =
+        stepType === "" || stepType === formData.userType.toLowerCase()
+          ? "block"
+          : "none";
+
+      const stepNum = parseInt(step.getAttribute("data-step"));
       const circle = step.querySelector(".step-circle");
       const line = step.querySelector(".step-line");
-      if (
-        (formData.userType === "MENTEE" && stepType === "mentor") ||
-        (formData.userType === "MENTOR" && stepType === "mentee")
-      ) {
-        circle.style.background = "green";
-        line.style.background = "green";
-        return;
-      }
-      if (
-        stepNum < currentStep ||
-        (currentStep === totalMenteeSteps && formData.userType === "MENTEE") ||
-        (currentStep === totalMentorSteps && formData.userType === "MENTOR")
-      ) {
+
+      if (stepNum <= currentStep) {
         circle.classList.add("active");
         line.classList.add("active");
       } else {
@@ -51,109 +67,135 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Show the appropriate form step
   function showStep(step) {
     document
       .querySelectorAll(".step")
       .forEach((s) => s.classList.add("hidden"));
-    if (step === 2) {
-      document.getElementById("step2").classList.remove("hidden");
-    } else if (step === 3) {
+    if (step === 1) {
+      document.getElementById("step1").classList.remove("hidden");
+    } else if (step === 2) {
       if (formData.userType === "MENTEE") {
-        document.getElementById("menteeStep3").classList.remove("hidden");
+        document.getElementById("menteeStep2").classList.remove("hidden");
       } else if (formData.userType === "MENTOR") {
-        document.getElementById("mentorStep3").classList.remove("hidden");
+        document.getElementById("mentorStep2").classList.remove("hidden");
       }
+    } else if (step === 3 && formData.userType === "MENTOR") {
+      document.getElementById("mentorStep3").classList.remove("hidden");
+      initializeCamera();
     } else if (step === 4 && formData.userType === "MENTOR") {
       document.getElementById("mentorStep4").classList.remove("hidden");
-      initializeCamera();
     } else if (step === 5 && formData.userType === "MENTOR") {
-      document.getElementById("mentorStep5").classList.remove("hidden");
-    } else if (step === 6 && formData.userType === "MENTOR") {
       document.getElementById("mentorFinal").classList.remove("hidden");
     }
     updateProgressBar();
   }
 
-  function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  }
-
-  function validatePhone(phone) {
-    const re = /^\+?\d{10,15}$/;
-    return re.test(phone);
-  }
-
-  function validatePassword(password) {
-    return password.length >= 8;
-  }
-
   function validateStep(step) {
     let isValid = true;
-    if (step === 2) {
+
+    if (step === 1) {
       const fullname = document.getElementById("fullname").value;
       const dob = document.getElementById("dob").value;
       const phone = document.getElementById("phone").value;
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
-      const userType = document.querySelector(
-        'input[name="userType"]:checked'
-      )?.value;
 
-      document.getElementById("fullnameError").classList.add("hidden");
-      document.getElementById("dobError").classList.add("hidden");
-      document.getElementById("phoneError").classList.add("hidden");
-      document.getElementById("passwordError").classList.add("hidden");
-      document.getElementById("confirmPasswordError").classList.add("hidden");
-      document.getElementById("userTypeError").classList.add("hidden");
+      // Get error elements
+      const nameError = document.getElementById("fullnameError");
+      const dobError = document.getElementById("dobError");
+      const phoneError = document.getElementById("phoneError");
+      const passwordError = document.getElementById("passwordError");
+      const confirmError = document.getElementById("confirmPasswordError");
 
-      if (!fullname) {
-        document.getElementById("fullnameError").textContent =
-          "Full name is required";
-        document.getElementById("fullnameError").classList.remove("hidden");
+      // Get input elements
+      const fullnameInput = document.getElementById("fullname");
+      const dobInput = document.getElementById("dob");
+      const phoneInput = document.getElementById("phone");
+      const passwordInput = document.getElementById("password");
+      const confirmPasswordInput = document.getElementById("confirmPassword");
+
+      // Clear previous errors
+      nameError.classList.add("hidden");
+      dobError.classList.add("hidden");
+      phoneError.classList.add("hidden");
+      passwordError.classList.add("hidden");
+      confirmError.classList.add("hidden");
+
+      // Clear previous styling
+      [
+        fullnameInput,
+        dobInput,
+        phoneInput,
+        passwordInput,
+        confirmPasswordInput,
+      ].forEach((input) => {
+        input.classList.remove("error", "success");
+      });
+
+      // Validate fullname
+      if (!fullname || fullname.trim() === "") {
+        nameError.textContent = "Full name is required";
+        nameError.classList.remove("hidden");
+        nameError.classList.add("error-message", "show");
+        fullnameInput.classList.add("error");
         isValid = false;
       }
+
+      // Validate date of birth
       if (!dob) {
-        document.getElementById("dobError").textContent =
-          "Date of birth is required";
-        document.getElementById("dobError").classList.remove("hidden");
-        isValid = false;
-      }
-      if (!validatePhone(phone)) {
-        document.getElementById("phoneError").textContent =
-          "Please enter a valid phone number";
-        document.getElementById("phoneError").classList.remove("hidden");
-        isValid = false;
-      }
-      if (!validatePassword(password)) {
-        document.getElementById("passwordError").textContent =
-          "Password must be at least 8 characters";
-        document.getElementById("passwordError").classList.remove("hidden");
-        isValid = false;
-      }
-      if (password !== confirmPassword) {
-        document.getElementById("confirmPasswordError").textContent =
-          "Passwords do not match";
-        document
-          .getElementById("confirmPasswordError")
-          .classList.remove("hidden");
-        isValid = false;
-      }
-      if (!userType) {
-        document.getElementById("userTypeError").textContent =
-          "Please select a user type";
-        document.getElementById("userTypeError").classList.remove("hidden");
+        dobError.textContent = "Date of birth is required";
+        dobError.classList.remove("hidden");
+        dobError.classList.add("error-message", "show");
+        dobInput.classList.add("error");
         isValid = false;
       }
 
+      // Validate phone
+      if (!validatePhone(phone)) {
+        phoneError.textContent = "Please enter a valid phone number";
+        phoneError.classList.remove("hidden");
+        phoneError.classList.add("error-message", "show");
+        phoneInput.classList.add("error");
+        isValid = false;
+      }
+
+      // Validate password
+      if (!validatePassword(password)) {
+        passwordError.textContent = "Password must be at least 8 characters";
+        passwordError.classList.remove("hidden");
+        passwordError.classList.add("error-message", "show");
+        passwordInput.classList.add("error");
+        isValid = false;
+      }
+
+      // Validate password confirmation
+      if (password !== confirmPassword) {
+        confirmError.textContent = "Passwords do not match";
+        confirmError.classList.remove("hidden");
+        confirmError.classList.add("error-message", "show");
+        confirmPasswordInput.classList.add("error");
+        isValid = false;
+      }
+
+      // If valid, add success styling and store data
       if (isValid) {
+        [
+          fullnameInput,
+          dobInput,
+          phoneInput,
+          passwordInput,
+          confirmPasswordInput,
+        ].forEach((input) => {
+          input.classList.add("success");
+        });
+
         formData.fullname = fullname;
         formData.dob = dob;
         formData.phone = phone;
         formData.password = password;
-        formData.userType = userType;
       }
-    } else if (step === 3 && formData.userType === "MENTEE") {
+    } else if (step === 2 && formData.userType === "MENTEE") {
       const educationLevel = document.getElementById("educationLevel").value;
       const learningGoals = document.getElementById("learningGoals").value;
 
@@ -183,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("tertiaryEducation").value;
         formData.learningGoals = learningGoals;
       }
-    } else if (step === 3 && formData.userType === "MENTOR") {
+    } else if (step === 2 && formData.userType === "MENTOR") {
       const specialities = document.getElementById("specialities").value;
       const experienceYears = document.getElementById("experienceYears").value;
       const hourlyRate = document.getElementById("hourlyRate").value;
@@ -218,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.experienceYears = experienceYears;
         formData.hourlyRate = hourlyRate;
       }
-    } else if (step === 4 && formData.userType === "MENTOR") {
+    } else if (step === 3 && formData.userType === "MENTOR") {
       if (!formData.selfie) {
         document.getElementById("selfieError").textContent =
           "Please capture a selfie";
@@ -227,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         document.getElementById("selfieError").classList.add("hidden");
       }
-    } else if (step === 5 && formData.userType === "MENTOR") {
+    } else if (step === 4 && formData.userType === "MENTOR") {
       const idDocument = document.getElementById("idDocument").files[0];
       if (!idDocument) {
         document.getElementById("idDocumentError").textContent =
@@ -243,53 +285,49 @@ document.addEventListener("DOMContentLoaded", () => {
     return isValid;
   }
 
+  // Display confirmation details
   function displayConfirmation() {
     const details = `
-            <p><strong>Email:</strong> ${formData.email}</p>
-            <p><strong>Full Name:</strong> ${formData.fullname}</p>
-            <p><strong>Date of Birth:</strong> ${formData.dob}</p>
-            <p><strong>Phone:</strong> ${formData.phone}</p>
-            <p><strong>User Type:</strong> ${formData.userType}</p>
-            ${
-              formData.userType === "MENTEE"
-                ? `
-                <p><strong>Education Level:</strong> ${
-                  formData.educationLevel
-                }</p>
-                <p><strong>Tertiary Education:</strong> ${
-                  formData.tertiaryEducation || "N/A"
-                }</p>
-                <p><strong>Learning Goals:</strong> ${
-                  formData.learningGoals
-                }</p>
-            `
-                : `
-                <p><strong>Specialities:</strong> ${formData.specialities}</p>
-                <p><strong>Experience Years:</strong> ${
-                  formData.experienceYears
-                }</p>
-                <p><strong>Hourly Rate:</strong> $${formData.hourlyRate}</p>
-                <p><strong>Selfie:</strong> Captured</p>
-                <p><strong>ID Document:</strong> ${
-                  formData.idDocument ? formData.idDocument.name : "N/A"
-                }</p>
-                <p><strong>Certificate:</strong> ${
-                  formData.certificate ? formData.certificate.name : "N/A"
-                }</p>
-            `
-            }
-        `;
+      <p><strong>Email:</strong> ${formData.email}</p>
+      <p><strong>Full Name:</strong> ${formData.fullname}</p>
+      <p><strong>Date of Birth:</strong> ${formData.dob}</p>
+      <p><strong>Phone:</strong> ${formData.phone}</p>
+      <p><strong>User Type:</strong> ${formData.userType}</p>
+      ${
+        formData.userType === "MENTEE"
+          ? `
+            <p><strong>Education Level:</strong> ${formData.educationLevel}</p>
+            <p><strong>Tertiary Education:</strong> ${
+              formData.tertiaryEducation || "N/A"
+            }</p>
+            <p><strong>Learning Goals:</strong> ${formData.learningGoals}</p>
+          `
+          : `
+            <p><strong>Specialities:</strong> ${formData.specialities}</p>
+            <p><strong>Experience Years:</strong> ${
+              formData.experienceYears
+            }</p>
+            <p><strong>Hourly Rate:</strong> $${formData.hourlyRate}</p>
+            <p><strong>Selfie:</strong> Captured</p>
+            <p><strong>ID Document:</strong> ${
+              formData.idDocument ? formData.idDocument.name : "N/A"
+            }</p>
+            <p><strong>Certificate:</strong> ${
+              formData.certificate ? formData.certificate.name : "N/A"
+            }</p>
+          `
+      }
+    `;
     document.getElementById("confirmationDetails").innerHTML = details;
   }
 
+  // Initialize camera for selfie step
   async function initializeCamera() {
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");
     try {
       stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: "user",
-        }, // Use front camera
+        video: { facingMode: "user" },
       });
       video.srcObject = stream;
     } catch (err) {
@@ -299,6 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Handle selfie capture
   document.getElementById("captureSelfie").addEventListener("click", () => {
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");
@@ -308,57 +347,69 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("selfieError").classList.add("hidden");
   });
 
-  document.getElementById("prev2").addEventListener("click", () => {
+  // Step navigation
+  document.getElementById("next1").addEventListener("click", () => {
+    if (validateStep(1)) {
+      currentStep = 2;
+      console.log("Moving to step", currentStep);
+      showStep(2);
+    } else {
+      console.log("Validation failed for step 1");
+    }
+  });
+
+  document.getElementById("prev2Mentee").addEventListener("click", () => {
     currentStep = 1;
     showStep(1);
   });
 
-  document.getElementById("next2").addEventListener("click", () => {
+  document.getElementById("submitMentee").addEventListener("click", () => {
+    if (validateStep(2)) {
+      console.log("Mentee Registration:", formData);
+      alert("Registration submitted successfully!");
+      closeOverlay("#registrationOverlay");
+    }
+  });
+
+  document.getElementById("prev2Mentor").addEventListener("click", () => {
+    currentStep = 1;
+    showStep(1);
+  });
+
+  document.getElementById("next2Mentor").addEventListener("click", () => {
     if (validateStep(2)) {
       currentStep = 3;
       showStep(3);
     }
   });
 
-  document.getElementById("prev3Mentee").addEventListener("click", () => {
-    currentStep = 2;
-    showStep(2);
-  });
-
-  document.getElementById("submitMentee").addEventListener("click", () => {
-    if (validateStep(3)) {
-      console.log("Mentee Registration:", formData);
-      alert("Registration submitted successfully!");
-      document.getElementById("registrationOverlay").classList.remove("active");
-    }
-  });
-
   document.getElementById("prev3Mentor").addEventListener("click", () => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
     currentStep = 2;
     showStep(2);
   });
 
   document.getElementById("next3Mentor").addEventListener("click", () => {
     if (validateStep(3)) {
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
       currentStep = 4;
       showStep(4);
     }
   });
 
   document.getElementById("prev4Mentor").addEventListener("click", () => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-    }
     currentStep = 3;
     showStep(3);
   });
 
-  document.getElementById("next4Mentor").addEventListener("click", () => {
+  document.getElementById("submitMentor").addEventListener("click", () => {
     if (validateStep(4)) {
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-      }
       currentStep = 5;
+      displayConfirmation();
       showStep(5);
     }
   });
@@ -366,31 +417,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("prev5Mentor").addEventListener("click", () => {
     currentStep = 4;
     showStep(4);
-    initializeCamera();
-  });
-
-  document.getElementById("submitMentor").addEventListener("click", () => {
-    if (validateStep(5)) {
-      currentStep = 6;
-      displayConfirmation();
-      showStep(6);
-    }
-  });
-
-  document.getElementById("prev6Mentor").addEventListener("click", () => {
-    currentStep = 5;
-    showStep(5);
   });
 
   document.getElementById("finishMentor").addEventListener("click", () => {
     console.log("Mentor Registration:", formData);
     alert("Mentor application submitted! It is now pending review.");
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-    }
-    document.getElementById("registrationOverlay").classList.remove("active");
+    closeOverlay("#registrationOverlay");
   });
 
-  document.getElementById("registrationOverlay").classList.add("active");
-  showStep(2);
+  // Show signup overlay on page load
+  showOverlay("#signupOverlay");
 });
