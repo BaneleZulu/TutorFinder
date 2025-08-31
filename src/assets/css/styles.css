@@ -416,7 +416,7 @@ input[type="submit"]:active {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10000;
+  z-index: 100000;
   display: none;
   justify-content: center;
   align-items: center;
@@ -636,11 +636,12 @@ form .form-data label[for="phone"]:before {
   content: "+27";
   position: relative;
   z-index: 2;
-  top: 2.15rem;
+  top: 2rem;
   left: 1rem;
-  font-size: 0.9rem;
-  font-weight: 300;
+  font-size: 1rem;
+  font-weight: 400;
   color: #000;
+  border-right: 2px solid var(--clr-card-bg);
 }
 
 form .form-data input#phone {
@@ -651,6 +652,12 @@ form .form-data :is(select, textarea):is(:hover, :focus) {
   border-bottom: 0.1rem solid var(--clr-style-2);
 }
 
+textarea {
+  min-height: 10rem;
+  max-height: 30rem;
+  resize: vertical;
+}
+
 form .form-data label {
   width: 100%;
   font-family: var(--font-txt2);
@@ -659,11 +666,13 @@ form .form-data label {
 
 /* Input states */
 input.error {
+  color: red;
   border-color: #ef4444;
   background-color: #fef2f2;
 }
 
 input.success {
+  color: green;
   border-color: #10b981;
   background-color: #f0fdf4;
 }

@@ -1,0 +1,306 @@
+Array
+(
+    [win_enabled] => on
+    [prizes] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 1
+                    [name] => Grand Prize
+                    [description] => $500 Gift Card
+                    [color] => #8b5cf6
+                    [icon] => gem
+                )
+
+            [1] => Array
+                (
+                    [id] => 2
+                    [name] => Big Win
+                    [description] => $100 Cash
+                    [color] => #3b82f6
+                    [icon] => coins
+                )
+
+            [2] => Array
+                (
+                    [id] => 3
+                    [name] => Special Offer
+                    [description] => 50% Discount
+                    [color] => #10b981
+                    [icon] => gift
+                )
+
+            [3] => Array
+                (
+                    [id] => 4
+                    [name] => Consolation
+                    [description] => Free Shipping
+                    [color] => #f59e0b
+                    [icon] => smile
+                )
+
+            [4] => Array
+                (
+                    [id] => 5
+                    [name] => Lucky Draw
+                    [description] => Event Ticket
+                    [color] => #ec4899
+                    [icon] => ticket-alt
+                )
+
+            [5] => Array
+                (
+                    [id] => 6
+                    [name] => Bonus Prize
+                    [description] => Branded T-Shirt
+                    [color] => #ef4444
+                    [icon] => tshirt
+                )
+
+            [6] => Array
+                (
+                    [id] => 7
+                    [name] => Try Again
+                    [description] => Try Again
+                    [color] => #64748b
+                    [icon] => redo
+                )
+
+            [7] => Array
+                (
+                    [id] => 8
+                    [name] => Credit
+                    [description] => $10 Credit
+                    [color] => #14b8a6
+                    [icon] => credit-card
+                )
+
+            [8] => Array
+                (
+                    [id] => 0
+                    [name] => Test
+                    [description] => tst tsst
+                    [color] => #12222
+                    [icon] => 12345
+                )
+
+        )
+
+)
+Array
+(
+    [win_enabled] => on
+    [prizes] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 1
+                    [name] => Grand Prize
+                    [description] => $500 Gift Card
+                    [color] => #8b5cf6
+                    [icon] => gem
+                )
+
+            [1] => Array
+                (
+                    [id] => 2
+                    [name] => Big Win
+                    [description] => $100 Cash
+                    [color] => #3b82f6
+                    [icon] => coins
+                )
+
+            [2] => Array
+                (
+                    [id] => 3
+                    [name] => Special Offer
+                    [description] => 50% Discount
+                    [color] => #10b981
+                    [icon] => gift
+                )
+
+            [3] => Array
+                (
+                    [id] => 4
+                    [name] => Consolation
+                    [description] => Free Shipping
+                    [color] => #f59e0b
+                    [icon] => smile
+                )
+
+            [4] => Array
+                (
+                    [id] => 5
+                    [name] => Lucky Draw
+                    [description] => Event Ticket
+                    [color] => #ec4899
+                    [icon] => ticket-alt
+                )
+
+            [5] => Array
+                (
+                    [id] => 6
+                    [name] => Bonus Prize
+                    [description] => Branded T-Shirt
+                    [color] => #ef4444
+                    [icon] => tshirt
+                )
+
+            [6] => Array
+                (
+                    [id] => 7
+                    [name] => Try Again
+                    [description] => Try Again
+                    [color] => #64748b
+                    [icon] => redo
+                )
+
+            [7] => Array
+                (
+                    [id] => 8
+                    [name] => Credit
+                    [description] => $10 Credit
+                    [color] => #14b8a6
+                    [icon] => credit-card
+                )
+
+            [8] => Array
+                (
+                    [id] => 0
+                    [name] => Test
+                    [description] => tst tsst
+                    [color] => #12222
+                    [icon] => 12345
+                )
+
+        )
+
+)
+{
+    "win_enabled": "on",
+    "prizes": [
+        {
+            "id": "1",
+            "name": "Grand Prize",
+            "description": "$500 Gift Card",
+            "color": "#8b5cf6",
+            "icon": "gem"
+        },
+        {
+            "id": "2",
+            "name": "Big Win",
+            "description": "$100 Cash",
+            "color": "#3b82f6",
+            "icon": "coins"
+        },
+        {
+            "id": "3",
+            "name": "Special Offer",
+            "description": "50% Discount",
+            "color": "#10b981",
+            "icon": "gift"
+        },
+        {
+            "id": "4",
+            "name": "Consolation",
+            "description": "Free Shipping",
+            "color": "#f59e0b",
+            "icon": "smile"
+        },
+        {
+            "id": "5",
+            "name": "Lucky Draw",
+            "description": "Event Ticket",
+            "color": "#ec4899",
+            "icon": "ticket-alt"
+        },
+        {
+            "id": "6",
+            "name": "Bonus Prize",
+            "description": "Branded T-Shirt",
+            "color": "#ef4444",
+            "icon": "tshirt"
+        },
+        {
+            "id": "7",
+            "name": "Try Again",
+            "description": "Try Again",
+            "color": "#64748b",
+            "icon": "redo"
+        },
+        {
+            "id": "8",
+            "name": "Credit",
+            "description": "$10 Credit",
+            "color": "#14b8a6",
+            "icon": "credit-card"
+        }
+    ]
+}{
+    "win_enabled": "on",
+    "prizes": [
+        {
+            "id": "1",
+            "name": "Grand Prize",
+            "description": "$500 Gift Card",
+            "color": "#8b5cf6",
+            "icon": "gem"
+        },
+        {
+            "id": "2",
+            "name": "Big Win",
+            "description": "$100 Cash",
+            "color": "#3b82f6",
+            "icon": "coins"
+        },
+        {
+            "id": "3",
+            "name": "Special Offer",
+            "description": "50% Discount",
+            "color": "#10b981",
+            "icon": "gift"
+        },
+        {
+            "id": "4",
+            "name": "Consolation",
+            "description": "Free Shipping",
+            "color": "#f59e0b",
+            "icon": "smile"
+        },
+        {
+            "id": "5",
+            "name": "Lucky Draw",
+            "description": "Event Ticket",
+            "color": "#ec4899",
+            "icon": "ticket-alt"
+        },
+        {
+            "id": "6",
+            "name": "Bonus Prize",
+            "description": "Branded T-Shirt",
+            "color": "#ef4444",
+            "icon": "tshirt"
+        },
+        {
+            "id": "7",
+            "name": "Try Again",
+            "description": "Try Again",
+            "color": "#64748b",
+            "icon": "redo"
+        },
+        {
+            "id": "8",
+            "name": "Credit",
+            "description": "$10 Credit",
+            "color": "#14b8a6",
+            "icon": "credit-card"
+        },
+        {
+            "id": "0",
+            "name": "Test",
+            "description": "tst tsst",
+            "color": "#12222",
+            "icon": "12345"
+        }
+    ]
+}

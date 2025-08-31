@@ -25,8 +25,8 @@ async function loadMentors() {
           index
         ].alt = `${mentor.fullname} - Rating: ${mentor.average_rating}`;
       }
-      // console.log(mentor.profile_image);
-      // console.log(url, mentor.profile_image);
+      console.log(mentor.profile_image);
+      console.log(url, mentor.profile_image);
     });
   } catch (error) {
     console.error("Error loading mentors:", error);
@@ -191,5 +191,3 @@ function formatAddress(address) {
 
 // Load data when the page is fully loaded
 document.addEventListener("DOMContentLoaded", loadBestRatedMentors);
-
-

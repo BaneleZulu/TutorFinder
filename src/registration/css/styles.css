@@ -1,9 +1,12 @@
 .progress-bar {
-  display: flex;
+  display: flex !important; /* Ensure it stays visible */
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid;
   color: var(--clr-text);
+  width: 100%;
+  padding: 10px 0;
+  position: relative;
+  z-index: 1;
 
   div {
     color: var(--clr-text);
@@ -14,6 +17,11 @@
   flex: 1;
   text-align: center;
   position: relative;
+  display: block !important; /* Ensure steps are not hidden */
+}
+
+.progress-step.hidden {
+  display: none; /* Explicitly hide steps when needed */
 }
 
 .progress-step.active .step-circle {
@@ -32,6 +40,10 @@
   justify-content: center;
   margin: 0 auto 5px;
   transition: background 0.3s ease;
+}
+
+.step-text {
+  font-size: 12px;
 }
 
 .step-line {
@@ -74,16 +86,13 @@ form#registrationForm .step {
 
   .form-data {
     position: relative;
+    width: 100%;
   }
 }
 
 #registrationOverlay {
   margin: auto;
   /* display: flex; */
-}
-
-#userSelectOverlay {
-  display: flex;
 }
 
 .radio-custom {
@@ -111,4 +120,8 @@ form#registrationForm .step {
 
 #canvas {
   display: none;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 4px;
+  margin-top: 10px;
 }

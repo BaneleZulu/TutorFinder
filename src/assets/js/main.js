@@ -157,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
         openOverlay(userSelectOverlay);
         closeOverlay(signupOverlay);
       }, 3000); // Simulate delay for UX
-   
     });
 });
 
@@ -174,11 +173,58 @@ document
     if (userTypeInput) {
       const userType = userTypeInput.value;
       localStorage.setItem("userType", userType.toUpperCase());
+      sessionStorage.setItem("userType", userType.toUpperCase());
 
       // Store type or pass it to your registration flow here
       closeOverlay(userSelectOverlay);
       openOverlay(registerOverlay);
+      // Clear the radio selection
+      userTypeInput.checked = false;
     } else {
-      console.warn("Please select a user type.");
+      Toastify({
+        text: "Please select a user type.",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#ef4444",
+      }).showToast();
     }
   });
+
+function validateNumberInputs() {
+  // Select all input elements with type="number"
+  const numberInputs = document.querySelectorAll('input[type="number"]');
+
+  numberInputs.forEach((input) => {
+    // Add input event listener to validate in real-time
+    input.addEventListener("input", (event) => {
+      const value = event.target.value;
+
+      // Regular expression to allow digits, optional negative sign, and optional decimal point
+      const isValidNumber = /^-?\d*\.?\d*$/.test(value);
+
+      if (!isValidNumber && value !== "") {
+        // If input is invalid and not empty, clear the input
+        event.target.value = "";
+        // Optionally, you can provide feedback
+        console.warn(
+          `Invalid input in ${
+            input.id || "number input"
+          }: Only numeric values are allowed.`
+        );
+      }
+    });
+
+    // Prevent non-numeric keypresses (optional, for stricter control)
+    input.addEventListener("keypress", (event) => {
+      const char = String.fromCharCode(event.keyCode || event.which);
+      // Allow digits, minus sign, decimal point, and control keys (like backspace)
+      if (!/[0-9.-]/.test(char) && !event.ctrlKey && !event.metaKey) {
+        event.preventDefault();
+      }
+    });
+  });
+}
+
+// Call the function when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", validateNumberInputs);
