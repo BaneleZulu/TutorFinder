@@ -701,7 +701,6 @@ input.success:focus {
   opacity: 1;
   transform: translateY(0);
 }
-
 /* Success message */
 .success-message {
   color: #10b981;

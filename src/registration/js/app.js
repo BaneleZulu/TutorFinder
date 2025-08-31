@@ -56,6 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const circle = step.querySelector(".step-circle");
       const line = step.querySelector(".step-line");
 
+      console.log("StepType", stepType);
+      console.log("UserType", formData.userType);
+      console.log("Email", formData.email);
+
       // Show steps matching userType or no specific type
       step.style.display =
         !stepType || stepType.toLowerCase() === formData.userType.toLowerCase()
@@ -305,9 +309,8 @@ document.addEventListener("DOMContentLoaded", () => {
       <p><strong>Date of Birth:</strong> ${formData.dob}</p>
       <p><strong>Phone:</strong> ${formData.phone}</p>
       <p><strong>User Type:</strong> ${formData.userType}</p>
-      ${
-        formData.userType === "MENTEE"
-          ? `
+      ${formData.userType === "MENTEE" ?
+          `
             <p><strong>Education Level:</strong> ${formData.educationLevel}</p>
             <p><strong>Tertiary Education:</strong> ${
               formData.tertiaryEducation || "N/A"
@@ -316,17 +319,11 @@ document.addEventListener("DOMContentLoaded", () => {
           `
           : `
             <p><strong>Specialities:</strong> ${formData.specialities}</p>
-            <p><strong>Experience Years:</strong> ${
-              formData.experienceYears
-            }</p>
+            <p><strong>Experience Years:</strong> ${formData.experienceYears}</p>
             <p><strong>Hourly Rate:</strong> $${formData.hourlyRate}</p>
             <p><strong>Selfie:</strong> Captured</p>
-            <p><strong>ID Document:</strong> ${
-              formData.idDocument ? formData.idDocument.name : "N/A"
-            }</p>
-            <p><strong>Certificate:</strong> ${
-              formData.certificate ? formData.certificate.name : "N/A"
-            }</p>
+            <p><strong>ID Document:</strong> ${formData.idDocument ? formData.idDocument.name : "N/A"}</p>
+            <p><strong>Certificate:</strong> ${formData.certificate ? formData.certificate.name : "N/A"}</p>
           `
       }
     `;

@@ -62,8 +62,6 @@
 
 /* FORM */
 #registrationOverlay .overlay-content {
-  /* margin-top: 5rem; */
-
   .progress-bar,
   .form-section {
     margin: 0;
@@ -124,4 +122,14 @@ form#registrationForm .step {
   max-width: 300px;
   border-radius: 4px;
   margin-top: 10px;
+}
+
+#registrationCompleteOverlay {
+  display: block;
+}
+
+#registrationCompleteOverlay .user-data {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
 }
