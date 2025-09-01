@@ -156,6 +156,8 @@ document.addEventListener("DOMContentLoaded", () => {
         loadingSpinner.style.display = "none";
         openOverlay(userSelectOverlay);
         closeOverlay(signupOverlay);
+        emailInput.value = ""; // Clear input field
+        emailInput.classList.remove("success");
       }, 3000); // Simulate delay for UX
     });
 });
@@ -171,10 +173,9 @@ document
     );
 
     if (userTypeInput) {
+      console.log("User type selected:", userTypeInput.value);
       const userType = userTypeInput.value;
       localStorage.setItem("userType", userType.toUpperCase());
-      sessionStorage.setItem("userType", userType.toUpperCase());
-
       // Store type or pass it to your registration flow here
       closeOverlay(userSelectOverlay);
       openOverlay(registerOverlay);

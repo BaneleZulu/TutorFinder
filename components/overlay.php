@@ -96,7 +96,7 @@
                     <span class="w-full absolute bottom-0 flex items-center justify-between bg-white bg-opacity-30 px-1">
                         <h1 class="text-gray-800 font-semibold">MENTEE</h1>
                         <label class="custom-radio">
-                            <input type="radio" id="userType_radio" name="userType_radio" value="mentee">
+                            <input type="radio" name="userType_radio" value="mentee">
                             <div class="custom-radio-slider"></div>
                         </label>
                     </span>
@@ -108,7 +108,7 @@
                     <span class="w-full absolute bottom-0 flex items-center justify-between bg-white bg-opacity-30 px-1">
                         <h1 class="text-gray-800 font-semibold">MENTOR</h1>
                         <label class="custom-radio">
-                            <input type="radio" id="userType_radio" name="userType_radio" value="mentor">
+                            <input type="radio" name="userType_radio" value="mentor">
                             <div class="custom-radio-slider"></div>
                         </label>
                     </span>
@@ -130,61 +130,5 @@
                 of <b>TutorFidner</b>
             </p>
         </form>
-    </div>
-</div>
-
-
-<div class="overlay-wrapper" id="registrationCompleteOverlay">
-    <div class="overlay-content">
-        <button class="exit-btn" onclick="closeOverlay('#registrationCompleteOverlay')">&times;</button>
-        <div id="confirmationDetails" class="mb-4 text-gray-300">
-            <h3 class="text-lg font-semibold mb-4 text-center uppercase bg-green-200 text-green-800">Registration Succeeded!</h3>
-            <p class="mb-2 text-xs">Thank you for registering with TutorFinder. A confirmation email has been sent to your provided email address. Please check your inbox and follow the instructions to verify your account.</p>
-            <p class="mb-2 text-xs">If you do not see the email, please check your spam or junk folder.</p>
-            <p class="mb-2 text-xs">We are excited to have you on board and look forward to helping you connect with mentors and mentees worldwide!</p>
-            <div class="flex flex-col justify-end gap-2 mt-2 max-h-90 overflow-y-auto bg-red-200">
-                <h1 class="text-md mb-0 text-center uppercase bg-yellow-200 text-yellow-800">Application Pending</h1>
-
-                <div class="flex flex-row gap-2 w-fit m-0">
-                    <p>User Type: </p>
-                    <b id="applicant-userType" class="">placeholder</b>
-                </div>
-                <h2 class="uppercase font-bold m-0 text-center">Personal Information</h2>
-                <div class="flex justify-evenly">
-                    <div class="user-data">
-                        <p>Full Name: </p>
-                        <b id="applicant-name">placeholder</b>
-                    </div>
-                    <div class="user-data">
-                        <p>Date of Birth: </p>
-                        <b id="applicant-dob">placeholder</b>
-                    </div>
-                    <div class="user-data">
-                        <p>Phone Number: </p>
-                        <b id="applicant-phone">placeholder</b>
-                    </div>
-                    <div class="user-data">
-                        <p>Email: </p>
-                        <b id="applicant-email">placeholder</b>
-                    </div>
-                </div>
-
-
-                <div class="user-data">
-                    <p>Application Date: </p>
-                    <b id="applicant-date">placeholder</b>
-                </div>
-                <div class="user-data">
-                    <p>Status: </p>
-                    <b>Pending</b>
-                </div>
-                <div class="user-data">
-
-                </div>
-
-
-
-            </div>
-        </div>
     </div>
 </div>

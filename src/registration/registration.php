@@ -157,7 +157,6 @@
                 </div>
                 <!-- Mentor Final Step: Confirmation -->
                 <div id="mentorFinal" class="step hidden">
-                    <h3 class="text-lg font-semibold mb-4">Application Pending</h3>
                     <div id="confirmationDetails" class="mb-4 text-gray-300"></div>
                     <div class="flex justify-end gap-4 mt-2">
                         <button type="button" id="prev5Mentor" class="p-2 rounded hover:bg-gray-600 mr-2">Previous <i class="ph-thin ph-arrow-bend-up-left"></i></i></button>

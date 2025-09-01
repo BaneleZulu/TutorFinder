@@ -54,10 +54,12 @@
   top: 14px;
   width: 100%;
   z-index: -1;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
 .step-line.active {
-  background: var(--clr-primary);
+  background: rgb(69, 147, 69);
 }
 
 /* FORM */
@@ -122,10 +124,6 @@ form#registrationForm .step {
   max-width: 300px;
   border-radius: 4px;
   margin-top: 10px;
-}
-
-#registrationCompleteOverlay {
-  display: block;
 }
 
 #registrationCompleteOverlay .user-data {

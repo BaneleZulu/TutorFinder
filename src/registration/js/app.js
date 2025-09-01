@@ -10,6 +10,9 @@ document
 const email = localStorage.getItem("email");
 const type = localStorage.getItem("userType");
 
+console.log("Email from storage:", email);
+console.log("User type from storage:", type);
+
 document.addEventListener("DOMContentLoaded", () => {
   const formData = {
     email: "test@mail.com", // Re-added email to store from signupOverlay
@@ -33,6 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let stream = null;
   formData.userType = type;
   formData.email = email;
+
+  console.log("Initialized formData:", formData);
+  console.log("FormData User Type:", formData.userType);
+  console.log("FormData Email:", formData.email);
 
   function validatePassword(password) {
     return password && password.length >= 8;
@@ -303,29 +310,100 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Display confirmation details
   function displayConfirmation() {
+    document.querySelector(".progress-bar").style.display = "none";
+    const today = new Date().toLocaleDateString();
     const details = `
-      <p><strong>Email:</strong> ${formData.email}</p>
-      <p><strong>Full Name:</strong> ${formData.fullname}</p>
-      <p><strong>Date of Birth:</strong> ${formData.dob}</p>
-      <p><strong>Phone:</strong> ${formData.phone}</p>
-      <p><strong>User Type:</strong> ${formData.userType}</p>
-      ${formData.userType === "MENTEE" ?
-          `
-            <p><strong>Education Level:</strong> ${formData.educationLevel}</p>
-            <p><strong>Tertiary Education:</strong> ${
-              formData.tertiaryEducation || "N/A"
-            }</p>
-            <p><strong>Learning Goals:</strong> ${formData.learningGoals}</p>
-          `
-          : `
-            <p><strong>Specialities:</strong> ${formData.specialities}</p>
-            <p><strong>Experience Years:</strong> ${formData.experienceYears}</p>
-            <p><strong>Hourly Rate:</strong> $${formData.hourlyRate}</p>
-            <p><strong>Selfie:</strong> Captured</p>
-            <p><strong>ID Document:</strong> ${formData.idDocument ? formData.idDocument.name : "N/A"}</p>
-            <p><strong>Certificate:</strong> ${formData.certificate ? formData.certificate.name : "N/A"}</p>
-          `
-      }
+          <h3 class="text-lg font-semibold mb-4 text-center uppercase bg-green-200 text-green-800">Registration Succeeded!</h3>
+            <p class="mb-2 text-xs text-center">Thank you for registering with TutorFinder. A confirmation email has been sent to your provided email address. Please check your inbox and follow the instructions to verify your account.</p>
+            <p class="mb-2 text-xs text-center">If you do not see the email, please check your spam or junk folder.</p>
+            <p class="mb-2 text-xs text-center">We are excited to have you on board and look forward to helping you connect with mentors and mentees worldwide!</p>
+            <div class="flex flex-col justify-end gap-2 mt-2 max-h-90 overflow-y-auto">
+                <h1 class="text-md mb-0 text-center uppercase bg-yellow-200 text-yellow-800">Application Pending</h1>
+
+                <div class="flex flex-col gap-0 w-fit">
+                    <span class="flex gap-4 text-sm">
+                        <p>User Type: </p>
+                        <b>${formData.userType || 'Unknown'}</b>
+                    </span>
+                    <span class="flex gap-4 text-sm">
+                        <p>Application Date: </p>
+                        <b>${today ?? 'N/A'}</b>
+                    </span>
+                </div>
+
+                <h2 class="uppercase font-bold m-0 text-center">Personal Information</h2>
+                <div class="flex justify-evenly">
+                    <div class="user-data">
+                        <p>Full Name: </p>
+                        <b>${formData.fullname}</b>
+                    </div>
+                    <div class="user-data">
+                        <p>Date of Birth: </p>
+                        <b>${formData.dob}</b>
+                    </div>
+                    <div class="user-data">
+                        <p>Phone Number: </p>
+                        <b>${formData.phone}</b>
+                    </div>
+                    <div class="user-data">
+                        <p>Email: </p>
+                        <b>${formData.email}</b>
+                    </div>
+                </div>
+
+                ${
+                  formData.userType === "MENTEE"
+                    ? `
+                <h2 class="uppercase font-bold m-0 text-center">Bio</h2>
+                <div class="flex justify-around">
+                    <div class="user-data">
+                        <p>Education Level: </p>
+                        <b>${formData.educationLevel}</b>
+                    </div>
+                    <div class="user-data">
+                        <p>Tertiary Education</p>
+                        <b>${formData.tertiaryEducation ?? "N/A"}</b>
+                    </div>
+                </div>
+                 `
+                    : `
+
+                <h2 class="uppercase font-bold m-0 text-center">Documents</h2>
+                <div class="flex justify-around min-h-30 h-30 bg-blue-200 p-2">
+                    <div class="rounded-xl bg-white shadow-md p-4 w-30 h-30 flex justify-center items-center relative">
+                        <i class="ph ph-file-pdf text-6xl"></i>
+                        <i class="ph-thin ph-check-circle bg-green-200 text-green-800 rounded-full p-2 text-md absolute z-10 -right-1 -bottom-1"></i>
+                        <p class='uppercase'>UPLOADED</p>
+                        </div>
+                        <div class="rounded-xl bg-white shadow-md p-4 w-30 h-30 flex justify-center items-center relative">
+                        <i class="ph ph-image text-6xl"></i>
+                        <i class="ph-thin ph-check-circle bg-green-200 text-green-800 rounded-full p-2 text-md absolute z-10 -right-1 -bottom-1"></i>
+                        <b class='uppercase'>CAPTURED</b>
+                    </div>
+                </div>
+
+                <h2 class="uppercase font-bold m-0 text-center">Experience</h2>
+                <div class="flex justify-evenly">
+                    <div class="user-data">
+                        <p>Years of Experience: </p>
+                        <b>${formData.experienceYears}</b>
+                    </div>
+                    <div class="user-data">
+                        <p>Area of Expertise: </p>
+                        <b>${formData.specialities}</b>
+                    </div>
+                    <div class="user-data">
+                        <p>Hourly Rate: </p>
+                        <b>R ${formData.hourlyRate}</b>
+                    </div>
+                </div>
+                `
+                }
+                <div class="w-fit flex gap-3">
+                    <p> Status: </p>
+                    <b>Pending</b>
+                </div>
+            </div>
     `;
     document.getElementById("confirmationDetails").innerHTML = details;
   }
@@ -501,9 +579,6 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.keys(formData).forEach((key) => (formData[key] = ""));
     currentStep = 1;
   });
-
-  // Show signup overlay on page load
-  showOverlay("#signupOverlay");
 
   function validateNumberInputs() {
     const numberInputs = document.querySelectorAll('input[type="number"]');
