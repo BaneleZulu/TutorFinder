@@ -130,4 +130,5 @@ form#registrationForm .step {
   display: flex;
   flex-direction: column;
   width: fit-content;
+  gap: 0;
 }

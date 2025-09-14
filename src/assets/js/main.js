@@ -87,7 +87,8 @@ document.getElementById("cards").onmousemove = (e) => {
 
 const signupOverlay = document.getElementById("signupOverlay");
 const signinOverlay = document.getElementById("loginOverlay");
-const registerOverlay = document.getElementById("registrationOverlay");
+const menteeOverlay = document.getElementById("menteeRegistrationOverlay");
+const mentorOverlay = document.getElementById("mentorRegistrationOverlay");
 const userSelectOverlay = document.getElementById("userSelectOverlay");
 // ? RENDER SIGN IN OVERLAY
 // ? global overlay opener function.
@@ -105,6 +106,8 @@ function closeOverlay(overlay) {
     typeof overlay === "string" ? document.querySelector(overlay) : overlay;
   element.style.display = "none";
 }
+
+
 
 document.getElementById("loginBtnOvl").addEventListener("click", () => {
   closeOverlay(signupOverlay);
@@ -178,7 +181,10 @@ document
       localStorage.setItem("userType", userType.toUpperCase());
       // Store type or pass it to your registration flow here
       closeOverlay(userSelectOverlay);
-      openOverlay(registerOverlay);
+      userType.toUpperCase() === "MENTEE"
+        ? openOverlay(menteeOverlay)
+        : openOverlay(mentorOverlay);
+
       // Clear the radio selection
       userTypeInput.checked = false;
     } else {
