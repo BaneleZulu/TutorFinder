@@ -1,17 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const email = localStorage.getItem("email");
-  const type = localStorage.getItem("userType");
+  const type = localStorage.getItem("userType")?.toUpperCase(); // Normalize to uppercase
 
-  console.log("Email from storage:", email);
-  console.log("User type from storage:", type);
+  const forms = [
+    document.getElementById("menteeRegistrationForm"),
+    document.getElementById("mentorRegistrationForm"),
+  ];
+  forms.forEach((form) => {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault(); // Prevent form submission
+    });
+  });
 
   const formData = {
-    email: "test@mail.com", // Re-added email to store from signupOverlay
+    email: email || "test@mail.com",
     fullname: "",
     dob: "",
     phone: "",
     password: "",
-    userType: "mentor",
+    userType: type || "MENTOR", // Default to MENTOR if undefined
     educationLevel: "",
     tertiaryEducation: "",
     learningGoals: "",
@@ -23,22 +30,30 @@ document.addEventListener("DOMContentLoaded", () => {
     certificate: null,
   };
 
-  let currentStep = 1; // Start at step 1 (Basic Info)
+  let currentStep = 1;
   let stream = null;
-  formData.userType = type;
+
   formData.email = email;
+  formData.userType = type;
+
+  // Show the correct overlay based on userType
+  if (formData.userType === "MENTEE") {
+    showOverlay("#menteeRegistrationOverlay");
+  } else if (formData.userType === "MENTOR") {
+    showOverlay("#mentorRegistrationOverlay");
+  }
+
+  // Add event listener for the confirmation close button
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("#confirmationCloseBtn")) {
+      closeConfirmation(event);
+    }
+  });
 
   function validatePassword(password) {
     return password && password.length >= 8;
   }
 
-  // In prev3Mentor
-  if (stream) {
-    stream.getTracks().forEach((track) => track.stop());
-    stream = null;
-  }
-
-  // Show/hide overlays
   function closeOverlayStep() {
     const overlayId =
       formData.userType === "MENTEE"
@@ -54,23 +69,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateProgressBar() {
     const steps = document.querySelectorAll(".progress-step");
     steps.forEach((step) => {
-      const stepType = step.getAttribute("data-type") || "";
+      const stepType = step.getAttribute("data-type")?.toLowerCase() || "";
       const stepNum = parseInt(step.getAttribute("data-step"));
       const circle = step.querySelector(".step-circle");
       const line = step.querySelector(".step-line");
 
-      // Hide steps that don't match the user type
-      if (
-        stepType &&
-        stepType.toLowerCase() !== formData.userType.toLowerCase()
-      ) {
+      if (stepType && stepType !== formData.userType.toLowerCase()) {
         step.style.display = "none";
         return;
       } else {
-        step.style.display = "flex"; // Ensure they are visible if they match
+        step.style.display = "flex";
       }
 
-      // Activate steps up to the current one
       if (stepNum <= currentStep) {
         circle.classList.add("active");
         line.classList.add("active");
@@ -108,49 +118,38 @@ document.addEventListener("DOMContentLoaded", () => {
     updateProgressBar();
   }
 
-  const exitBtns = document.querySelectorAll(".cancelRegistrationBtn");
-  exitBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
+  function validateStep(step) {
+    let isValid = true;
+    console.log(`Validating Step ${step} for userType: ${formData.userType}`);
+
+    if (step === 1) {
+      const prefix = formData.userType === "MENTEE" ? "mentee-" : "mentor-";
       const formId =
         formData.userType === "MENTEE"
           ? "menteeRegistrationForm"
           : "mentorRegistrationForm";
       const form = document.getElementById(formId);
-      form.setAttribute("novalidate", "novalidate"); // Disable validation
-      form.reset();
-      form.removeAttribute("novalidate"); // Restore after reset
-      localStorage.removeItem("userType");
-      localStorage.removeItem("email");
-      closeOverlayStep();
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-        stream = null;
-      }
-      currentStep = 1; // Reset step
-    });
-  });
+      const fullname = form.querySelector(`#${prefix}fullname`).value.trim();
+      const dob = form.querySelector(`#${prefix}dob`).value;
+      const phone = form.querySelector(`#${prefix}phone`).value.trim();
+      const password = form.querySelector(`#${prefix}password`).value;
+      const confirmPassword = form.querySelector(
+        `#${prefix}confirmPassword`
+      ).value;
 
-  function validateStep(step) {
-    let isValid = true;
+      const nameError = form.querySelector(`#${prefix}fullnameError`);
+      const dobError = form.querySelector(`#${prefix}dobError`);
+      const phoneError = form.querySelector(`#${prefix}phoneError`);
+      const passwordError = form.querySelector(`#${prefix}passwordError`);
+      const confirmError = form.querySelector(`#${prefix}confirmPasswordError`);
 
-    if (step === 1) {
-      const fullname = document.getElementById("fullname").value.trim();
-      const dob = document.getElementById("dob").value;
-      const phone = document.getElementById("phone").value.trim();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-
-      const nameError = document.getElementById("fullnameError");
-      const dobError = document.getElementById("dobError");
-      const phoneError = document.getElementById("phoneError");
-      const passwordError = document.getElementById("passwordError");
-      const confirmError = document.getElementById("confirmPasswordError");
-
-      const fullnameInput = document.getElementById("fullname");
-      const dobInput = document.getElementById("dob");
-      const phoneInput = document.getElementById("phone");
-      const passwordInput = document.getElementById("password");
-      const confirmPasswordInput = document.getElementById("confirmPassword");
+      const fullnameInput = form.querySelector(`#${prefix}fullname`);
+      const dobInput = form.querySelector(`#${prefix}dob`);
+      const phoneInput = form.querySelector(`#${prefix}phone`);
+      const passwordInput = form.querySelector(`#${prefix}password`);
+      const confirmPasswordInput = form.querySelector(
+        `#${prefix}confirmPassword`
+      );
 
       // Clear previous errors
       nameError.classList.add("hidden");
@@ -248,30 +247,38 @@ document.addEventListener("DOMContentLoaded", () => {
           phone,
           password,
           confirmPassword,
+          userType: formData.userType,
         });
       }
     } else if (step === 2 && formData.userType === "MENTEE") {
-      const educationLevel = document.getElementById("educationLevel").value;
+      const prefix = "mentee-";
+      const educationLevel = document.getElementById(
+        `${prefix}educationLevel`
+      ).value;
       const learningGoals = document
-        .getElementById("learningGoals")
+        .getElementById(`${prefix}learningGoals`)
         .value.trim();
 
-      document.getElementById("educationLevelError").classList.add("hidden");
-      document.getElementById("learningGoalsError").classList.add("hidden");
+      document
+        .getElementById(`${prefix}educationLevelError`)
+        .classList.add("hidden");
+      document
+        .getElementById(`${prefix}learningGoalsError`)
+        .classList.add("hidden");
 
       if (!educationLevel) {
-        document.getElementById("educationLevelError").textContent =
+        document.getElementById(`${prefix}educationLevelError`).textContent =
           "Education level is required";
         document
-          .getElementById("educationLevelError")
+          .getElementById(`${prefix}educationLevelError`)
           .classList.remove("hidden");
         isValid = false;
       }
       if (!learningGoals || learningGoals.length < 100) {
-        document.getElementById("learningGoalsError").textContent =
+        document.getElementById(`${prefix}learningGoalsError`).textContent =
           "Learning goals must be at least 100 characters";
         document
-          .getElementById("learningGoalsError")
+          .getElementById(`${prefix}learningGoalsError`)
           .classList.remove("hidden");
         isValid = false;
       }
@@ -279,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isValid) {
         formData.educationLevel = educationLevel;
         formData.tertiaryEducation = document
-          .getElementById("tertiaryEducation")
+          .getElementById(`${prefix}tertiaryEducation`)
           .value.trim();
         formData.learningGoals = learningGoals;
       } else {
@@ -289,32 +296,47 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
     } else if (step === 2 && formData.userType === "MENTOR") {
-      const specialities = document.getElementById("specialities").value;
-      const experienceYears = document.getElementById("experienceYears").value;
-      const hourlyRate = document.getElementById("hourlyRate").value;
+      const prefix = "mentor-";
+      const specialities = document.getElementById(
+        `${prefix}specialities`
+      ).value;
+      const experienceYears = document.getElementById(
+        `${prefix}experienceYears`
+      ).value;
+      const hourlyRate = document.getElementById(`${prefix}hourlyRate`).value;
 
-      document.getElementById("specialitiesError").classList.add("hidden");
-      document.getElementById("experienceYearsError").classList.add("hidden");
-      document.getElementById("hourlyRateError").classList.add("hidden");
+      document
+        .getElementById(`${prefix}specialitiesError`)
+        .classList.add("hidden");
+      document
+        .getElementById(`${prefix}experienceYearsError`)
+        .classList.add("hidden");
+      document
+        .getElementById(`${prefix}hourlyRateError`)
+        .classList.add("hidden");
 
       if (!specialities) {
-        document.getElementById("specialitiesError").textContent =
+        document.getElementById(`${prefix}specialitiesError`).textContent =
           "Specialities are required";
-        document.getElementById("specialitiesError").classList.remove("hidden");
+        document
+          .getElementById(`${prefix}specialitiesError`)
+          .classList.remove("hidden");
         isValid = false;
       }
       if (!experienceYears || experienceYears < 0) {
-        document.getElementById("experienceYearsError").textContent =
+        document.getElementById(`${prefix}experienceYearsError`).textContent =
           "Valid years of experience required";
         document
-          .getElementById("experienceYearsError")
+          .getElementById(`${prefix}experienceYearsError`)
           .classList.remove("hidden");
         isValid = false;
       }
       if (!hourlyRate || hourlyRate < 0) {
-        document.getElementById("hourlyRateError").textContent =
+        document.getElementById(`${prefix}hourlyRateError`).textContent =
           "Valid hourly rate required";
-        document.getElementById("hourlyRateError").classList.remove("hidden");
+        document
+          .getElementById(`${prefix}hourlyRateError`)
+          .classList.remove("hidden");
         isValid = false;
       }
 
@@ -324,138 +346,184 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.hourlyRate = hourlyRate;
       }
     } else if (step === 3 && formData.userType === "MENTOR") {
-      const selfieData = document.getElementById("selfieData").value;
+      const prefix = "mentor-";
+      const selfieData = document.getElementById(`${prefix}selfieData`).value;
       if (!selfieData) {
-        document.getElementById("selfieError").textContent =
+        document.getElementById(`${prefix}selfieError`).textContent =
           "Please capture a selfie before proceeding.";
-        document.getElementById("selfieError").classList.remove("hidden");
+        document
+          .getElementById(`${prefix}selfieError`)
+          .classList.remove("hidden");
         isValid = false;
       } else {
-        document.getElementById("selfieError").classList.add("hidden");
+        document.getElementById(`${prefix}selfieError`).classList.add("hidden");
         formData.selfie = selfieData;
       }
     } else if (step === 4 && formData.userType === "MENTOR") {
-      const idDocument = document.getElementById("idDocument").files[0];
+      const prefix = "mentor-";
+      const idDocument = document.getElementById(`${prefix}idDocument`)
+        .files[0];
       if (!idDocument) {
-        document.getElementById("idDocumentError").textContent =
+        document.getElementById(`${prefix}idDocumentError`).textContent =
           "ID document is required";
-        document.getElementById("idDocumentError").classList.remove("hidden");
+        document
+          .getElementById(`${prefix}idDocumentError`)
+          .classList.remove("hidden");
         isValid = false;
       } else {
-        document.getElementById("idDocumentError").classList.add("hidden");
+        document
+          .getElementById(`${prefix}idDocumentError`)
+          .classList.add("hidden");
         formData.idDocument = idDocument;
-        formData.certificate = document.getElementById("certificate").files[0];
+        formData.certificate = document.getElementById(
+          `${prefix}certificate`
+        ).files[0];
       }
     }
     return isValid;
   }
 
-  // Display confirmation details
-  function displayConfirmation() {
-    const progressbar = document.querySelector(".progress-bar");
-    progressbar.style.display = "none";
-    progressbar.classList.add("hidden", "h-0");
-    const today = new Date().toLocaleDateString();
-    const details = `
-          <h3 class="text-lg font-semibold mb-3 text-center uppercase bg-green-200 text-green-800">Registration Succeeded!</h3>
-            <p class="mb-2 text-xs text-center">Thank you for registering with TutorFinder. A confirmation email has been sent to your provided email address. Please check your inbox and follow the instructions to verify your account.</p>
-            <p class="mb-2 text-xs text-center">If you do not see the email, please check your spam or junk folder.</p>
-            <p class="mb-2 text-xs text-center">We are excited to have you on board and look forward to helping you connect with mentors and mentees worldwide!</p>
-            <div class="flex flex-col justify-end gap-2 mt-1 max-h-90 overflow-y-auto">
-                <h1 class="text-md mb-0 text-center uppercase bg-yellow-200 text-yellow-800">Application Pending</h1>
+  function closeConfirmation(overlay) {
+    event.preventDefault(); // Prevent form submission
+    console.log("Closing confirmation overlay");
 
-                <div class="flex flex-col gap-0 w-fit">
-                    <span class="flex gap-4 text-sm">
-                        <p>User Type: </p>  
-                        <b>${formData.userType || "Unknown"}</b>
-                    </span>
-                    <span class="flex gap-4 text-sm">
-                        <p>Application Date: </p>
-                        <b>${today ?? "N/A"}</b>
-                    </span>
-                </div>
+    // Close the entire overlay based on userType
+    const overlayId =
+      formData.userType === "MENTEE"
+        ? "#menteeRegistrationOverlay"
+        : "#mentorRegistrationOverlay";
+    document.querySelector(overlayId).style.display = "none";
 
-                <h2 class="uppercase font-bold m-0 text-center">Personal Information</h2>
-                <div class="flex justify-evenly">
-                    <div class="user-data">
-                        <p>Full Name: </p>
-                        <b>${formData.fullname}</b>
-                    </div>
-                    <div class="user-data">
-                        <p>Date of Birth: </p>
-                        <b>${formData.dob}</b>
-                    </div>
-                    <div class="user-data">
-                        <p>Phone Number: </p>
-                        <b>${formData.phone}</b>
-                    </div>
-                    <div class="user-data">
-                        <p>Email: </p>
-                        <b>${formData.email}</b>
-                    </div>
-                </div>
-
-                ${
-                  formData.userType === "MENTEE"
-                    ? `
-                <h2 class="uppercase font-bold m-0 text-center">Bio</h2>
-                <div class="flex justify-around">
-                    <div class="user-data">
-                        <p>Education Level: </p>
-                        <b>${formData.educationLevel}</b>
-                    </div>
-                    <div class="user-data">
-                        <p>Tertiary Education</p>
-                        <b>${formData.tertiaryEducation ?? "N/A"}</b>
-                    </div>
-                </div>
-                 `
-                    : `
-
-                <h2 class="uppercase font-bold m-0 text-center">Documents</h2>
-                <div class="flex justify-around min-h-30 h-30 bg-blue-200 p-2">
-                    <div class="rounded-xl bg-white shadow-md p-4 w-30 h-30 flex justify-center items-center relative">
-                        <i class="ph ph-file-pdf text-6xl"></i>
-                        <i class="ph-thin ph-check-circle bg-green-200 text-green-800 rounded-full p-2 text-md absolute z-10 -right-1 -bottom-1"></i>
-                        <p class='uppercase'>UPLOADED</p>
-                        </div>
-                        <div class="rounded-xl bg-white shadow-md p-4 w-30 h-30 flex justify-center items-center relative">
-                        <i class="ph ph-image text-6xl"></i>
-                        <i class="ph-thin ph-check-circle bg-green-200 text-green-800 rounded-full p-2 text-md absolute z-10 -right-1 -bottom-1"></i>
-                        <b class='uppercase'>CAPTURED</b>
-                    </div>
-                </div>
-
-                <h2 class="uppercase font-bold m-0 text-center">Experience</h2>
-                <div class="flex justify-evenly">
-                    <div class="user-data">
-                        <p>Years of Experience: </p>
-                        <b>${formData.experienceYears}</b>
-                    </div>
-                    <div class="user-data">
-                        <p>Area of Expertise: </p>
-                        <b>${formData.specialities}</b>
-                    </div>
-                    <div class="user-data">
-                        <p>Hourly Rate: </p>
-                        <b>R ${formData.hourlyRate}</b>
-                    </div>
-                </div>
-                `
-                }
-                <div class="w-fit flex gap-3">
-                    <p> Status: </p>
-                    <b>Pending</b>
-                </div>
-            </div>
-    `;
-    document.getElementById("confirmationDetails").innerHTML = details;
+    // Optionally reset form and clear data
+    const formId =
+      formData.userType === "MENTEE"
+        ? "menteeRegistrationForm"
+        : "mentorRegistrationForm";
+    const form = document.getElementById(formId);
+    form.reset();
+    localStorage.removeItem("userType");
+    localStorage.removeItem("email");
+    Object.keys(formData).forEach((key) => (formData[key] = ""));
+    currentStep = 1;
   }
 
-  // Initialize camera for selfie step
+  function displayConfirmation() {
+    removeControls();
+    const today = new Date().toLocaleDateString();
+    const details = `
+    <h3 class="text-lg font-semibold mb-3 text-center uppercase bg-green-200 text-green-800">Registration Succeeded!</h3>
+    <p class="mb-2 text-xs text-center">Thank you for registering with TutorFinder. A confirmation email has been sent to your provided email address. Please check your inbox and follow the instructions to verify your account.</p>
+    <p class="mb-2 text-xs text-center">If you do not see the email, please check your spam or junk folder.</p>
+    <p class="mb-2 text-xs text-center">We are excited to have you on board and look forward to helping you connect with mentors and mentees worldwide!</p>
+    <div class="flex flex-col justify-end gap-2 mt-1 max-h-90 overflow-y-auto relative">
+      <h1 class="text-md mb-0 text-center uppercase bg-yellow-200 text-yellow-800">Application Pending</h1>
+      <div class="flex flex-col gap-0 w-fit">
+        <span class="flex gap-4 text-sm">
+          <p>User Type: </p>  
+          <b>${formData.userType || "Unknown"}</b>
+        </span>
+        <span class="flex gap-4 text-sm">
+          <p>Application Date: </p>
+          <b>${today ?? "N/A"}</b>
+        </span>
+      </div>
+      <h2 class="uppercase font-bold m-0 text-center">Personal Information</h2>
+      <div class="flex justify-evenly">
+        <div class="user-data">
+          <p>Full Name: </p>
+          <b>${formData.fullname}</b>
+        </div>
+        <div class="user-data">
+          <p>Date of Birth: </p>
+          <b>${formData.dob}</b>
+        </div>
+        <div class="user-data">
+          <p>Phone Number: </p>
+          <b>(+27) ${formData.phone}</b>
+        </div>
+        <div class="user-data">
+          <p>Email: </p>
+          <b>${formData.email}</b>
+        </div>
+      </div>
+      ${
+        formData.userType === "MENTEE"
+          ? `
+      <h2 class="uppercase font-bold m-0 text-center">Bio</h2>
+      <div class="flex justify-around">
+        <div class="user-data">
+          <p>Education Level: </p>
+          <b>${formData.educationLevel}</b>
+        </div>
+        <div class="user-data">
+          <p>Tertiary Education</p>
+          <b>${formData.tertiaryEducation ?? "N/A"}</b>
+        </div>
+      </div>
+      `
+          : `
+      <h2 class="uppercase font-bold m-0 text-center">Documents</h2>
+      <div class="flex justify-around min-h-30 h-30 bg-blue-200 p-2">
+        <div class="rounded-xl bg-white shadow-md p-4 w-30 h-30 flex justify-center items-center relative">
+          <i class="ph ph-file-pdf text-6xl"></i>
+          <i class="ph-thin ph-check-circle bg-green-200 text-green-800 rounded-full p-2 text-md absolute z-10 -right-1 -bottom-1"></i>
+          <b class='uppercase'>UPLOADED</b>
+        </div>
+        <div class="rounded-xl bg-white shadow-md p-4 w-30 h-30 flex justify-center items-center relative">
+          <i class="ph ph-image text-6xl"></i>
+          <i class="ph-thin ph-check-circle bg-green-200 text-green-800 rounded-full p-2 text-md absolute z-10 -right-1 -bottom-1"></i>
+          <b class='uppercase'>CAPTURED</b>
+        </div>
+      </div>
+      <h2 class="uppercase font-bold m-0 text-center">Experience</h2>
+      <div class="flex justify-evenly">
+        <div class="user-data">
+          <p>Years of Experience: </p>
+          <b>${formData.experienceYears}</b>
+        </div>
+        <div class="user-data">
+          <p>Area of Expertise: </p>
+          <b>${formData.specialities}</b>
+        </div>
+        <div class="user-data">
+          <p>Hourly Rate: </p>
+          <b>R ${formData.hourlyRate}</b>
+        </div>
+      </div>
+      `
+      }
+      <div class="w-fit flex gap-3">
+        <p> Status: </p>
+        <b>Pending</b>
+      </div>
+      <button type="button" id="confirmationCloseBtn" class="absolute z-100 bottom-0 right-2 mr-2 mt-2 bg-red-400 p-1 rounded-sm">CLOSE <i class="ph ph-x-circle text-md"></i></button>
+    </div>
+  `;
+
+    const confirmationDetails =
+      formData.userType === "MENTEE"
+        ? "confirmationMenteeDetails"
+        : "confirmationMentorDetails";
+    document.getElementById(confirmationDetails).innerHTML = details;
+  }
+
+  //? removes the navigation and progress bar on the confirmation page.
+  function removeControls() {
+    const progressbar = document.querySelector(".progress-bar");
+    const navigationButtons = document.querySelector(".nav-btn");
+    const exitButtons = document.querySelector(".cancelRegistrationBtn");
+    progressbar.style.display = "none";
+    progressbar.classList.add("hidden", "h-0");
+    navigationButtons.style.display = "none";
+    navigationButtons.classList.add("hidden", "h-0");
+    exitButtons.style.display = "none";
+    exitButtons.classList.add("hidden", "h-0");
+  }
+
   async function initializeCamera() {
-    const video = document.getElementById("video");
-    const canvas = document.getElementById("canvas");
+    const prefix = "mentor-";
+    const video = document.getElementById(`${prefix}video`);
+    const canvas = document.getElementById(`${prefix}canvas`);
     try {
       stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "user" },
@@ -465,70 +533,106 @@ document.addEventListener("DOMContentLoaded", () => {
       canvas.style.display = "none";
       document.getElementById("captureSelfie").style.display = "inline-block";
       document.getElementById("retakeSelfie").style.display = "none";
-      document.getElementById("selfieData").value = "";
+      document.getElementById(`${prefix}selfieData`).value = "";
     } catch (err) {
-      document.getElementById("selfieError").textContent =
+      document.getElementById(`${prefix}selfieError`).textContent =
         "Unable to access camera: " + err.message;
-      document.getElementById("selfieError").classList.remove("hidden");
+      document
+        .getElementById(`${prefix}selfieError`)
+        .classList.remove("hidden");
     }
   }
 
-  // Handle selfie capture
   document.getElementById("captureSelfie").addEventListener("click", () => {
-    const video = document.getElementById("video");
-    const canvas = document.getElementById("canvas");
+    const prefix = "mentor-";
+    const video = document.getElementById(`${prefix}video`);
+    const canvas = document.getElementById(`${prefix}canvas`);
     const context = canvas.getContext("2d");
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     const imageData = canvas.toDataURL("image/jpeg");
-    document.getElementById("selfieData").value = imageData;
+    document.getElementById(`${prefix}selfieData`).value = imageData;
     formData.selfie = imageData;
     video.style.display = "none";
     canvas.style.display = "block";
     document.getElementById("captureSelfie").style.display = "none";
     document.getElementById("retakeSelfie").style.display = "inline-block";
-    document.getElementById("selfieError").classList.add("hidden");
+    document.getElementById(`${prefix}selfieError`).classList.add("hidden");
   });
 
-  // Handle selfie retake
   document.getElementById("retakeSelfie").addEventListener("click", () => {
-    const video = document.getElementById("video");
-    const canvas = document.getElementById("canvas");
-    document.getElementById("selfieData").value = "";
+    const prefix = "mentor-";
+    const video = document.getElementById(`${prefix}video`);
+    const canvas = document.getElementById(`${prefix}canvas`);
+    document.getElementById(`${prefix}selfieData`).value = "";
     formData.selfie = null;
     canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
     video.style.display = "block";
     canvas.style.display = "none";
     document.getElementById("captureSelfie").style.display = "inline-block";
     document.getElementById("retakeSelfie").style.display = "none";
-    document.getElementById("selfieError").classList.add("hidden");
+    document.getElementById(`${prefix}selfieError`).classList.add("hidden");
   });
 
-  // Handle selfie submission to backend
   document.getElementById("next3Mentor").addEventListener("click", async () => {
     if (validateStep(3)) {
-      formData.selfie = document.getElementById("selfieData").value;
+      formData.selfie = document.getElementById("mentor-selfieData").value;
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
         stream = null;
       }
       currentStep = 4;
       showStep(4);
+    } else {
+      Toastify({
+        text: "Please capture a selfie before proceeding.",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        style: { background: "#ef4444" },
+      }).showToast();
     }
   });
 
-  // Step navigation
-  document.getElementById("next1").addEventListener("click", () => {
+  // Step 1 navigation for mentee
+  document.getElementById("menteeNext1").addEventListener("click", async () => {
+    if (formData.userType !== "MENTEE") return; // Prevent misfiring
+    console.log("Mentee Next1 clicked, validating Step 1");
     if (validateStep(1)) {
-      currentStep = 2;
-      const loadingSpinner = document.getElementById("loadingSpinnerStep1");
+      const loadingSpinner = document.getElementById(
+        "mentee-loadingSpinnerStep1"
+      );
       loadingSpinner.style.display = "inline-block";
-      setTimeout(() => {
-        showStep(2);
-        loadingSpinner.style.display = "none";
-      }, 3000);
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate async operation
+      currentStep = 2;
+      showStep(2);
+      loadingSpinner.style.display = "none";
     } else {
       Toastify({
-        text: "Please fill in all required fields.",
+        text: "Please fill in all required fields correctly.",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        style: { background: "#ef4444" },
+      }).showToast();
+    }
+  });
+
+  // Step 1 navigation for mentor
+  document.getElementById("mentorNext1").addEventListener("click", async () => {
+    if (formData.userType !== "MENTOR") return; // Prevent misfiring
+    console.log("Mentor Next1 clicked, validating Step 1");
+    if (validateStep(1)) {
+      const loadingSpinner = document.getElementById(
+        "mentor-loadingSpinnerStep1"
+      );
+      loadingSpinner.style.display = "inline-block";
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate async operation
+      currentStep = 2;
+      showStep(2);
+      loadingSpinner.style.display = "none";
+    } else {
+      Toastify({
+        text: "Please fill in all required fields correctly.",
         duration: 3000,
         gravity: "top",
         position: "right",
@@ -576,6 +680,15 @@ document.addEventListener("DOMContentLoaded", () => {
     showStep(2);
   });
 
+  document.getElementById("prev3Mentor").addEventListener("click", () => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      stream = null;
+    }
+    currentStep = 2;
+    showStep(2);
+  });
+
   document.getElementById("prev4Mentor").addEventListener("click", () => {
     currentStep = 3;
     showStep(3);
@@ -596,7 +709,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // In finishMentor
   document.getElementById("finishMentor").addEventListener("click", () => {
-    console.log("Mentor Registration:", formData);
+    removeControls();
     Swal.fire({
       title: "Application Submitted",
       text: "Mentor application submitted! It is now pending review.",
@@ -622,6 +735,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add finishMentee handler
   document.getElementById("finishMentee").addEventListener("click", () => {
+    removeControls();
     console.log("Mentee Registration:", formData);
     Swal.fire({
       title: "Application Submitted",
@@ -646,20 +760,47 @@ document.addEventListener("DOMContentLoaded", () => {
     currentStep = 1;
   });
 
+  const exitBtns = document.querySelectorAll(".cancelRegistrationBtn");
+  exitBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const formId =
+        formData.userType === "MENTEE"
+          ? "menteeRegistrationForm"
+          : "mentorRegistrationForm";
+      const form = document.getElementById(formId);
+      form.setAttribute("novalidate", "novalidate"); // Disable validation
+      form.reset();
+      form.removeAttribute("novalidate"); // Restore after reset
+      localStorage.removeItem("userType");
+      localStorage.removeItem("email");
+      closeOverlayStep();
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+        stream = null;
+      }
+      currentStep = 1; // Reset step
+    });
+  });
+
   function validateNumberInputs() {
     const numberInputs = document.querySelectorAll('input[type="number"]');
     numberInputs.forEach((input) => {
       input.addEventListener("input", (event) => {
         let value = event.target.value;
-        if (event.target.id === "experienceYears") {
+        if (
+          event.target.id === "experienceYears" ||
+          event.target.id === "mentor-experienceYears"
+        ) {
           value = value.replace(/[^0-9]/g, "").slice(0, 2); // Max 2 digits, no decimals/negatives
-        } else if (event.target.id === "hourlyRate") {
+        } else if (
+          event.target.id === "hourlyRate" ||
+          event.target.id === "mentor-hourlyRate"
+        ) {
           value = value.replace(/[^0-9.]/g, "");
           if ((value.match(/\./g) || []).length > 1) value = value.slice(0, -1); // One decimal
         }
         event.target.value = value;
 
-        // Existing validation
         const isValidNumber = /^-?\d*\.?\d*$/.test(value);
         if (!isValidNumber && value !== "") {
           event.target.value = "";

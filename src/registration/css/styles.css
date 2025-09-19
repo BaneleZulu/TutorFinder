@@ -63,14 +63,18 @@
 }
 
 /* FORM */
-#registrationOverlay .overlay-content {
+:is(#menteeRegistrationOverlay, #mentorRegistrationOverlay) .overlay-content {
   .progress-bar,
   .form-section {
     margin: 0;
   }
 }
 
-#registrationOverlay .form-section {
+#mentorRegistrationOverlay {
+  /* display: flex !important; */
+}
+
+:is(#menteeRegistrationOverlay, #mentorRegistrationOverlay) .form-section {
   min-width: 60dvw;
   padding: 0;
 
@@ -79,7 +83,7 @@
   }
 }
 
-form#registrationForm .step {
+:is(#menteeRegistrationOverlay, #mentorRegistrationOverlay) form .step {
   width: 100%;
   padding: 0;
   margin: 0;
@@ -90,9 +94,8 @@ form#registrationForm .step {
   }
 }
 
-#registrationOverlay {
+:is(#menteeRegistrationOverlay, #mentorRegistrationOverlay) {
   margin: auto;
-  /* display: flex; */
 }
 
 .radio-custom {

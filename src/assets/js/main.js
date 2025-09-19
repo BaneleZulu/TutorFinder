@@ -90,6 +90,7 @@ const signinOverlay = document.getElementById("loginOverlay");
 const menteeOverlay = document.getElementById("menteeRegistrationOverlay");
 const mentorOverlay = document.getElementById("mentorRegistrationOverlay");
 const userSelectOverlay = document.getElementById("userSelectOverlay");
+
 // ? RENDER SIGN IN OVERLAY
 // ? global overlay opener function.
 //? @{param} : overlay wrapper id or class to open.
@@ -106,8 +107,6 @@ function closeOverlay(overlay) {
     typeof overlay === "string" ? document.querySelector(overlay) : overlay;
   element.style.display = "none";
 }
-
-
 
 document.getElementById("loginBtnOvl").addEventListener("click", () => {
   closeOverlay(signupOverlay);
@@ -176,7 +175,6 @@ document
     );
 
     if (userTypeInput) {
-      console.log("User type selected:", userTypeInput.value);
       const userType = userTypeInput.value;
       localStorage.setItem("userType", userType.toUpperCase());
       // Store type or pass it to your registration flow here
