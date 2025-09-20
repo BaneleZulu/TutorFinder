@@ -422,6 +422,7 @@ input[type="submit"]:active {
   align-items: center;
 }
 
+
 .overlay-wrapper .overlay-content {
   position: relative;
   inset: 0;
@@ -632,7 +633,9 @@ input[type="email"] {
 }
 
 form .form-data label[for="phone"]:before,
-form .form-data :is(label[for="mentee-phone"],label[for="mentor-phone"] ):before {
+form
+  .form-data
+  :is(label[for="mentee-phone"], label[for="mentor-phone"]):before {
   content: "+27";
   position: relative;
   z-index: 2;

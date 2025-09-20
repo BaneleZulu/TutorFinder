@@ -1,3 +1,6 @@
+localStorage.removeItem("email");
+localStorage.removeItem("userType");
+
 //profile update/edit overlay tab mechanism
 function openTab(event, tabId) {
   // Hide all tab contents

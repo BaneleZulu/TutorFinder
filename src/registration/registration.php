@@ -1,5 +1,5 @@
 <div id="menteeRegistrationOverlay" class="overlay-wrapper">
-    <div class="overlay-content w-64">
+    <div class="overlay-content">
         <div class="progress-bar">
             <div class="progress-step" data-step="1">
                 <div class="step-circle">1</div>
@@ -16,7 +16,7 @@
         <div class="form-section">
             <form id="menteeRegistrationForm" class="relative" novalidate>
                 <!-- Step 1: Basic Info -->
-                <div id="step1" class="step">
+                <div id="menteeStep1" class="step">
                     <h3 class="text-lg font-semibold mb-4">Step 1: Basic Information</h3>
                     <!-- <h1 id="test">her</h1> -->
                     <div class="form-data mb-4">
@@ -87,7 +87,6 @@
 
                 <!-- In mentee overlay, after menteeStep2 -->
                 <div id="menteeFinal" class="step hidden relative">
-                    <button type="button" class="exit-btn" onclick="closeOverlayStep()">&times;</button>
                     <div id="confirmationMenteeDetails" class="mb-4 text-gray-300"></div>
                     <div class="nav-btn flex justify-end gap-4 mt-2">
                         <button type="button" id="prev3Mentee" class="p-2 rounded hover:bg-gray-600 mr-2">Previous <i class="ph-thin ph-arrow-bend-up-left"></i></button>
@@ -128,7 +127,7 @@
         <div class="form-section">
             <form id="mentorRegistrationForm" class="relative" novalidate>
                 <!-- Step 1: Basic Info -->
-                <div id="step1" class="step">
+                <div id="mentorStep1" class="step">
                     <h3 class="text-lg font-semibold mb-4">Step 1: Basic Information</h3>
                     <!-- <h1 id="test">her</h1> -->
                     <div class="form-data mb-4">

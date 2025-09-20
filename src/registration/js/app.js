@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const email = localStorage.getItem("email");
-  const type = localStorage.getItem("userType")?.toUpperCase(); // Normalize to uppercase
+  const initialUserType = localStorage.getItem("userType")?.toUpperCase();
 
   const forms = [
     document.getElementById("menteeRegistrationForm"),
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   ];
   forms.forEach((form) => {
     form.addEventListener("submit", (event) => {
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault();
     });
   });
 
@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     dob: "",
     phone: "",
     password: "",
-    userType: type || "MENTOR", // Default to MENTOR if undefined
     educationLevel: "",
     tertiaryEducation: "",
     learningGoals: "",
@@ -33,40 +32,52 @@ document.addEventListener("DOMContentLoaded", async () => {
   let currentStep = 1;
   let stream = null;
 
-  formData.email = email;
-  formData.userType = type;
-
-  // Show the correct overlay based on userType
-  if (formData.userType === "MENTEE") {
-    showOverlay("#menteeRegistrationOverlay");
-  } else if (formData.userType === "MENTOR") {
-    showOverlay("#mentorRegistrationOverlay");
+  // Function for dynamic user type retrieval
+  function getUserType() {
+    const type = localStorage.getItem("userType")?.toUpperCase();
+    if (!type) {
+      Toastify({
+        text: "User type not set. Please restart registration.",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        style: { background: "#ef4444" },
+      }).showToast();
+    }
+    return type;
   }
 
-  // Add event listener for the confirmation close button
+  // Use initial value for auto-open check (will be false if cleared on load)
+  if (initialUserType) {
+    if (initialUserType === "MENTEE") {
+      showOverlay("#menteeRegistrationOverlay");
+    } else if (initialUserType === "MENTOR") {
+      showOverlay("#mentorRegistrationOverlay");
+    }
+  }
+
   document.addEventListener("click", (event) => {
     if (event.target.closest("#confirmationCloseBtn")) {
       closeConfirmation(event);
     }
   });
 
-  function validatePassword(password) {
-    return password && password.length >= 8;
-  }
-
   function closeOverlayStep() {
     const overlayId =
-      formData.userType === "MENTEE"
+      getUserType() === "MENTEE"
         ? "#menteeRegistrationOverlay"
         : "#mentorRegistrationOverlay";
-    document.querySelector(overlayId).classList.remove("active");
+    closeOverlay(overlayId);
   }
 
   function showOverlay(selector) {
-    document.querySelector(selector).classList.add("active");
+    openOverlay(selector);
+    currentStep = 1;
+    showStep(1);
   }
 
   function updateProgressBar() {
+    const userType = getUserType()?.toLowerCase();
     const steps = document.querySelectorAll(".progress-step");
     steps.forEach((step) => {
       const stepType = step.getAttribute("data-type")?.toLowerCase() || "";
@@ -74,7 +85,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const circle = step.querySelector(".step-circle");
       const line = step.querySelector(".step-line");
 
-      if (stepType && stepType !== formData.userType.toLowerCase()) {
+      if (stepType && stepType !== userType) {
         step.style.display = "none";
         return;
       } else {
@@ -95,23 +106,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     document
       .querySelectorAll(".step")
       .forEach((s) => s.classList.add("hidden"));
+
+    const prefix = getUserType()?.toLowerCase();
+
     if (step === 1) {
-      document.getElementById("step1").classList.remove("hidden");
+      document.getElementById(`${prefix}Step1`).classList.remove("hidden");
     } else if (step === 2) {
-      if (formData.userType === "MENTEE") {
+      if (getUserType() === "MENTEE") {
         document.getElementById("menteeStep2").classList.remove("hidden");
-      } else if (formData.userType === "MENTOR") {
+      } else if (getUserType() === "MENTOR") {
         document.getElementById("mentorStep2").classList.remove("hidden");
       }
-    } else if (step === 3 && formData.userType === "MENTEE") {
+    } else if (step === 3 && getUserType() === "MENTEE") {
       document.getElementById("menteeFinal").classList.remove("hidden");
       displayConfirmation();
-    } else if (step === 3 && formData.userType === "MENTOR") {
+    } else if (step === 3 && getUserType() === "MENTOR") {
       document.getElementById("mentorStep3").classList.remove("hidden");
       initializeCamera();
-    } else if (step === 4 && formData.userType === "MENTOR") {
+    } else if (step === 4 && getUserType() === "MENTOR") {
       document.getElementById("mentorStep4").classList.remove("hidden");
-    } else if (step === 5 && formData.userType === "MENTOR") {
+    } else if (step === 5 && getUserType() === "MENTOR") {
       document.getElementById("mentorFinal").classList.remove("hidden");
       displayConfirmation();
     }
@@ -120,12 +134,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function validateStep(step) {
     let isValid = true;
-    console.log(`Validating Step ${step} for userType: ${formData.userType}`);
+    const userType = getUserType();
+    console.log(`Validating Step ${step} for userType: ${userType}`);
 
     if (step === 1) {
-      const prefix = formData.userType === "MENTEE" ? "mentee-" : "mentor-";
+      const prefix = userType === "MENTEE" ? "mentee-" : "mentor-";
       const formId =
-        formData.userType === "MENTEE"
+        userType === "MENTEE"
           ? "menteeRegistrationForm"
           : "mentorRegistrationForm";
       const form = document.getElementById(formId);
@@ -152,11 +167,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       );
 
       // Clear previous errors
-      nameError.classList.add("hidden");
-      dobError.classList.add("hidden");
-      phoneError.classList.add("hidden");
-      passwordError.classList.add("hidden");
-      confirmError.classList.add("hidden");
+      [nameError, dobError, phoneError, passwordError, confirmError].forEach(
+        (error) => {
+          error.classList.add("hidden");
+          error.textContent = "";
+        }
+      );
 
       [
         fullnameInput,
@@ -186,10 +202,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         isValid = false;
       } else {
         const age = new Date().getFullYear() - new Date(dob).getFullYear();
-        if (age < 13 || (formData.userType === "MENTOR" && age < 18)) {
-          dobError.textContent = `Must be at least ${
-            formData.userType === "MENTOR" ? 18 : 13
-          } years old`;
+        const minAge = userType === "MENTOR" ? 18 : 13;
+        if (age < minAge) {
+          dobError.textContent = `Must be at least ${minAge} years old`;
           dobError.classList.remove("hidden");
           dobError.classList.add("error-message", "show");
           dobInput.classList.add("error");
@@ -199,7 +214,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // Validate phone
       if (!phone || !/^\d{10}$/.test(phone)) {
-        phoneError.textContent = "Phone must be 10 digits";
+        phoneError.textContent = "Phone must be exactly 10 digits";
         phoneError.classList.remove("hidden");
         phoneError.classList.add("error-message", "show");
         phoneInput.classList.add("error");
@@ -247,10 +262,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           phone,
           password,
           confirmPassword,
-          userType: formData.userType,
+          userType,
         });
       }
-    } else if (step === 2 && formData.userType === "MENTEE") {
+    } else if (step === 2 && getUserType() === "MENTEE") {
       const prefix = "mentee-";
       const educationLevel = document.getElementById(
         `${prefix}educationLevel`
@@ -295,7 +310,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           learningGoals,
         });
       }
-    } else if (step === 2 && formData.userType === "MENTOR") {
+    } else if (step === 2 && getUserType() === "MENTOR") {
       const prefix = "mentor-";
       const specialities = document.getElementById(
         `${prefix}specialities`
@@ -345,7 +360,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         formData.experienceYears = experienceYears;
         formData.hourlyRate = hourlyRate;
       }
-    } else if (step === 3 && formData.userType === "MENTOR") {
+    } else if (step === 3 && getUserType() === "MENTOR") {
       const prefix = "mentor-";
       const selfieData = document.getElementById(`${prefix}selfieData`).value;
       if (!selfieData) {
@@ -359,7 +374,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById(`${prefix}selfieError`).classList.add("hidden");
         formData.selfie = selfieData;
       }
-    } else if (step === 4 && formData.userType === "MENTOR") {
+    } else if (step === 4 && getUserType() === "MENTOR") {
       const prefix = "mentor-";
       const idDocument = document.getElementById(`${prefix}idDocument`)
         .files[0];
@@ -383,24 +398,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     return isValid;
   }
 
-  function closeConfirmation(overlay) {
-    event.preventDefault(); // Prevent form submission
+  function closeConfirmation(event) {
+    event.preventDefault();
     console.log("Closing confirmation overlay");
 
-    // Close the entire overlay based on userType
-    const overlayId =
-      formData.userType === "MENTEE"
-        ? "#menteeRegistrationOverlay"
-        : "#mentorRegistrationOverlay";
-    document.querySelector(overlayId).style.display = "none";
-
-    // Optionally reset form and clear data
     const formId =
-      formData.userType === "MENTEE"
+      getUserType() === "MENTEE"
         ? "menteeRegistrationForm"
         : "mentorRegistrationForm";
     const form = document.getElementById(formId);
     form.reset();
+
+    closeOverlayStep(); // Move before removeItem to ensure getUserType has value
+
     localStorage.removeItem("userType");
     localStorage.removeItem("email");
     Object.keys(formData).forEach((key) => (formData[key] = ""));
@@ -410,6 +420,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function displayConfirmation() {
     removeControls();
     const today = new Date().toLocaleDateString();
+    const userType = getUserType();
     const details = `
     <h3 class="text-lg font-semibold mb-3 text-center uppercase bg-green-200 text-green-800">Registration Succeeded!</h3>
     <p class="mb-2 text-xs text-center">Thank you for registering with TutorFinder. A confirmation email has been sent to your provided email address. Please check your inbox and follow the instructions to verify your account.</p>
@@ -420,7 +431,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       <div class="flex flex-col gap-0 w-fit">
         <span class="flex gap-4 text-sm">
           <p>User Type: </p>  
-          <b>${formData.userType || "Unknown"}</b>
+          <b>${userType || "Unknown"}</b>
         </span>
         <span class="flex gap-4 text-sm">
           <p>Application Date: </p>
@@ -447,7 +458,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
       </div>
       ${
-        formData.userType === "MENTEE"
+        userType === "MENTEE"
           ? `
       <h2 class="uppercase font-bold m-0 text-center">Bio</h2>
       <div class="flex justify-around">
@@ -458,6 +469,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="user-data">
           <p>Tertiary Education</p>
           <b>${formData.tertiaryEducation ?? "N/A"}</b>
+        </div>
+        <div class="user-data">
+          <p>Learning Goals</p>
+          <b>${formData.learningGoals ?? "N/A"}</b>
         </div>
       </div>
       `
@@ -501,23 +516,25 @@ document.addEventListener("DOMContentLoaded", async () => {
   `;
 
     const confirmationDetails =
-      formData.userType === "MENTEE"
+      userType === "MENTEE"
         ? "confirmationMenteeDetails"
         : "confirmationMentorDetails";
     document.getElementById(confirmationDetails).innerHTML = details;
   }
 
-  //? removes the navigation and progress bar on the confirmation page.
   function removeControls() {
-    const progressbar = document.querySelector(".progress-bar");
-    const navigationButtons = document.querySelector(".nav-btn");
-    const exitButtons = document.querySelector(".cancelRegistrationBtn");
-    progressbar.style.display = "none";
-    progressbar.classList.add("hidden", "h-0");
-    navigationButtons.style.display = "none";
-    navigationButtons.classList.add("hidden", "h-0");
-    exitButtons.style.display = "none";
-    exitButtons.classList.add("hidden", "h-0");
+    const userType = getUserType();
+    const overlayId =
+      userType === "MENTEE"
+        ? "menteeRegistrationOverlay"
+        : "mentorRegistrationOverlay";
+    const overlay = document.getElementById(overlayId);
+    const progressbar = overlay.querySelector(".progress-bar");
+    const navigationButtons = overlay.querySelector(".nav-btn");
+    const exitButtons = overlay.querySelector(".cancelRegistrationBtn");
+    if (progressbar) progressbar.style.display = "none";
+    if (navigationButtons) navigationButtons.style.display = "none";
+    if (exitButtons) exitButtons.style.display = "none";
   }
 
   async function initializeCamera() {
@@ -595,14 +612,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Step 1 navigation for mentee
   document.getElementById("menteeNext1").addEventListener("click", async () => {
-    if (formData.userType !== "MENTEE") return; // Prevent misfiring
+    if (getUserType() !== "MENTEE") return; // Dynamic check
     console.log("Mentee Next1 clicked, validating Step 1");
     if (validateStep(1)) {
       const loadingSpinner = document.getElementById(
         "mentee-loadingSpinnerStep1"
       );
       loadingSpinner.style.display = "inline-block";
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate async operation
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       currentStep = 2;
       showStep(2);
       loadingSpinner.style.display = "none";
@@ -619,14 +636,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Step 1 navigation for mentor
   document.getElementById("mentorNext1").addEventListener("click", async () => {
-    if (formData.userType !== "MENTOR") return; // Prevent misfiring
+    if (getUserType() !== "MENTOR") return; // Dynamic check
     console.log("Mentor Next1 clicked, validating Step 1");
     if (validateStep(1)) {
       const loadingSpinner = document.getElementById(
         "mentor-loadingSpinnerStep1"
       );
       loadingSpinner.style.display = "inline-block";
-      await new Promise((resolve) => setTimeout(resolve, 3000)); // Simulate async operation
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       currentStep = 2;
       showStep(2);
       loadingSpinner.style.display = "none";
@@ -646,7 +663,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     showStep(1);
   });
 
-  // Update submitMentee
   document.getElementById("submitMentee").addEventListener("click", () => {
     if (validateStep(2)) {
       currentStep = 3;
@@ -674,7 +690,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // Add prev3Mentee
   document.getElementById("prev3Mentee").addEventListener("click", () => {
     currentStep = 2;
     showStep(2);
@@ -707,7 +722,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     showStep(4);
   });
 
-  // In finishMentor
   document.getElementById("finishMentor").addEventListener("click", () => {
     removeControls();
     Swal.fire({
@@ -718,22 +732,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Continue!",
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        await handleLogout(event);
         setTimeout(() => {
           window.location.href = "/index.php";
         }, 500);
       }
     });
-    closeOverlayStep(); // Fixed
+    closeOverlayStep();
     localStorage.removeItem("userType");
     localStorage.removeItem("email");
     Object.keys(formData).forEach((key) => (formData[key] = ""));
     currentStep = 1;
   });
 
-  // Add finishMentee handler
   document.getElementById("finishMentee").addEventListener("click", () => {
     removeControls();
     console.log("Mentee Registration:", formData);
@@ -745,9 +757,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Continue!",
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        await handleLogout(event);
         setTimeout(() => {
           window.location.href = "/index.php";
         }, 500);
@@ -764,21 +775,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   exitBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       const formId =
-        formData.userType === "MENTEE"
+        getUserType() === "MENTEE"
           ? "menteeRegistrationForm"
           : "mentorRegistrationForm";
       const form = document.getElementById(formId);
-      form.setAttribute("novalidate", "novalidate"); // Disable validation
+      form.setAttribute("novalidate", "novalidate");
       form.reset();
-      form.removeAttribute("novalidate"); // Restore after reset
+      form.removeAttribute("novalidate");
+
+      closeOverlayStep(); // Move before removeItem
+
       localStorage.removeItem("userType");
       localStorage.removeItem("email");
-      closeOverlayStep();
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
         stream = null;
       }
-      currentStep = 1; // Reset step
+      currentStep = 1;
     });
   });
 
@@ -791,13 +804,13 @@ document.addEventListener("DOMContentLoaded", async () => {
           event.target.id === "experienceYears" ||
           event.target.id === "mentor-experienceYears"
         ) {
-          value = value.replace(/[^0-9]/g, "").slice(0, 2); // Max 2 digits, no decimals/negatives
+          value = value.replace(/[^0-9]/g, "").slice(0, 2);
         } else if (
           event.target.id === "hourlyRate" ||
           event.target.id === "mentor-hourlyRate"
         ) {
           value = value.replace(/[^0-9.]/g, "");
-          if ((value.match(/\./g) || []).length > 1) value = value.slice(0, -1); // One decimal
+          if ((value.match(/\./g) || []).length > 1) value = value.slice(0, -1);
         }
         event.target.value = value;
 
@@ -828,5 +841,121 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // Real-time validation setup (from previous refinement)
+  function setupRealTimeValidation(prefix) {
+    const fullnameInput = document.getElementById(`${prefix}-fullname`);
+    const fullnameError = document.getElementById(`${prefix}-fullnameError`);
+    const dobInput = document.getElementById(`${prefix}-dob`);
+    const dobError = document.getElementById(`${prefix}-dobError`);
+    const phoneInput = document.getElementById(`${prefix}-phone`);
+    const phoneError = document.getElementById(`${prefix}-phoneError`);
+    const passwordInput = document.getElementById(`${prefix}-password`);
+    const passwordError = document.getElementById(`${prefix}-passwordError`);
+    const confirmInput = document.getElementById(`${prefix}-confirmPassword`);
+    const confirmError = document.getElementById(
+      `${prefix}-confirmPasswordError`
+    );
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+    const minAge = prefix === "mentee" ? 13 : 18;
+
+    function validateOnBlur(input, error, validator, msg) {
+      input.addEventListener("blur", () => {
+        const value = input.value.trim();
+        error.classList.add("hidden");
+        error.textContent = "";
+        input.classList.remove("error", "success");
+        if (!validator(value)) {
+          error.textContent = msg;
+          error.classList.remove("hidden");
+          error.classList.add("error-message", "show");
+          input.classList.add("error");
+        } else {
+          input.classList.add("success");
+        }
+      });
+    }
+
+    validateOnBlur(
+      fullnameInput,
+      fullnameError,
+      (v) => v.length > 0,
+      "Full name is required"
+    );
+
+    validateOnBlur(
+      dobInput,
+      dobError,
+      (v) => {
+        if (!v) return false;
+        const age = new Date().getFullYear() - new Date(v).getFullYear();
+        return age >= minAge;
+      },
+      `Date of birth is required and must be at least ${minAge} years old`
+    );
+
+    validateOnBlur(
+      phoneInput,
+      phoneError,
+      (v) => /^\d{10}$/.test(v),
+      "Phone must be exactly 10 digits"
+    );
+
+    validateOnBlur(
+      passwordInput,
+      passwordError,
+      (v) => passwordRegex.test(v),
+      "Password must be 8+ characters with uppercase, number, special character"
+    );
+
+    [passwordInput, confirmInput].forEach((inp) => {
+      inp.addEventListener("blur", () => {
+        confirmError.classList.add("hidden");
+        confirmError.textContent = "";
+        confirmInput.classList.remove("error", "success");
+        if (passwordInput.value !== confirmInput.value || !confirmInput.value) {
+          confirmError.textContent = "Passwords do not match";
+          confirmError.classList.remove("hidden");
+          confirmError.classList.add("error-message", "show");
+          confirmInput.classList.add("error");
+        } else {
+          confirmInput.classList.add("success");
+        }
+      });
+    });
+  }
+
+  function restrictPhoneInputs() {
+    const phoneInputs = document.querySelectorAll('input[type="tel"].phone');
+    phoneInputs.forEach((input) => {
+      input.addEventListener("input", (e) => {
+        e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+      });
+    });
+  }
+
+  setupRealTimeValidation("mentee");
+  setupRealTimeValidation("mentor");
+  restrictPhoneInputs();
   validateNumberInputs();
+
+  // Observe overlay visibility changes to initialize steps
+  const overlays = [
+    document.getElementById("menteeRegistrationOverlay"),
+    document.getElementById("mentorRegistrationOverlay"),
+  ];
+  overlays.forEach((overlay) => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.attributeName === "style" &&
+          overlay.style.display === "flex"
+        ) {
+          currentStep = 1;
+          showStep(1);
+        }
+      });
+    });
+    observer.observe(overlay, { attributes: true });
+  });
 });
