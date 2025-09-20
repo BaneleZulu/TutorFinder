@@ -6,14 +6,29 @@ header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Credentials: true');
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/conn.php';
+
+// Define the document root as a constant.
+// The rtrim() function removes the trailing slash for consistency.
+define("ROOT", rtrim($_SERVER["DOCUMENT_ROOT"], '/'));
+
+// Define the other paths using the new constant.
+define("DATABASE_PATH", ROOT . "/includes/conn.php");
+define("CLASS_PATH", ROOT . "/model/php/User.php");
+
+require_once DATABASE_PATH;
+include_once CLASS_PATH;
+
+if (!file_exists(DATABASE_PATH) || !file_exists(CLASS_PATH)):
+    http_response_code(401); // No content for OPTIONS
+    respondWithJSON("Missing file(s). Couldn't process with process.", 401, false);
+endif;
 
 // Handle preflight request
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') :
     http_response_code(204); // No content for OPTIONS
     respondWithJSON('Invalid request method', 204, false);
     exit;
-}
+endif;
 
 $input = json_decode(file_get_contents('php://input'), true);
 if (empty($input) || !isset($input)):
@@ -23,6 +38,7 @@ if (empty($input) || !isset($input)):
     exit;
 endif;
 
+// echo json_encode($input, JSON_PRETTY_PRINT | JSON_ERROR_UTF16);
 
 // Validate input
 if (!isset($input['email']) || !isset($input['password'])) {
@@ -31,37 +47,24 @@ if (!isset($input['email']) || !isset($input['password'])) {
     exit;
 }
 
-[
-    :ALL
-    {
-        name:
-        dob:
-        phone:
-        password:
-        passwordConfirm:
-    }
-    :MENTEE
-    {
-        education:
-        tertiaryEducation:
-        learningGoals:
-    }
-    :MENTOR
-    {
-       specialities:
-       experienceYears:
-       hourlyRate:
-       selfie:
-       idDocument:
-       certificate:
-    }
 
-]
 
+function validateEmailInDatabase(PDO $pdo, string $email): int
+{
+    $cmd = $pdo->prepare("SELECT COUNT(email) AS FLAG FROM users WHERE email = :email");
+    $cmd->bindParam(':email', $email, PDO::PARAM_STR);
+    $cmd->execute();
+    $result = $cmd->fetch(PDO::FETCH_ASSOC);
+    return (int) $result['FLAG'];
+}
 
 
 try {
+
     $email = filter_var($input['email'], FILTER_SANITIZE_EMAIL);
+    $password = $input['password'];
+    $userType = $input['type'];
+
     // Additional XSS prevention
     if (preg_match('/<script|<\/script>|javascript:/i', $email) || preg_match('/<script|<\/script>|javascript:/i', $password)) {
         http_response_code(400);
@@ -69,42 +72,31 @@ try {
         exit;
     }
 
-    // Prepare and execute query
-    $stmt = $pdo->prepare("SELECT id, fullname, password, phone, status, is_varified from landlord_tbl WHERE email = :email");
-    $stmt->execute(['email' => $email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-    if ($user && password_verify($password, $user['password'])) {
-        // Start session and store user data
-        session_start();
-        $_SESSION['id'] = $user['id'];
-        $_SESSION['name'] = $user['fullname'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['phone'] = $user['phone'];
-        $_SESSION['status'] = $user['status'];
-        $_SESSION['verified'] = $user['is_varified'];
-
-        echo json_encode([
-            'success' => true,
-            'user' => [
-                'id' => htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'),
-                'name' => htmlspecialchars($user['fullname'], ENT_QUOTES, 'UTF-8'),
-                'email' => htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8'),
-                'phone' => htmlspecialchars($user['phone'], ENT_QUOTES, 'UTF-8'),
-                'status' => htmlspecialchars($user['status'], ENT_QUOTES, 'UTF-8'),
-                'verified' => htmlspecialchars($user['is_varified'], ENT_QUOTES, 'UTF-8')
-            ]
-        ]);
-
+    $flag = validateEmailInDatabase($pdo, $email);
+    if ($flag) {
+        respondWithJSON("Email is already in use.. Please retry your email or use another email", 409, false);
+        $pdo = null;
         exit;
-    } else {
-        http_response_code(401);
-        echo json_encode(['success' => false, 'message' => 'Invalid email or password']);
     }
+
+    $user = new User($pdo);
+    $userID =  $user->createUser($input);
+
+
+    $cmd = $pdo->prepare("SELECT users.*,
+	students.*
+	FROM users
+	JOIN students 
+	ON users.id = students.id
+	WHERE users.id = :id");
+    $cmd->execute([':id' => $userID]);
+
+    $results = $cmd->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($results, JSON_PRETTY_PRINT, JSON_ERROR_UTF8);
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Database error occurred']);
+    respondWithJSON($e->getMessage() . "|" . $e->getCode(), false, 500);
     error_log('Database error: ' . $e->getMessage());
 } catch (Exception $e) {
     http_response_code(500);

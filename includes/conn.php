@@ -8,7 +8,7 @@ header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 
-include($_SERVER['DOCUMENT_ROOT'] . '/Backend/database/functions.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/includes/functions.php');
 function initializeDatabase()
 {
     $host = 'localhost';

@@ -1,0 +1,261 @@
+2025-09-20, 22:02:17 - Database Connection Failed: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+2025-09-20, 22:03:27 - Autocommit is enabled.
+2025-09-20, 22:03:27 - Connected to database: tutorfinder
+2025-09-20, 23:57:51 - Autocommit is enabled.
+2025-09-20, 23:57:51 - Connected to database: tutorfinder
+2025-09-20, 23:58:50 - Autocommit is enabled.
+2025-09-20, 23:58:50 - Connected to database: tutorfinder
+2025-09-20, 23:59:08 - Autocommit is enabled.
+2025-09-20, 23:59:08 - Connected to database: tutorfinder
+2025-09-20, 23:59:12 - Autocommit is enabled.
+2025-09-20, 23:59:12 - Connected to database: tutorfinder
+2025-09-20, 23:59:34 - Autocommit is enabled.
+2025-09-20, 23:59:34 - Connected to database: tutorfinder
+2025-09-21, 00:00:01 - Autocommit is enabled.
+2025-09-21, 00:00:01 - Connected to database: tutorfinder
+2025-09-21, 00:00:03 - Autocommit is enabled.
+2025-09-21, 00:00:03 - Connected to database: tutorfinder
+2025-09-21, 00:31:51 - Autocommit is enabled.
+2025-09-21, 00:31:51 - Connected to database: tutorfinder
+2025-09-21, 00:35:30 - Autocommit is enabled.
+2025-09-21, 00:35:30 - Connected to database: tutorfinder
+2025-09-21, 00:50:33 - Autocommit is enabled.
+2025-09-21, 00:50:33 - Connected to database: tutorfinder
+2025-09-21, 00:51:22 - Autocommit is enabled.
+2025-09-21, 00:51:22 - Connected to database: tutorfinder
+2025-09-21, 00:51:22 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "name": "Banele Zulu",
+    "email": "banelezulu85@gmail.com",
+    "type": "MENTEE",
+    "password": "1234567890"
+}
+2025-09-21, 00:52:41 - Autocommit is enabled.
+2025-09-21, 00:52:41 - Connected to database: tutorfinder
+2025-09-21, 00:52:41 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banelezulu85@gmail.com",
+    "phone": "0731532439",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "1234567890"
+}
+2025-09-21, 00:56:03 - Autocommit is enabled.
+2025-09-21, 00:56:03 - Connected to database: tutorfinder
+2025-09-21, 00:56:03 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banelezulu85@gmail.com",
+    "phone": "0731532439",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "1234567890"
+}
+2025-09-21, 01:12:32 - Autocommit is enabled.
+2025-09-21, 01:12:32 - Connected to database: tutorfinder
+2025-09-21, 01:12:32 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:13:08 - Autocommit is enabled.
+2025-09-21, 01:13:08 - Connected to database: tutorfinder
+2025-09-21, 01:13:08 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:13:11 - Autocommit is enabled.
+2025-09-21, 01:13:11 - Connected to database: tutorfinder
+2025-09-21, 01:13:12 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:14:14 - Autocommit is enabled.
+2025-09-21, 01:14:14 - Connected to database: tutorfinder
+2025-09-21, 01:14:14 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:14:28 - Autocommit is enabled.
+2025-09-21, 01:14:28 - Connected to database: tutorfinder
+2025-09-21, 01:14:28 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:14:30 - Autocommit is enabled.
+2025-09-21, 01:14:30 - Connected to database: tutorfinder
+2025-09-21, 01:14:30 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:16:27 - Autocommit is enabled.
+2025-09-21, 01:16:27 - Connected to database: tutorfinder
+2025-09-21, 01:16:27 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:17:20 - Autocommit is enabled.
+2025-09-21, 01:17:20 - Connected to database: tutorfinder
+2025-09-21, 01:17:20 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:17:22 - Autocommit is enabled.
+2025-09-21, 01:17:22 - Connected to database: tutorfinder
+2025-09-21, 01:17:22 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:18:11 - Autocommit is enabled.
+2025-09-21, 01:18:11 - Connected to database: tutorfinder
+2025-09-21, 01:18:11 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:18:12 - Autocommit is enabled.
+2025-09-21, 01:18:12 - Connected to database: tutorfinder
+2025-09-21, 01:18:12 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banele@theapi.house",
+    "phone": "069153240812",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:18:57 - Autocommit is enabled.
+2025-09-21, 01:18:57 - Connected to database: tutorfinder
+2025-09-21, 01:19:27 - Autocommit is enabled.
+2025-09-21, 01:19:27 - Connected to database: tutorfinder
+2025-09-21, 01:20:22 - Autocommit is enabled.
+2025-09-21, 01:20:22 - Connected to database: tutorfinder
+2025-09-21, 01:20:51 - Autocommit is enabled.
+2025-09-21, 01:20:51 - Connected to database: tutorfinder
+2025-09-21, 01:21:10 - Autocommit is enabled.
+2025-09-21, 01:21:10 - Connected to database: tutorfinder
+2025-09-21, 01:21:10 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banelezulu@gmail.com",
+    "phone": "0731532411",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "1234567890"
+}
+2025-09-21, 01:23:42 - Autocommit is enabled.
+2025-09-21, 01:23:42 - Connected to database: tutorfinder
+2025-09-21, 01:23:56 - Autocommit is enabled.
+2025-09-21, 01:23:56 - Connected to database: tutorfinder
+2025-09-21, 01:23:56 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Banele Zulu",
+    "email": "banelezulu1@gmail.com",
+    "phone": "0731532111",
+    "dob": "2001-01-01",
+    "type": "MENTEE",
+    "password": "1234567890"
+}
+2025-09-21, 01:27:39 - Autocommit is enabled.
+2025-09-21, 01:27:39 - Connected to database: tutorfinder
+2025-09-21, 01:27:39 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Gojo Saturo",
+    "email": "gojosaturo@jjk",
+    "phone": "0123456779",
+    "dob": "2000-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:32:50 - Autocommit is enabled.
+2025-09-21, 01:32:50 - Connected to database: tutorfinder
+2025-09-21, 01:32:50 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Naruto Uzumaki",
+    "email": "narutouzumaki@mail.com",
+    "phone": "0123456790",
+    "dob": "2000-01-01",
+    "type": "MENTEE",
+    "password": "123450"
+}
+2025-09-21, 01:34:49 - Autocommit is enabled.
+2025-09-21, 01:34:49 - Connected to database: tutorfinder
+2025-09-21, 01:39:23 - Autocommit is enabled.
+2025-09-21, 01:39:23 - Connected to database: tutorfinder
+2025-09-21, 01:39:23 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Sasuke Uchiha",
+    "email": "sasuke@mail.com",
+    "phone": "0123456390",
+    "dob": "2000-01-01",
+    "type": "MENTEE",
+    "password": "123450",
+    "education_level": "High Shool",
+    "tertiary_education": "University of Mangosuthu",
+    "interests": "Codine, Codine, Codine, Codine, Codine",
+    "learning_goals": "To be able to codine freely in the coding environement with codine and codine and codine"
+}
+2025-09-21, 01:42:45 - Autocommit is enabled.
+2025-09-21, 01:42:45 - Connected to database: tutorfinder
+2025-09-21, 01:42:45 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Sasuke Uchiha",
+    "email": "sasuke@mail.com",
+    "phone": "0123456390",
+    "dob": "2000-01-01",
+    "type": "MENTEE",
+    "password": "123450",
+    "education_level": "High Shool",
+    "tertiary_education": "University of Mangosuthu",
+    "interests": "Codine, Codine, Codine, Codine, Codine",
+    "learning_goals": "To be able to codine freely in the coding environement with codine and codine and codine"
+}
