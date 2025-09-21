@@ -119,7 +119,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } else if (step === 3 && getUserType() === "MENTEE") {
       document.getElementById("menteeFinal").classList.remove("hidden");
-      displayConfirmation();
+      submitForm(formData);
+      // displayConfirmation();
     } else if (step === 3 && getUserType() === "MENTOR") {
       document.getElementById("mentorStep3").classList.remove("hidden");
       initializeCamera();
@@ -127,7 +128,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("mentorStep4").classList.remove("hidden");
     } else if (step === 5 && getUserType() === "MENTOR") {
       document.getElementById("mentorFinal").classList.remove("hidden");
-      displayConfirmation();
+      submitForm(formData);
+      // displayConfirmation();
     }
     updateProgressBar();
   }
@@ -770,6 +772,55 @@ document.addEventListener("DOMContentLoaded", async () => {
     Object.keys(formData).forEach((key) => (formData[key] = ""));
     currentStep = 1;
   });
+
+  async function submitForm(params) {
+    console.log("before", params);
+    if (!params) {
+      Toastify({
+        text: "Please select a user type.",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#ef4444",
+      }).showToast();
+      window.location.href = "/index.php";
+    }
+
+    formData.user_role = getUserType(); // Updated: Use getUserType() for current value
+    if (!formData.user_role) {
+      // Optional safeguard: Handle missing user_role to prevent invalid submissions
+      throw new Error(
+        "User role is undefined. Please ensure role selection is completed."
+      );
+    }
+    console.log("with type: ", params);
+    try {
+      const url =
+        "http://localhost:3000/src/registration/php/process_registration.php";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(params),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+      console.log("after", params);
+      displayConfirmation();
+      console.log("after confirm", params);
+    } catch (error) {
+      Toastify({
+        text: `Error: ${error}`,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#ef4444",
+      }).showToast();
+    }
+  }
 
   const exitBtns = document.querySelectorAll(".cancelRegistrationBtn");
   exitBtns.forEach((btn) => {

@@ -19,10 +19,8 @@ class User
 
     private function generateAuthToken()
     {
-        return bin2hex(random_bytes(32)); // Simple token; consider JWT for production
+        return bin2hex(random_bytes(38)); // Simple token; consider JWT for production
     }
-
-
 
     // Create a new user with role-specific data
     public function createUser(array $userData): int
@@ -70,13 +68,15 @@ class User
             $data['interests'] ?? null,
             $data['learning_goals'] ?? null
         ]);
+
+        $this->activateUser($userId);
     }
 
     private function createTutor(int $userId, array $data): void
     {
         $stmt = $this->pdo->prepare(
             "INSERT INTO tutors (id, bio, experience_years, hourly_rate, availability_status, average_rating, verification_status) 
-             VALUES (?, ?, ?, ?, ?, ?, ?)"
+             VALUES (?, ?, ?, ?, ?,  ?, ?)"
         );
         $stmt->execute([
             $userId,
@@ -88,14 +88,13 @@ class User
             $data['verification_status'] ?? 'Pending'
         ]);
 
-        $tutorUuid = $this->generateUuidV4();
         $authToken = $this->generateAuthToken();
 
         $stmt = $this->pdo->prepare(
             "INSERT INTO tutor_auth (id, tutor_uuid, auth_token, is_active) 
-             VALUES (?, ?, ?, ?)"
+             VALUES (?, UUID(), ?, ?)"
         );
-        $stmt->execute([$userId, $tutorUuid, $authToken, 1]);
+        $stmt->execute([$userId, $authToken, 1]);
     }
 
     // User login with history logging
@@ -142,6 +141,51 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+
+    public function getUserDetails(int $id, string $type): array
+    {
+        try {
+            $query = $type === "MENTEE" ?
+                "SELECT 
+                        users.uuid, users.profile_image, users.fullname, users.dob, users.user_role, users.phone, users.email, users.address, users.is_verified,
+                        students.education_level, students.tertiary_education, students.interests, students.learning_goals
+                FROM users
+                JOIN students ON  users.id = students.id
+                WHERE users.id = :userID
+                LIMIT 1
+                " :
+                "SELECT 
+                        users.uuid, users.profile_image, users.fullname, users.dob, users.user_role, users.phone, users.email, users.address, users.is_verified,
+                        tutors.bio, tutors.specialities, tutors.experience_years, tutors.hourly_rate, tutors.availability_status, tutors.average_rating, tutors.verification_status,
+                        tutor_auth.auth_token, tutor_auth.is_active
+                FROM users
+                JOIN tutors ON users.id = tutors.id
+                JOIN tutor_auth ON tutors.id = tutor_auth.id
+                WHERE users.id = :userID
+                LIMIT 1";
+
+            $cmd = $this->pdo->prepare($query);
+            $cmd->bindParam(':userID', $id, PDO::PARAM_INT);
+            $cmd->execute();
+            $result = $cmd->fetch(PDO::FETCH_ASSOC);
+            return $result ?: [];
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return $data = [
+                "response" =>  $e->getMessage() . " | " . $e->getCode(),
+                "status" =>  false,
+                "code" =>  500
+            ];
+        } catch (Exception $e) {
+            http_response_code(500);
+            return $data = [
+                "response" =>  $e->getMessage() . " | " . $e->getCode(),
+                "status" =>  false,
+                "code" =>  500
+            ];
+        }
+    }
+
     // Update user data
     public function updateUser(int $id, array $data): bool
     {
@@ -174,9 +218,21 @@ class User
         $stmt = $this->pdo->prepare("UPDATE users SET is_verified = 0 WHERE id = ?");
         return $stmt->execute([$id]);
     }
+    // Deactivate user (set is_verified to 0)
+    public function activateUser(int $id): bool
+    {
+        $stmt = $this->pdo->prepare("UPDATE users SET is_verified = 1 WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
 
     // Deactivate tutor (set is_active to 0 in tutor_auth)
     public function deactivateTutor(int $id): bool
+    {
+        $stmt = $this->pdo->prepare("UPDATE tutor_auth SET is_active = 0 WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
+    // Deactivate tutor (set is_active to 0 in tutor_auth)
+    public function activateTutor(int $id): bool
     {
         $stmt = $this->pdo->prepare("UPDATE tutor_auth SET is_active = 0 WHERE id = ?");
         return $stmt->execute([$id]);
@@ -202,7 +258,7 @@ class User
     }
 
     // Verify a document
-    public function verifyDocument(int $docId, bool $isVerified, string $notes = null): bool
+    public function verifyDocument(int $docId, bool $isVerified, string $notes): bool
     {
         $verifiedAt = $isVerified ? 'CURRENT_TIMESTAMP' : 'NULL';
         $stmt = $this->pdo->prepare(

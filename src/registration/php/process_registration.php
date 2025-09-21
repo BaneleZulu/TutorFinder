@@ -31,6 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') :
 endif;
 
 $input = json_decode(file_get_contents('php://input'), true);
+
+logResults("Log from api call", json_encode($input["formData"], JSON_PRETTY_PRINT));
+logResults("Log from api call2", json_encode($input, JSON_PRETTY_PRINT));
+logResults("Log from api call3", json_encode($_POST, JSON_PRETTY_PRINT));
+
 if (empty($input) || !isset($input)):
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Empty param']);
@@ -48,7 +53,6 @@ if (!isset($input['email']) || !isset($input['password'])) {
 }
 
 
-
 function validateEmailInDatabase(PDO $pdo, string $email): int
 {
     $cmd = $pdo->prepare("SELECT COUNT(email) AS FLAG FROM users WHERE email = :email");
@@ -58,6 +62,46 @@ function validateEmailInDatabase(PDO $pdo, string $email): int
     return (int) $result['FLAG'];
 }
 
+function createSessionVariables(array $data, string $userType): void
+{
+    switch ($userType) {
+        case "MENTEE":
+            $_SESSION["uuid"] = $data["uuid"];
+            $_SESSION["image"] = $data["profile_image"];
+            $_SESSION["name"] = $data["fullname"];
+            $_SESSION["dob"] = $data["dob"];
+            $_SESSION["role"] = $data["user_role"];
+            $_SESSION["phone"] = $data["phone"];
+            $_SESSION["email"] = $data["email"];
+            $_SESSION["address"] = $data["address"];
+            $_SESSION["verified"] = $data["is_verified"];
+            $_SESSION["education"] = $data["education_level"];
+            $_SESSION["3rdEducation"] = $data["tertiary_education"];
+            $_SESSION["interest"] = $data["interests"];
+            $_SESSION["goals"] = $data["learning_goals"];
+            break;
+        case "MENTOR":
+            $_SESSION["uuid"] = $data["uuid"];
+            $_SESSION["image"] = $data["profile_image"];
+            $_SESSION["name"] = $data["fullname"];
+            $_SESSION["dob"] = $data["dob"];
+            $_SESSION["role"] = $data["user_role"];
+            $_SESSION["phone"] = $data["phone"];
+            $_SESSION["email"] = $data["email"];
+            $_SESSION["address"] = $data["address"];
+            $_SESSION["verified"] = $data["is_verified"];
+            $_SESSION["bio"] = $data["bio"];
+            $_SESSION["skills"] = $data["specialities"];
+            $_SESSION["exp"] = $data["experience_years"];
+            $_SESSION["hrRate"] = $data["hourly_rate"];
+            $_SESSION["availStatus"] = $data["availability_status"];
+            $_SESSION["rating"] = $data["average_rating"];
+            $_SESSION["verified"] = $data["verification_status"];
+            $_SESSION["token"] = $data["auth_token"];
+            $_SESSION["active"] = $data["is_active"];
+            break;
+    }
+}
 
 try {
 
@@ -79,21 +123,13 @@ try {
         exit;
     }
 
-    $user = new User($pdo);
-    $userID =  $user->createUser($input);
+    // $user = new User($pdo);
+    // define("userID", $user->createUser($input));
+    // $results = $user->getUserDetails(userID, $userType);
+    // $_SESSION["id"] = userID;
+    // createSessionVariables($results, $userType);
 
-
-    $cmd = $pdo->prepare("SELECT users.*,
-	students.*
-	FROM users
-	JOIN students 
-	ON users.id = students.id
-	WHERE users.id = :id");
-    $cmd->execute([':id' => $userID]);
-
-    $results = $cmd->fetch(PDO::FETCH_ASSOC);
-
-    echo json_encode($results, JSON_PRETTY_PRINT, JSON_ERROR_UTF8);
+    // echo json_encode($results, JSON_PRETTY_PRINT, JSON_ERROR_UTF8);
 } catch (PDOException $e) {
     http_response_code(500);
     respondWithJSON($e->getMessage() . "|" . $e->getCode(), false, 500);

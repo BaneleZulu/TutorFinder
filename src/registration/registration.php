@@ -238,3 +238,48 @@
 </div>
 
 <script type="module" src="/src/registration/js/app.js" defer></script>
+
+
+
+
+
+
+
+
+
+{
+"uuid": "ef042b59-9718-11f0-9e86-747827464d7a",
+"profile_image": "default.jpg",
+"fullname": "Sasuke Uchiha",
+"dob": "2000-01-01",
+"user_role": "MENTEE",
+"phone": "0123456390",
+"email": "sasuke@mail.com",
+"address": null,
+"is_verified": 1,
+"education_level": "High Shool",
+"tertiary_education": "University of Mangosuthu",
+"interests": "Codine, Codine, Codine, Codine, Codine",
+"learning_goals": "To be able to codine freely in the coding environement with codine and codine and codine"
+}
+
+{
+"uuid": "113a469a-9721-11f0-9e86-747827464d7a",
+"profile_image": "default.jpg",
+"fullname": "Sasuke Uchiha",
+"dob": "2000-01-01",
+"user_role": "MENTOR",
+"phone": "0123456390",
+"email": "sasuke@mail.com",
+"address": null,
+"is_verified": 0,
+"bio": "This is the first insert into the tutor table API",
+"specialities": null,
+"experience_years": 3,
+"hourly_rate": "123.00",
+"availability_status": "available",
+"average_rating": 100,
+"verification_status": "Pending",
+"auth_token": "b76708bbf16db0af925552e5743bd884bbecb0b747e32e8a5b823370f8019308d5f9777c1761",
+"is_active": 1
+}

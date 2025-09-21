@@ -259,3 +259,118 @@
     "interests": "Codine, Codine, Codine, Codine, Codine",
     "learning_goals": "To be able to codine freely in the coding environement with codine and codine and codine"
 }
+2025-09-21, 20:29:39 - Autocommit is enabled.
+2025-09-21, 20:29:39 - Connected to database: tutorfinder
+2025-09-21, 20:29:39 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Sasuke Uchiha",
+    "email": "sasuke@mail.com",
+    "phone": "0123456390",
+    "dob": "2000-01-01",
+    "type": "MENTEE",
+    "password": "123450",
+    "education_level": "High Shool",
+    "tertiary_education": "University of Mangosuthu",
+    "interests": "Codine, Codine, Codine, Codine, Codine",
+    "learning_goals": "To be able to codine freely in the coding environement with codine and codine and codine"
+}
+2025-09-21, 21:19:05 - Autocommit is enabled.
+2025-09-21, 21:19:05 - Connected to database: tutorfinder
+2025-09-21, 21:19:31 - Autocommit is enabled.
+2025-09-21, 21:19:31 - Connected to database: tutorfinder
+2025-09-21, 21:19:32 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Sasuke Uchiha",
+    "email": "sasuke@mail.com",
+    "phone": "0123456390",
+    "dob": "2000-01-01",
+    "type": "MENTOR",
+    "password": "123450",
+    "bio": "This is the first insert into the tutor table API",
+    "experience_years": "3",
+    "hourly_rate": "123",
+    "availability_status": "1",
+    "average_rating": "100",
+    "verification_status": "1",
+    "is_active": "1"
+}
+2025-09-21, 21:25:13 - Autocommit is enabled.
+2025-09-21, 21:25:13 - Connected to database: tutorfinder
+2025-09-21, 21:26:02 - Autocommit is enabled.
+2025-09-21, 21:26:02 - Connected to database: tutorfinder
+2025-09-21, 21:26:02 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Sasuke Uchiha",
+    "email": "sasuke@mail.com",
+    "phone": "0123456390",
+    "dob": "2000-01-01",
+    "type": "MENTOR",
+    "password": "123450",
+    "bio": "This is the first insert into the tutor table API",
+    "experience_years": "3",
+    "hourly_rate": "123",
+    "availability_status": "1",
+    "average_rating": "100",
+    "verification_status": "1",
+    "is_active": "1"
+}
+2025-09-21, 21:27:52 - Autocommit is enabled.
+2025-09-21, 21:27:52 - Connected to database: tutorfinder
+2025-09-21, 21:27:52 - Executing statement: INSERT INTO users (uuid, fullname, dob, user_role, phone, email, password) 
+             VALUES (UUID(), :fullname, :dob, :role, :phone, :email, :password) | Insert params: {
+    "fullname": "Sasuke Uchiha",
+    "email": "sasuke@mail.com",
+    "phone": "0123456390",
+    "dob": "2000-01-01",
+    "type": "MENTOR",
+    "password": "123450",
+    "bio": "This is the first insert into the tutor table API",
+    "experience_years": "3",    
+    "hourly_rate": "123",
+    "availability_status": "1",
+    "average_rating": "100",
+    "verification_status": "1",
+    "is_active": "1"
+}
+2025-09-21, 21:57:53 - Autocommit is enabled.
+2025-09-21, 21:57:53 - Connected to database: tutorfinder
+2025-09-21, 21:57:53 - Log from api call
+2025-09-21, 21:59:46 - Autocommit is enabled.
+2025-09-21, 21:59:46 - Connected to database: tutorfinder
+2025-09-21, 21:59:46 - Log from api call
+------------------------------------------------------2025-09-21, 22:02:07 - Autocommit is enabled.
+2025-09-21, 22:02:07 - Connected to database: tutorfinder
+2025-09-21, 22:02:07 - Log from api call
+2025-09-21, 22:03:43 - Autocommit is enabled.
+2025-09-21, 22:03:43 - Connected to database: tutorfinder
+2025-09-21, 22:03:43 - Log from api call
+2025-09-21, 22:11:24 - Autocommit is enabled.
+2025-09-21, 22:11:24 - Connected to database: tutorfinder
+2025-09-21, 22:11:24 - Log from api call
+2025-09-21, 22:13:14 - Autocommit is enabled.
+2025-09-21, 22:13:14 - Connected to database: tutorfinder
+2025-09-21, 22:13:14 - Log from api call
+2025-09-21, 22:36:45 - Autocommit is enabled.
+2025-09-21, 22:36:45 - Connected to database: tutorfinder
+2025-09-21, 22:36:45 - Log from api call
+2025-09-21, 22:40:32 - Autocommit is enabled.
+2025-09-21, 22:40:32 - Connected to database: tutorfinder
+2025-09-21, 22:40:32 - Log from api call
+2025-09-21, 22:42:25 - Autocommit is enabled.
+2025-09-21, 22:42:25 - Connected to database: tutorfinder
+2025-09-21, 22:42:25 - Log from api call
+2025-09-21, 22:42:25 - Log from api call2
+2025-09-21, 22:47:51 - Autocommit is enabled.
+2025-09-21, 22:47:51 - Connected to database: tutorfinder
+2025-09-21, 22:47:51 - Log from api call
+2025-09-21, 22:47:51 - Log from api call2
+2025-09-21, 22:47:51 - Log from api call3
+2025-09-21, 22:49:14 - Autocommit is enabled.
+2025-09-21, 22:49:14 - Connected to database: tutorfinder
+2025-09-21, 22:49:14 - Log from api call
+2025-09-21, 22:49:14 - Log from api call2
+2025-09-21, 22:49:14 - Log from api call3
+2025-09-21, 22:50:45 - Autocommit is enabled.
+2025-09-21, 22:50:45 - Connected to database: tutorfinder
+2025-09-21, 22:50:45 - Log from api call
+2025-09-21, 22:50:45 - Log from api call2
